@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/orderListFragment"
+        android:title="Мои заказы"
+        android:icon="@drawable/ic_list"
+        />
+
+    <item
+        android:id="@+id/placeOrderFragment"
+        android:title="Разместить заказ"
+        android:icon="@drawable/ic_add_order"
+        />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="Настройки"
+        android:icon="@drawable/ic_settings"
+        />
+
+</menu>

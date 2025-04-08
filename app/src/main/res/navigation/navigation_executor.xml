@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_ececutor"
+    app:startDestination="@id/placeOrderFragment2">
+
+    <fragment
+        android:id="@+id/placeOrderFragment2"
+        android:name="com.example.myapplication.order.ui.PlaceOrderFragment"
+        android:label="fragment_place_order"
+        tools:layout="@layout/fragment_place_order" />
+    <fragment
+        android:id="@+id/orderListFragment2"
+        android:name="com.example.myapplication.order.ui.OrderListFragment"
+        android:label="fragment_order_list"
+        tools:layout="@layout/fragment_order_list" />
+</navigation>
