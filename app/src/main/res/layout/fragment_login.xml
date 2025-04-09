@@ -77,8 +77,8 @@
 
         <ImageView
             android:id="@+id/togglePasswordVisibility"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/ic_visible"
             android:layout_gravity="center"
             app:tint="#999999"/>
