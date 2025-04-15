@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.app.Application
+import com.example.di.appModule
 import com.example.di.dataModule
 import com.example.di.domainModule
 import com.example.di.viewModelModule
@@ -14,7 +15,7 @@ class App() : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(listOf(dataModule, domainModule, viewModelModule))
+            modules(listOf(appModule,dataModule, domainModule, viewModelModule))
         }
 
         Realm.init(this)

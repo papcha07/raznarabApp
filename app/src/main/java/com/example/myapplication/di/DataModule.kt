@@ -1,5 +1,6 @@
 package com.example.di
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
@@ -99,7 +100,14 @@ val dataModule = module {
     }
 
 
+    //locale storage
+    single<LocalProfileRepository>{
+        LocalProfileRepositoryImpl(get(named("userPrefs")))
+    }
 
+    single(named("userPrefs")){
+        androidContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    }
 
 
 

@@ -17,7 +17,7 @@ class LocalProfileRepositoryImpl(
 ) : LocalProfileRepository {
 
 
-    override  fun saveUserData(userData: String) {
+    override fun saveUserData(userData: String) {
         userSharedPreferences
             .edit()
             .putString(CONST.USER_DATA_SHARED_PREF, userData)
@@ -25,17 +25,17 @@ class LocalProfileRepositoryImpl(
     }
 
     override fun getUserData(): Flow<Resource<String?>> = flow {
-        withContext(Dispatchers.IO) {
-            val currentUserDate = userSharedPreferences.getString(CONST.USER_DATA_SHARED_PREF, null)
 
-            when (currentUserDate) {
-                null -> {
-                    emit(Resource.Failed("Ошибка получения данных с локального хранилища"))
-                    Log.d("local_storage", "Ошибка получения данных с локального хранилища")
-                }
+        val currentUserDate = userSharedPreferences.getString(CONST.USER_DATA_SHARED_PREF, null)
 
-                else -> emit(Resource.Success(currentUserDate))
+        when (currentUserDate) {
+            null -> {
+                emit(Resource.Failed("Ошибка получения данных с локального хранилища"))
+                Log.d("local_storage", "Ошибка получения данных с локального хранилища")
             }
+
+            else -> emit(Resource.Success(currentUserDate))
         }
+
     }
 }

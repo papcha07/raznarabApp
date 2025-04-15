@@ -31,6 +31,12 @@
             UserInfoUseCase(get())
         }
 
+        single<LocalDataInteractorInterface>{
+            LocalDataUseCase(get(), get())
+        }
+
+
+
 
 
     }

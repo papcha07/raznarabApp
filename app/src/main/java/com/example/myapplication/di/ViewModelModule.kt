@@ -21,7 +21,8 @@ val viewModelModule = module {
     }
 
     viewModel {
-        ProfileViewModel(get(), get())
+        ProfileViewModel(get(), get(), get())
     }
+
 
 }
