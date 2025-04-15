@@ -152,6 +152,16 @@
                 >
             </TextView>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/my_account_desc_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/my_account_title_id">
+            </ImageView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -199,6 +209,17 @@
                 android:layout_marginStart="10dp"
                 >
             </TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/darktheme_desc_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/darktheme_title_id">
+
+            </ImageView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -248,6 +269,18 @@
                 >
             </TextView>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/about_desc_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/about_title_id">
+
+            </ImageView>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -291,12 +324,24 @@
                 app:layout_constraintStart_toEndOf="@id/logout_image_id"
                 app:layout_constraintTop_toBottomOf="@id/logout_title_id"
                 app:layout_constraintBottom_toBottomOf="@id/logout_image_id"
-                android:text="Нажмите для перехода к экрану авторизации"
+                android:text="Переход к авторизации"
                 android:textSize="12sp"
                 android:fontFamily="@font/ys_text_regular"
                 android:layout_marginStart="10dp"
                 >
             </TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/logout_desc_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/logout_title_id">
+
+            </ImageView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

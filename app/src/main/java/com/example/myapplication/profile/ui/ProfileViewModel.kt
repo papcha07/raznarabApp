@@ -42,7 +42,7 @@ class ProfileViewModel(
                 when {
                     userInfo == null -> {
                         if (message == "Ошибка подключения") {
-                            infoState.postValue(ProfileInfoStateScreen.ConnectionFailed)
+                            getLocalData()
                         } else {
                             infoState.postValue(ProfileInfoStateScreen.Error(message!!))
                         }
@@ -70,7 +70,6 @@ class ProfileViewModel(
                     userInfo == null -> {
                         infoState.postValue(ProfileInfoStateScreen.Error(message!!))
                     }
-
                     else -> {
                         loadInfo()
                     }
