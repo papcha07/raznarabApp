@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
@@ -53,6 +54,11 @@ class SettingsFragment : Fragment() {
 
                 is ProfileInfoStateScreen.Error -> {
                     networkErrorStub()
+                }
+
+                is ProfileInfoStateScreen.ConnectionFailed ->{
+                    networkErrorStub()
+                    Toast.makeText(requireContext(), "Проблемы с подключением к интернету", Toast.LENGTH_LONG).show()
                 }
             }
         }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.myapplication.authorization.ui.registration.RegistrationViewModel
 import com.example.myapplication.databinding.FragmentChangeProfileBinding
 import com.example.myapplication.profile.domain.model.UserSettingsModel
@@ -45,12 +46,16 @@ class ChangeProfileFragment : Fragment() {
                 is ProfileInfoStateScreen.Error -> {
                     showMessage()
                 }
+
+                is ProfileInfoStateScreen.ConnectionFailed ->{
+                    showMessage()
+                }
             }
         }
     }
 
     private fun showMessage() {
-
+        Toast.makeText(requireContext(), "Ошибка подключения к интернету", Toast.LENGTH_LONG).show()
     }
 
     private fun fillProfile(userModel: UserSettingsModel) {

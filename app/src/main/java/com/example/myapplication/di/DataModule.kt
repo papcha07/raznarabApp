@@ -96,7 +96,7 @@ val dataModule = module {
     }
 
     single<SettingsNetworkClientInterface>{
-        SettingsNetworkClient(ProfileRetrofitInstance)
+        SettingsNetworkClient(ProfileRetrofitInstance, androidContext())
     }
 
 

@@ -32,6 +32,10 @@ class SettingsRepositoryImpl(private val networkClient: SettingsNetworkClientInt
                 emit(Resource.Failed("Не найден"))
             }
 
+            -1 -> {
+                emit(Resource.Failed("Ошибка подключения"))
+            }
+
             else -> {
                 emit(Resource.Failed("Ошибка сервера"))
             }
