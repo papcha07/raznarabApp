@@ -14,13 +14,17 @@ import com.example.myapplication.order.data.network.RetrofitNetworkClient
 import com.example.myapplication.order.data.repository.CoordinatesRepositoryImpl
 import com.example.myapplication.order.domain.api.CoordinatesRepository
 import com.example.myapplication.profile.data.SettingsRepositoryImpl
+import com.example.myapplication.profile.data.local.LocalProfileRepositoryImpl
 import com.example.myapplication.profile.data.network.ProfileRetrofitInstance
 import com.example.myapplication.profile.data.network.SettingsNetworkClient
 import com.example.myapplication.profile.data.network.SettingsNetworkClientInterface
+import com.example.myapplication.profile.domain.api.LocalProfileRepository
 import com.example.myapplication.profile.domain.api.SettingsRepositoryInterface
+import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
 import com.example.myapplication.token.data.TokenEncryptedRepository
 import com.example.myapplication.token.data.TokenEncryptedRepositoryImpl
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 
@@ -93,5 +97,10 @@ val dataModule = module {
     single<SettingsNetworkClientInterface>{
         SettingsNetworkClient(ProfileRetrofitInstance)
     }
+
+
+
+
+
 
 }
