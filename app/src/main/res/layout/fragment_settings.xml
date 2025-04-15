@@ -96,33 +96,212 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
+        android:background="@drawable/settings_background_design"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@id/start"
         app:layout_constraintEnd_toEndOf="@id/end"
-        app:layout_constraintTop_toBottomOf="@id/profileViewId"
-        >
+        app:layout_constraintTop_toBottomOf="@id/profileViewId">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/account_container_id"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
+            android:clickable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/account_image_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/ic_account"
+                android:padding="10dp"
+                android:background="@drawable/settings_icon_shape"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Темная тема"
-                android:fontFamily="@font/ys_text_regular"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/my_account_title_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/account_image_id"
+                app:layout_constraintTop_toTopOf="@id/account_image_id"
+                android:text="Мой аккаунт"
+                android:fontFamily="@font/ys_text_medium"
+                android:layout_marginStart="10dp"
                 >
             </TextView>
+
+            <TextView
+                android:id="@+id/my_account_desc_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/account_image_id"
+                app:layout_constraintTop_toBottomOf="@id/my_account_title_id"
+                app:layout_constraintBottom_toBottomOf="@id/account_image_id"
+                android:text="Измените свой аккаунт"
+                android:textSize="12sp"
+                android:fontFamily="@font/ys_text_regular"
+                android:layout_marginStart="10dp"
+                >
+            </TextView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dark_theme_container_id"
+            android:clickable="true"
+            app:layout_constraintTop_toBottomOf="@id/account_container_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/darktheme_image_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_dark_mode"
+                android:padding="10dp"
+                android:background="@drawable/settings_icon_shape"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/darktheme_title_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/darktheme_image_id"
+                app:layout_constraintTop_toTopOf="@id/darktheme_image_id"
+                android:text="Темная тема"
+                android:fontFamily="@font/ys_text_medium"
+                android:layout_marginStart="10dp"
+                >
+            </TextView>
+
+            <TextView
+                android:id="@+id/darktheme_desc_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/darktheme_image_id"
+                app:layout_constraintTop_toBottomOf="@id/darktheme_title_id"
+                app:layout_constraintBottom_toBottomOf="@id/darktheme_image_id"
+                android:text="Измените дизайн вашего приложения"
+                android:textSize="12sp"
+                android:fontFamily="@font/ys_text_regular"
+                android:layout_marginStart="10dp"
+                >
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/about_container_id"
+            android:clickable="true"
+            app:layout_constraintTop_toBottomOf="@id/dark_theme_container_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/about_image_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_about"
+                android:padding="10dp"
+                android:background="@drawable/settings_icon_shape"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/about_title_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/about_image_id"
+                app:layout_constraintTop_toTopOf="@id/about_image_id"
+                android:text="О приложение"
+                android:fontFamily="@font/ys_text_medium"
+                android:layout_marginStart="10dp"
+                >
+            </TextView>
+
+            <TextView
+                android:id="@+id/about_desc_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/about_image_id"
+                app:layout_constraintTop_toBottomOf="@id/about_title_id"
+                app:layout_constraintBottom_toBottomOf="@id/about_image_id"
+                android:text="Подробная информация о нас"
+                android:textSize="12sp"
+                android:fontFamily="@font/ys_text_regular"
+                android:layout_marginStart="10dp"
+                >
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/logout_container_id"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintTop_toBottomOf="@id/about_container_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/logout_image_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_logout"
+                android:padding="10dp"
+                android:background="@drawable/settings_icon_shape"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/logout_title_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/logout_image_id"
+                app:layout_constraintTop_toTopOf="@id/logout_image_id"
+                android:text="Выйти из аккаунта"
+                android:fontFamily="@font/ys_text_medium"
+                android:layout_marginStart="10dp"
+                >
+            </TextView>
+
+            <TextView
+                android:id="@+id/logout_desc_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/logout_image_id"
+                app:layout_constraintTop_toBottomOf="@id/logout_title_id"
+                app:layout_constraintBottom_toBottomOf="@id/logout_image_id"
+                android:text="Нажмите для перехода к экрану авторизации"
+                android:textSize="12sp"
+                android:fontFamily="@font/ys_text_regular"
+                android:layout_marginStart="10dp"
+                >
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
