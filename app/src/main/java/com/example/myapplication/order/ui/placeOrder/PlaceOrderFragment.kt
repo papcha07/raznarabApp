@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui
+package com.example.myapplication.order.ui.placeOrder
 
 import android.os.Bundle
 import android.text.Editable
@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
-import com.example.myapplication.R
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
 import com.example.myapplication.order.domain.models.Place
+import com.example.myapplication.order.ui.AddressState
+import com.example.myapplication.order.ui.PlaceAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -24,6 +27,17 @@ class PlaceOrderFragment : Fragment() {
     private lateinit var adapter: PlaceAdapter
     private lateinit var addressList: MutableList<Place>
     private lateinit var autoCompleteTextView: AutoCompleteTextView
+    private lateinit var imageAdapter: ImageAdapter
+
+    val picker = registerForActivityResult(
+        ActivityResultContracts.PickMultipleVisualMedia()
+    ){
+        uris ->
+        if(uris != null){
+            Log.d("uris", uris.toString())
+            imageAdapter.setItems(uris)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +86,14 @@ class PlaceOrderFragment : Fragment() {
             }
         }
 
+        pickImage()
         placeOrder()
+
+        imageAdapter = ImageAdapter()
+        val recyclerView = binding.rvId
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        recyclerView.adapter = imageAdapter
+        recyclerView
 
     }
 
@@ -117,6 +138,14 @@ class PlaceOrderFragment : Fragment() {
 
     private fun showToast(message : String){
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun pickImage(){
+        binding.addPhotoButtonId.setOnClickListener {
+            picker.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }
     }
 
 

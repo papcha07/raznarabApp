@@ -1,10 +1,11 @@
-package com.example.myapplication.order.ui
+package com.example.myapplication.order.ui.placeOrder
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
+import com.example.myapplication.order.ui.AddressState
 import kotlinx.coroutines.launch
 
 class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewModel() {

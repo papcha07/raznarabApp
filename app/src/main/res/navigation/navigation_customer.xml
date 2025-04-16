@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/placeOrderFragment"
-        android:name="com.example.myapplication.order.ui.PlaceOrderFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.PlaceOrderFragment"
         android:label="fragment_place_order"
         tools:layout="@layout/fragment_place_order" />
     <fragment

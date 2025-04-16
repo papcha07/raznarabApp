@@ -1,184 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".order.ui.PlaceOrderFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        tools:context=".order.ui.placeOrder.PlaceOrderFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/start"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp">
 
-    </androidx.constraintlayout.widget.Guideline>
+        </androidx.constraintlayout.widget.Guideline>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/end"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp">
 
-    </androidx.constraintlayout.widget.Guideline>
+        </androidx.constraintlayout.widget.Guideline>
 
-    <TextView
-        android:id="@+id/orderTitleId"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/ys_text_medium"
-        android:text="Разместить заказ"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/orderTitleId"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/ys_text_medium"
+            android:text="Разместить заказ"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </TextView>
-
-
-    <TextView
-        android:id="@+id/enterAddressTvId"
-        style="@style/order_text_view"
-        android:layout_marginTop="20dp"
-        android:text="Адрес"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/orderTitleId">
-
-    </TextView>
+        </TextView>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/addressLayoutId"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/end"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/enterAddressTvId">
+        <TextView
+            android:id="@+id/enterAddressTvId"
+            style="@style/order_text_view"
+            android:layout_marginTop="20dp"
+            android:text="Адрес"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/orderTitleId">
 
-        <AutoCompleteTextView
-            android:id="@+id/addressEditTextId"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        </TextView>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addressLayoutId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/end"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/enterAddressTvId">
+
+            <AutoCompleteTextView
+                android:id="@+id/addressEditTextId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_background"
+                android:padding="15dp">
+            </AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/enterCategoryTvId"
+            style="@style/order_text_view"
+            android:layout_marginTop="20dp"
+            android:text="Категория работы"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/addressLayoutId">
+
+        </TextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/autoLayoutId"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/end"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/enterCategoryTvId">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_background"
+                android:inputType="none"
+                android:text="Монтажник" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/priceTextViewId"
+            style="@style/order_text_view"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/autoLayoutId"
+            android:text="Стоимость"
+            android:layout_marginTop="20dp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/priceEdiTextId"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
             android:background="@drawable/edit_text_background"
-            android:padding="15dp">
-        </AutoCompleteTextView>
+            app:layout_constraintTop_toBottomOf="@id/priceTextViewId"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintEnd_toEndOf="@id/end"
+            android:layout_marginTop="5dp">
+        </EditText>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/descriptionTextViewId"
+            style="@style/order_text_view"
+            android:layout_marginTop="20dp"
+            android:text="Описание работы"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/priceEdiTextId"
+            >
+        </TextView>
 
-
-    <TextView
-        android:id="@+id/enterCategoryTvId"
-        style="@style/order_text_view"
-        android:layout_marginTop="20dp"
-        android:text="Категория работы"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/addressLayoutId">
-
-    </TextView>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/autoLayoutId"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/end"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/enterCategoryTvId">
-
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextViewId"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+        <EditText
+            android:id="@+id/descriptionEditTextId"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
             android:background="@drawable/edit_text_background"
-            android:inputType="none"
-            android:text="Монтажник" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/priceTextViewId"
-        style="@style/order_text_view"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/autoLayoutId"
-        android:text="Стоимость"
-        android:layout_marginTop="20dp">
-    </TextView>
-
-    <EditText
-        android:id="@+id/priceEdiTextId"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:background="@drawable/edit_text_background"
-        app:layout_constraintTop_toBottomOf="@id/priceTextViewId"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintEnd_toEndOf="@id/end"
-        android:layout_marginTop="5dp">
-    </EditText>
-
-    <TextView
-        android:id="@+id/descriptionTextViewId"
-        style="@style/order_text_view"
-        android:layout_marginTop="20dp"
-        android:text="Описание работы"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/priceEdiTextId"
-        >
-    </TextView>
-
-    <EditText
-        android:id="@+id/descriptionEditTextId"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:background="@drawable/edit_text_background"
-        app:layout_constraintTop_toBottomOf="@id/descriptionTextViewId"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintEnd_toEndOf="@id/end"
-        android:layout_marginTop="5dp">
-    </EditText>
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextViewId"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintEnd_toEndOf="@id/end"
+            android:layout_marginTop="5dp">
+        </EditText>
 
 
-    <TextView
-        android:id="@+id/addPhotoTextViewId"
-        style="@style/order_text_view"
-        android:layout_marginTop="20dp"
-        android:text="Добавьте фотографии работы"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/descriptionEditTextId"
-        >
-    </TextView>
+        <TextView
+            android:id="@+id/addPhotoTextViewId"
+            style="@style/order_text_view"
+            android:layout_marginTop="20dp"
+            android:text="Добавьте фотографии работы"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/descriptionEditTextId"
+            >
+        </TextView>
 
-    <ImageButton
-        android:id="@+id/addPhotoButtonId"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/addPhotoTextViewId"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintEnd_toEndOf="@id/end"
-        android:background="@drawable/edit_text_background"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_add_photo"
-        >
-    </ImageButton>
+        <ImageButton
+            android:id="@+id/addPhotoButtonId"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/addPhotoTextViewId"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintEnd_toEndOf="@id/end"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_add_photo"
+            >
+        </ImageButton>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/placeOrderButtonId"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Разместить заказ"
-        android:background="@drawable/rounded_button"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addPhotoButtonId"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintEnd_toEndOf="@id/end">
-    </androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/addPhotoButtonId"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintBottom_toTopOf="@id/placeOrderButtonId"
+            app:layout_constraintEnd_toEndOf="@id/end">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/placeOrderButtonId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Разместить заказ"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addPhotoButtonId"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintEnd_toEndOf="@id/end">
+        </androidx.appcompat.widget.AppCompatButton>
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

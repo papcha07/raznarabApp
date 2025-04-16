@@ -13,8 +13,6 @@ import com.example.myapplication.databinding.FragmentSettingsBinding
 import com.example.myapplication.profile.domain.model.UserSettingsModel
 import com.example.myapplication.profile.ui.ProfileInfoStateScreen
 import com.example.myapplication.profile.ui.ProfileViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -45,8 +43,8 @@ class SettingsFragment : Fragment() {
 
 
     private fun observeScreen() {
-        viewModel.getInfoState().observe(viewLifecycleOwner) { state ->
 
+        viewModel.getInfoState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ProfileInfoStateScreen.Content -> {
                     fillScreen(state.data)
