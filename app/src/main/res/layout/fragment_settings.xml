@@ -210,17 +210,16 @@
                 >
             </TextView>
 
-            <ImageView
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/themeSwitcherId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_right_arrow"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/darktheme_desc_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/darktheme_title_id">
-
-            </ImageView>
-
+            </com.google.android.material.switchmaterial.SwitchMaterial>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
