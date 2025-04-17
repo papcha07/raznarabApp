@@ -9,7 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/settings_background"
         tools:context=".order.ui.placeOrder.PlaceOrderFragment">
 
         <androidx.constraintlayout.widget.Guideline
@@ -39,6 +39,7 @@
             android:text="Разместить заказ"
             android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/title_name_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -175,7 +176,7 @@
             android:id="@+id/rvId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/addPhotoButtonId"
             app:layout_constraintStart_toStartOf="@id/start"
