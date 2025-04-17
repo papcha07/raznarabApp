@@ -8,11 +8,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSettingsBinding
 import com.example.myapplication.profile.domain.model.UserSettingsModel
 import com.example.myapplication.profile.ui.ProfileInfoStateScreen
 import com.example.myapplication.profile.ui.ProfileViewModel
+import com.example.myapplication.settings.domain.api.ThemeInteractor
+import com.google.android.material.switchmaterial.SwitchMaterial
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -20,6 +24,8 @@ class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: ProfileViewModel by viewModel()
+    private lateinit var switchMaterial: SwitchMaterial
+    private val themeInteractor : ThemeInteractor by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +40,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeScreen()
         navigateToChangeScreen()
+        switchTheme()
     }
 
     override fun onResume() {
@@ -76,6 +83,16 @@ class SettingsFragment : Fragment() {
     private fun navigateToChangeScreen(){
         binding.editButton.setOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment2_to_changeProfileFragment)
+        }
+    }
+    
+    private fun switchTheme(){
+        switchMaterial = binding.themeSwitcherId
+        val currentTheme = themeInteractor.getTheme()
+        switchMaterial.setChecked(currentTheme)
+
+        switchMaterial.setOnCheckedChangeListener { compoundButton, checked ->
+            (requireContext().applicationContext as App).switchTheme(checked)
         }
     }
 

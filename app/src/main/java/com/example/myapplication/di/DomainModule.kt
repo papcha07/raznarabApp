@@ -9,6 +9,8 @@
     import com.example.myapplication.profile.domain.UserInfoUseCase
     import com.example.myapplication.profile.domain.api.LocalDataInteractorInterface
     import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
+    import com.example.myapplication.settings.domain.ThemeInteractorImpl
+    import com.example.myapplication.settings.domain.api.ThemeInteractor
     import com.example.myapplication.token.domain.TokenInteractor
     import com.example.myapplication.token.domain.TokenInteractorImpl
     import org.koin.dsl.module
@@ -33,6 +35,9 @@
 
         single<LocalDataInteractorInterface>{
             LocalDataUseCase(get(), get())
+        }
+        single<ThemeInteractor>{
+            ThemeInteractorImpl(get())
         }
 
 

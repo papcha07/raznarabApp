@@ -213,8 +213,8 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/themeSwitcherId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/darktheme_desc_id"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -21,7 +21,8 @@ import com.example.myapplication.profile.data.network.SettingsNetworkClient
 import com.example.myapplication.profile.data.network.SettingsNetworkClientInterface
 import com.example.myapplication.profile.domain.api.LocalProfileRepository
 import com.example.myapplication.profile.domain.api.SettingsRepositoryInterface
-import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
+import com.example.myapplication.settings.domain.api.ThemeRepository
+import com.example.myapplication.settings.data.ThemeRepositoryImpl
 import com.example.myapplication.token.data.TokenEncryptedRepository
 import com.example.myapplication.token.data.TokenEncryptedRepositoryImpl
 import org.koin.android.ext.koin.androidContext
@@ -107,6 +108,16 @@ val dataModule = module {
 
     single(named("userPrefs")){
         androidContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    }
+
+
+    //themeStorage
+    single<ThemeRepository>{
+        ThemeRepositoryImpl(get(named("themePrefs")))
+    }
+
+    single(named("themePrefs")){
+        androidContext().getSharedPreferences("theme_prefs", Context.MODE_PRIVATE)
     }
 
 
