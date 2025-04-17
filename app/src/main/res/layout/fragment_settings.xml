@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/settings_background"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".settings.SettingsFragment">
@@ -11,6 +12,7 @@
         app:layout_constraintStart_toStartOf="@id/start"
         app:layout_constraintTop_toTopOf="parent"
         android:text="Настройки"
+        android:textColor="@color/title_name_color"
         style="@style/headerStyle">
     </TextView>
 
@@ -40,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintTop_toBottomOf="@id/settingsId"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/blue">
+        android:backgroundTint="@color/card_color">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -114,6 +116,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/account_image_id"
                 android:layout_width="wrap_content"
@@ -128,28 +131,19 @@
 
             <TextView
                 android:id="@+id/my_account_title_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/account_image_id"
                 app:layout_constraintTop_toTopOf="@id/account_image_id"
                 android:text="Мой аккаунт"
-                android:fontFamily="@font/ys_text_medium"
-                android:layout_marginStart="10dp"
-                >
+                style="@style/main_text_style_settings">
             </TextView>
 
             <TextView
                 android:id="@+id/my_account_desc_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/account_image_id"
                 app:layout_constraintTop_toBottomOf="@id/my_account_title_id"
                 app:layout_constraintBottom_toBottomOf="@id/account_image_id"
                 android:text="Измените свой аккаунт"
-                android:textSize="12sp"
-                android:fontFamily="@font/ys_text_regular"
-                android:layout_marginStart="10dp"
-                >
+                style="@style/second_text_style_settings">
             </TextView>
 
             <ImageView
@@ -186,27 +180,20 @@
 
             <TextView
                 android:id="@+id/darktheme_title_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/darktheme_image_id"
                 app:layout_constraintTop_toTopOf="@id/darktheme_image_id"
                 android:text="Темная тема"
-                android:fontFamily="@font/ys_text_medium"
-                android:layout_marginStart="10dp"
+                style="@style/main_text_style_settings"
                 >
             </TextView>
 
             <TextView
                 android:id="@+id/darktheme_desc_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/darktheme_image_id"
                 app:layout_constraintTop_toBottomOf="@id/darktheme_title_id"
                 app:layout_constraintBottom_toBottomOf="@id/darktheme_image_id"
                 android:text="Измените дизайн вашего приложения"
-                android:textSize="12sp"
-                android:fontFamily="@font/ys_text_regular"
-                android:layout_marginStart="10dp"
+                style="@style/second_text_style_settings"
                 >
             </TextView>
 
@@ -244,27 +231,20 @@
 
             <TextView
                 android:id="@+id/about_title_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/about_image_id"
                 app:layout_constraintTop_toTopOf="@id/about_image_id"
                 android:text="О приложение"
-                android:fontFamily="@font/ys_text_medium"
-                android:layout_marginStart="10dp"
+                style="@style/main_text_style_settings"
                 >
             </TextView>
 
             <TextView
                 android:id="@+id/about_desc_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/about_image_id"
                 app:layout_constraintTop_toBottomOf="@id/about_title_id"
                 app:layout_constraintBottom_toBottomOf="@id/about_image_id"
                 android:text="Подробная информация о нас"
-                android:textSize="12sp"
-                android:fontFamily="@font/ys_text_regular"
-                android:layout_marginStart="10dp"
+                style="@style/second_text_style_settings"
                 >
             </TextView>
 
@@ -306,27 +286,20 @@
 
             <TextView
                 android:id="@+id/logout_title_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/logout_image_id"
                 app:layout_constraintTop_toTopOf="@id/logout_image_id"
                 android:text="Выйти из аккаунта"
-                android:fontFamily="@font/ys_text_medium"
-                android:layout_marginStart="10dp"
+                style="@style/main_text_style_settings"
                 >
             </TextView>
 
             <TextView
                 android:id="@+id/logout_desc_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/second_text_style_settings"
                 app:layout_constraintStart_toEndOf="@id/logout_image_id"
                 app:layout_constraintTop_toBottomOf="@id/logout_title_id"
                 app:layout_constraintBottom_toBottomOf="@id/logout_image_id"
                 android:text="Переход к авторизации"
-                android:textSize="12sp"
-                android:fontFamily="@font/ys_text_regular"
-                android:layout_marginStart="10dp"
                 >
             </TextView>
 
