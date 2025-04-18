@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.myapplication.authorization.ui.registration.RegistrationViewModel
 import com.example.myapplication.databinding.FragmentChangeProfileBinding
 import com.example.myapplication.profile.domain.model.UserSettingsModel
@@ -33,6 +35,7 @@ class ChangeProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         stateObserve()
         changeInfo()
+        pickImage()
     }
 
 
@@ -81,6 +84,23 @@ class ChangeProfileFragment : Fragment() {
                 patronymic,
                 description
             ))
+        }
+    }
+
+    fun pickImage(){
+        val picker = registerForActivityResult(
+            ActivityResultContracts.PickVisualMedia()
+        ){
+            uris ->
+            if(uris != null){
+                binding.imageViewId.setImageURI(uris)
+            }
+        }
+
+        binding.imageViewId.setOnClickListener {
+            picker.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
         }
     }
 

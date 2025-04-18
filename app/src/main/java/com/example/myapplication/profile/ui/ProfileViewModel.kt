@@ -42,7 +42,7 @@ class ProfileViewModel(
                 when {
                     userInfo == null -> {
                         if (message == "Ошибка подключения") {
-                            getLocalData()
+
                         } else {
                             infoState.postValue(ProfileInfoStateScreen.Error(message!!))
                         }
@@ -84,20 +84,20 @@ class ProfileViewModel(
 
     private fun getLocalData() {
         viewModelScope.launch {
+
             localUseCase.getUserData().collect { pair ->
                 val userInfo = pair.first
                 val message = pair.second
-
                 when {
                     userInfo == null -> {
                         infoState.postValue(ProfileInfoStateScreen.Error(message!!))
                     }
-
                     else -> {
-                        infoState.postValue(ProfileInfoStateScreen.Content(userInfo))
+                        infoState.postValue(ProfileInfoStateScreen.ConnectionFailed(userInfo))
                     }
                 }
             }
+
         }
     }
 
