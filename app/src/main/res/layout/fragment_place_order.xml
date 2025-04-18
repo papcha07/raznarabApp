@@ -119,6 +119,7 @@
             android:id="@+id/priceEdiTextId"
             android:layout_width="0dp"
             android:layout_height="55dp"
+            android:paddingStart="15dp"
             android:background="@drawable/edit_text_background"
             app:layout_constraintTop_toBottomOf="@id/priceTextViewId"
             app:layout_constraintStart_toStartOf="@id/start"
@@ -140,6 +141,7 @@
             android:id="@+id/descriptionEditTextId"
             android:layout_width="0dp"
             android:layout_height="100dp"
+            android:paddingStart="15dp"
             android:background="@drawable/edit_text_background"
             app:layout_constraintTop_toBottomOf="@id/descriptionTextViewId"
             app:layout_constraintStart_toStartOf="@id/start"
@@ -179,11 +181,11 @@
             android:visibility="visible"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintStart_toStartOf="@id/addPhotoButtonId"
+            app:layout_constraintEnd_toEndOf="@id/addPhotoButtonId"
             app:layout_constraintTop_toBottomOf="@id/addPhotoButtonId"
-            app:layout_constraintStart_toStartOf="@id/start"
             app:layout_constraintBottom_toTopOf="@id/placeOrderButtonId"
-            app:layout_constraintEnd_toEndOf="@id/end">
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
         </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.appcompat.widget.AppCompatButton
