@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 
-class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+class ImageAdapter(
+    private val onItemClick: (Uri) -> Unit
+) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     private val items = mutableListOf<Uri>()
 
@@ -22,7 +24,7 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.order_image_item, parent, false)
-        return ImageViewHolder(view)
+        return ImageViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
@@ -31,10 +33,13 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ImageViewHolder(itemView: View, private val onItemClick: (Uri) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val imageView : ImageView = itemView.findViewById(R.id.imageId)
         fun bind(uri: Uri) {
             imageView.setImageURI(uri)
+            imageView.setOnClickListener {
+                onItemClick(uri)
+            }
         }
     }
 }

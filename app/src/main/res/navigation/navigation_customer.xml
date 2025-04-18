@@ -26,7 +26,11 @@
         android:id="@+id/placeOrderFragment"
         android:name="com.example.myapplication.order.ui.placeOrder.PlaceOrderFragment"
         android:label="fragment_place_order"
-        tools:layout="@layout/fragment_place_order" />
+        tools:layout="@layout/fragment_place_order" >
+        <action
+            android:id="@+id/action_placeOrderFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.myapplication.authorization.ui.login.LoginFragment"
@@ -41,4 +45,15 @@
         android:name="com.example.myapplication.authorization.ui.registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" />
+
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image">
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+    </fragment>
 </navigation>

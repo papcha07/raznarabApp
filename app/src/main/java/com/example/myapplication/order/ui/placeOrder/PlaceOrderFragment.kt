@@ -1,5 +1,6 @@
 package com.example.myapplication.order.ui.placeOrder
 
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,7 +13,9 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.ui.AddressState
@@ -89,7 +92,11 @@ class PlaceOrderFragment : Fragment() {
         pickImage()
         placeOrder()
 
-        imageAdapter = ImageAdapter()
+        imageAdapter = ImageAdapter{
+            uri ->
+            openImage(uri)
+        }
+
         val recyclerView = binding.rvId
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         recyclerView.adapter = imageAdapter
@@ -146,6 +153,11 @@ class PlaceOrderFragment : Fragment() {
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
         }
+    }
+
+    private fun openImage(uri: Uri){
+        val action = PlaceOrderFragmentDirections.actionPlaceOrderFragmentToImageFragment(uri)
+        findNavController().navigate(action)
     }
 
 
