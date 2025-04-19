@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.ui.AddressState
@@ -37,14 +35,10 @@ class PlaceOrderFragment : Fragment() {
     ){
         uris ->
         if(uris != null){
-            Log.d("uris", uris.toString())
-            imageAdapter.setItems(uris)
+            orderViewModel.setPhotoState(uris.toMutableList())
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,7 +61,6 @@ class PlaceOrderFragment : Fragment() {
             orderViewModel.chooseAddress()
         }
         autoCompleteTextView.setAdapter(adapter)
-
         autoCompleteTextView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
@@ -79,7 +72,6 @@ class PlaceOrderFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {}
         })
-
         orderViewModel.getAddressState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is AddressState.Content -> {
@@ -104,7 +96,12 @@ class PlaceOrderFragment : Fragment() {
         val recyclerView = binding.rvId
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         recyclerView.adapter = imageAdapter
-        recyclerView
+        observeUris()
+
+
+
+
+
 
     }
 
@@ -156,6 +153,7 @@ class PlaceOrderFragment : Fragment() {
             picker.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
+
         }
     }
 
@@ -163,6 +161,16 @@ class PlaceOrderFragment : Fragment() {
         val action = PlaceOrderFragmentDirections.actionPlaceOrderFragmentToImageFragment(uri)
         findNavController().navigate(action)
     }
+
+    private fun observeUris(){
+        orderViewModel.getPhotoState().observe(viewLifecycleOwner){
+            uris ->
+            imageAdapter.setItems(uris)
+        }
+    }
+
+
+
 
 
 }

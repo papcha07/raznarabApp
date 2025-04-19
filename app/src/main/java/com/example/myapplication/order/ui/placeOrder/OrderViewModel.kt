@@ -1,5 +1,6 @@
 package com.example.myapplication.order.ui.placeOrder
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,11 @@ import com.example.myapplication.order.ui.AddressState
 import kotlinx.coroutines.launch
 
 class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewModel() {
+
+    private val photoState = MutableLiveData<MutableList<Uri>>()
+    fun getPhotoState() : LiveData<MutableList<Uri>>{
+        return photoState
+    }
 
     private val addressState = MutableLiveData<AddressState>()
     fun getAddressState() : LiveData<AddressState> {
@@ -43,6 +49,10 @@ class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewMo
 
     fun notChooseAddress(){
         stateAddressClick.postValue(false)
+    }
+
+    fun setPhotoState(items: MutableList<Uri>){
+        photoState.postValue(items)
     }
 
 }
