@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentImageBinding
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
 class ImageFragment : Fragment() {
 
     private lateinit var binding : FragmentImageBinding
     private lateinit var uri : Uri
+    private val orderViewModel: OrderViewModel by activityViewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,7 @@ class ImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setImage()
         goBack()
+        deleteImage()
     }
 
     private fun setImage(){
@@ -42,6 +46,13 @@ class ImageFragment : Fragment() {
 
     private fun goBack(){
         binding.closeButtonId.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun deleteImage(){
+        binding.deleteImageButton.setOnClickListener {
+            orderViewModel.deleteByUri(uri)
             findNavController().popBackStack()
         }
     }

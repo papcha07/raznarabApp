@@ -30,6 +30,12 @@
         <action
             android:id="@+id/action_placeOrderFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
+        <argument
+            android:name="deleteUri"
+            app:argType="android.net.Uri"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -55,5 +61,8 @@
         <argument
             android:name="uri"
             app:argType="android.net.Uri" />
+        <action
+            android:id="@+id/action_imageFragment_to_placeOrderFragment"
+            app:destination="@id/placeOrderFragment" />
     </fragment>
 </navigation>

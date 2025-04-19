@@ -1,6 +1,7 @@
 package com.example.myapplication.order.ui.placeOrder
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -53,6 +54,16 @@ class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewMo
 
     fun setPhotoState(items: MutableList<Uri>){
         photoState.postValue(items)
+    }
+
+    fun deleteByUri(deleteUri: Uri) {
+
+        val currentList = photoState.value?.toMutableList() ?: return
+        currentList.removeAll { it == deleteUri }
+        photoState.value = currentList
+        Log.d("deleteByUri", "вызов после ${photoState.value?.size}")
+
+
     }
 
 }

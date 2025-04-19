@@ -13,17 +13,19 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.ui.AddressState
 import com.example.myapplication.order.ui.PlaceAdapter
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class PlaceOrderFragment : Fragment() {
     private lateinit var binding: FragmentPlaceOrderBinding
-    private val orderViewModel: OrderViewModel by viewModel()
+    private val orderViewModel: OrderViewModel by activityViewModel()
 
     private lateinit var adapter: PlaceAdapter
     private lateinit var addressList: MutableList<Place>
@@ -51,6 +53,8 @@ class PlaceOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         autoCompleteTextView = binding.addressEditTextId
         addressList = mutableListOf()
@@ -97,11 +101,6 @@ class PlaceOrderFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         recyclerView.adapter = imageAdapter
         observeUris()
-
-
-
-
-
 
     }
 
