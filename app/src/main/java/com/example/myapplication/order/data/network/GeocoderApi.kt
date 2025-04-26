@@ -1,6 +1,6 @@
 package com.example.myapplication.order.data.network
 
-import com.example.myapplication.order.data.dto.GeocodeResponse
+import com.example.myapplication.order.data.dto.geo.GeocodeResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

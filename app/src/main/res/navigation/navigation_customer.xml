@@ -10,7 +10,7 @@
         android:label="ChangeProfileFragment" />
     <fragment
         android:id="@+id/orderListFragment"
-        android:name="com.example.myapplication.order.ui.OrderListFragment"
+        android:name="com.example.myapplication.order.ui.listOrder.OrderListFragment"
         android:label="fragment_order_list"
         tools:layout="@layout/fragment_order_list" />
     <fragment
@@ -30,12 +30,6 @@
         <action
             android:id="@+id/action_placeOrderFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
-        <argument
-            android:name="deleteUri"
-            app:argType="android.net.Uri"
-            app:nullable="true"
-            android:defaultValue="@null"
-            />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

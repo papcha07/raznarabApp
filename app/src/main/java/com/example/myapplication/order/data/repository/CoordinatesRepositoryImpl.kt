@@ -1,12 +1,14 @@
 package com.example.myapplication.order.data.repository
 
 import android.util.Log
-import com.example.myapplication.order.data.dto.GeoCodeRequest
-import com.example.myapplication.order.data.dto.GeocodeResponse
+import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
+import com.example.myapplication.order.data.dto.geo.GeocodeResponse
+import com.example.myapplication.order.data.dto.prof.ProfessionResponse
 import com.example.myapplication.order.data.network.NetworkClient
 import com.example.myapplication.order.domain.api.CoordinatesRepository
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.domain.models.Resource
+import com.example.myapplication.order.domain.models.Profession
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -50,6 +52,22 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
             else -> {
                 emit(Resource.Failed("Ошибка api"))
                 Log.d("coordinate","Ошибка инета")
+            }
+        }
+    }
+
+    override fun getProfessions(): Flow<Resource<MutableList<Profession>>> = flow {
+        val response = networkClient.professionRequest()
+        Log.d("responseProf", response.resultCode.toString())
+        when(response.resultCode){
+
+            200 -> {
+                val currentProfList = (response as ProfessionResponse).professionsList
+                emit(Resource.Success(currentProfList))
+            }
+
+            else -> {
+                emit(Resource.Failed("Ошибка получения списка профессий"))
             }
         }
     }

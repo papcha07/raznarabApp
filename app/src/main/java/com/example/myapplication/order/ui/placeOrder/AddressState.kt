@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui
+package com.example.myapplication.order.ui.placeOrder
 
 import com.example.myapplication.order.domain.models.Place
 

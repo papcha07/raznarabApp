@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui
+package com.example.myapplication.order.ui.listOrder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,4 +23,11 @@ class OrderAdapter (private val orderList: MutableList<Order>) : RecyclerView.Ad
     override fun getItemCount(): Int {
         return orderList.size
     }
+
+    fun setOrders(newOrders: List<Order>) {
+        orderList.clear()
+        orderList.addAll(newOrders)
+        notifyDataSetChanged()
+    }
+
 }

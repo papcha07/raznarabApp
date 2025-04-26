@@ -2,7 +2,7 @@ package com.example.myapplication.order.domain.interactor
 
 import com.example.myapplication.order.domain.api.OrderInteractorInterface
 import com.example.myapplication.order.domain.api.OrderRepository
-import com.example.myapplication.order.ui.Order
+import com.example.myapplication.order.ui.listOrder.Order
 import kotlinx.coroutines.flow.Flow
 
 class OrderInteractor(private val orderRepository: OrderRepository) : OrderInteractorInterface {
@@ -17,5 +17,9 @@ class OrderInteractor(private val orderRepository: OrderRepository) : OrderInter
 
     override suspend fun deleteOrder(order: Order) {
         orderRepository.deleteOrder(order)
+    }
+
+    override suspend fun deleteAll() {
+        orderRepository.deleteAll()
     }
 }

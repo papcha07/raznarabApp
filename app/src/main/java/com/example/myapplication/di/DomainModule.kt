@@ -4,7 +4,9 @@
     import com.example.myapplication.authorization.domain.api.AuthInteractor
     import com.example.myapplication.authorization.domain.AuthInteractorImpl
     import com.example.myapplication.order.domain.api.MapInteractorInterface
+    import com.example.myapplication.order.domain.api.OrderInteractorInterface
     import com.example.myapplication.order.domain.interactor.MapInteractor
+    import com.example.myapplication.order.domain.interactor.OrderInteractor
     import com.example.myapplication.profile.domain.LocalDataUseCase
     import com.example.myapplication.profile.domain.UserInfoUseCase
     import com.example.myapplication.profile.domain.api.LocalDataInteractorInterface
@@ -38,6 +40,10 @@
         }
         single<ThemeInteractor>{
             ThemeInteractorImpl(get())
+        }
+
+        single<OrderInteractorInterface>{
+            OrderInteractor(get())
         }
 
 

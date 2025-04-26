@@ -1,13 +1,14 @@
 package com.example.myapplication.order.data.network
 
 import android.util.Log
-import com.example.myapplication.order.data.dto.GeoCodeRequest
+import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
 import com.example.myapplication.order.data.dto.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
+import retrofit2.HttpException
 
 class RetrofitNetworkClient(val client : RetrofitClient) : NetworkClient {
+
     override suspend fun doRequest(dto: Any): Response {
         return try {
             if(dto is GeoCodeRequest){
@@ -35,4 +36,23 @@ class RetrofitNetworkClient(val client : RetrofitClient) : NetworkClient {
             }
         }
     }
+
+    override suspend fun professionRequest(): Response {
+        return try {
+            withContext(Dispatchers.IO){
+                val response = RetrofitClient.professionApi.getProfessions()
+                response.apply {
+                    resultCode = 200
+                }
+            }
+        }
+        catch (e: HttpException){
+            Log.d("ProfException", e.message.toString())
+            Response().apply {
+                resultCode = e.code()
+            }
+        }
+    }
+
+
 }

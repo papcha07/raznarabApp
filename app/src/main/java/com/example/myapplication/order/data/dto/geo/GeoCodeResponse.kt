@@ -1,5 +1,6 @@
-package com.example.myapplication.order.data.dto
+package com.example.myapplication.order.data.dto.geo
 
+import com.example.myapplication.order.data.dto.Response
 import com.google.gson.annotations.SerializedName
 
 data class GeocodeResponse(

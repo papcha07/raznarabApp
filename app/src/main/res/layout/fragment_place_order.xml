@@ -99,10 +99,11 @@
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextViewId"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edit_text_background"
+                android:layout_height="wrap_content"
                 android:inputType="none"
+                android:background="@drawable/edit_text_background"
+                android:clickable="false"
+                android:focusable="false"
                 android:text="Монтажник" />
         </com.google.android.material.textfield.TextInputLayout>
 

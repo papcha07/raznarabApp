@@ -33,6 +33,10 @@ class ImageAdapter(
 
     override fun getItemCount() = items.size
 
+    fun getFirstItem() : Uri {
+        return items.first()
+    }
+
     class ImageViewHolder(itemView: View, private val onItemClick: (Uri) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val imageView : ImageView = itemView.findViewById(R.id.imageId)
         fun bind(uri: Uri) {

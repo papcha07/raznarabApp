@@ -7,10 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
-import com.example.myapplication.order.ui.AddressState
+import com.example.myapplication.order.domain.api.OrderInteractorInterface
+import com.example.myapplication.order.domain.interactor.OrderInteractor
+import com.example.myapplication.order.ui.listOrder.Order
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewModel() {
+class OrderViewModel(
+    private val mapInteractor: MapInteractorInterface,
+    private val orderInteractor: OrderInteractorInterface
+) : ViewModel() {
+
+
+
 
     private val photoState = MutableLiveData<MutableList<Uri>>()
     fun getPhotoState() : LiveData<MutableList<Uri>>{
@@ -22,10 +31,52 @@ class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewMo
         return addressState
     }
 
+    private val profState = MutableLiveData<ProfessionState>()
+    fun getProfState() : LiveData<ProfessionState> = profState
+
+
+
+
     private val stateAddressClick = MutableLiveData<Boolean>()
 
     fun getAddressClickState() : LiveData<Boolean>{
         return stateAddressClick
+    }
+
+
+    private val ordersState = MutableLiveData<OrdersListState>()
+    fun getOrdersState() : LiveData<OrdersListState> = ordersState
+
+
+     fun addOrder(order: Order){
+        viewModelScope.launch {
+            orderInteractor.addOrder(order)
+            getAllOrders()
+        }
+    }
+
+     fun deleteOrder(order: Order){
+        viewModelScope.launch {
+            orderInteractor.deleteOrder(order)
+        }
+    }
+
+    private fun getAllOrders(){
+        viewModelScope.launch {
+            val list = orderInteractor.getAllOrders().first()
+            when{
+                list.size == 0 -> ordersState.postValue(OrdersListState.EmptyList)
+                else -> {
+                    ordersState.postValue(OrdersListState.Orders(list))
+                }
+            }
+        }
+    }
+
+
+    init {
+        getAllOrders()
+        loadProfessionList()
     }
 
     fun loadAddressList(address: String){
@@ -44,6 +95,21 @@ class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewMo
         }
     }
 
+    fun loadProfessionList(){
+        viewModelScope.launch {
+            mapInteractor.getProfessions().collect{
+                pair ->
+                val content = pair.first
+                val message = pair.second
+                if(content == null){
+                    profState.postValue(ProfessionState.Error)
+                } else{
+                    profState.postValue(ProfessionState.Content(content))
+                }
+            }
+        }
+    }
+
     fun chooseAddress() {
         stateAddressClick.postValue(true)
     }
@@ -57,13 +123,16 @@ class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewMo
     }
 
     fun deleteByUri(deleteUri: Uri) {
-
         val currentList = photoState.value?.toMutableList() ?: return
         currentList.removeAll { it == deleteUri }
         photoState.value = currentList
         Log.d("deleteByUri", "вызов после ${photoState.value?.size}")
+    }
 
-
+    private fun deletedb(){
+        viewModelScope.launch {
+            orderInteractor.deleteAll()
+        }
     }
 
 }
