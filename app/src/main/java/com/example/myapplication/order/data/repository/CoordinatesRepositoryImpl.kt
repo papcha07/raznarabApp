@@ -3,9 +3,12 @@ package com.example.myapplication.order.data.repository
 import android.util.Log
 import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
 import com.example.myapplication.order.data.dto.geo.GeocodeResponse
+import com.example.myapplication.order.data.dto.order.OrderDto
+import com.example.myapplication.order.data.dto.order.OrderResponse
 import com.example.myapplication.order.data.dto.prof.ProfessionResponse
 import com.example.myapplication.order.data.network.NetworkClient
 import com.example.myapplication.order.domain.api.CoordinatesRepository
+import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.domain.models.Resource
 import com.example.myapplication.order.domain.models.Profession
@@ -68,6 +71,19 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
 
             else -> {
                 emit(Resource.Failed("Ошибка получения списка профессий"))
+            }
+        }
+    }
+
+    override fun placeOrder(order: Order): Flow<String?> = flow {
+        val response = networkClient.placeOrderRequest(order)
+        when(response.resultCode){
+            200 -> {
+                val orderId = (response as OrderResponse).orderId
+                emit(orderId)
+            }
+            else -> {
+                emit(null)
             }
         }
     }

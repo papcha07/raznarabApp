@@ -30,4 +30,16 @@ object RetrofitClient {
         professionsClient.create(ProfessionApi::class.java)
     }
 
+    private val orderClient: Retrofit by lazy {
+        Retrofit
+            .Builder()
+            .baseUrl("https://hw-api-production.up.railway.app/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    val orderApi : OrderApi by lazy {
+        orderClient.create(OrderApi::class.java)
+    }
+
 }

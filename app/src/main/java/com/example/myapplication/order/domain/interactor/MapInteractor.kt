@@ -1,7 +1,9 @@
 package com.example.myapplication.order.domain.interactor
 
+import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.api.CoordinatesRepository
 import com.example.myapplication.order.domain.api.MapInteractorInterface
+import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.domain.models.Resource
 import com.example.myapplication.order.domain.models.Profession
@@ -37,4 +39,10 @@ class MapInteractor(private val coordinatesRepository: CoordinatesRepository) :
             }
         }
     }
+
+    override fun placeOrder(order: Order): Flow<String?> {
+        return coordinatesRepository.placeOrder(order)
+    }
+
+
 }

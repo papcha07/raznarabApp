@@ -37,6 +37,8 @@ class ImageAdapter(
         return items.first()
     }
 
+    fun getUriList() : List<Uri> = items
+
     class ImageViewHolder(itemView: View, private val onItemClick: (Uri) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val imageView : ImageView = itemView.findViewById(R.id.imageId)
         fun bind(uri: Uri) {

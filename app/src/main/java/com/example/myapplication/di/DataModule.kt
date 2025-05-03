@@ -2,8 +2,6 @@ package com.example.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.room.FtsOptions
-import androidx.room.Index
 import androidx.room.Room
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
@@ -13,13 +11,11 @@ import com.example.myapplication.authorization.data.network.AuthRetrofitNetworkC
 import com.example.myapplication.authorization.data.repository.AuthRepositoryImpl
 import com.example.myapplication.authorization.domain.api.AuthRepository
 import com.example.myapplication.order.data.db.OrderDataBase
-import com.example.myapplication.order.data.db.OrderRepositoryImpl
 import com.example.myapplication.order.data.network.NetworkClient
 import com.example.myapplication.order.data.network.RetrofitClient
 import com.example.myapplication.order.data.network.RetrofitNetworkClient
 import com.example.myapplication.order.data.repository.CoordinatesRepositoryImpl
 import com.example.myapplication.order.domain.api.CoordinatesRepository
-import com.example.myapplication.order.domain.api.OrderRepository
 import com.example.myapplication.profile.data.SettingsRepositoryImpl
 import com.example.myapplication.profile.data.local.LocalProfileRepositoryImpl
 import com.example.myapplication.profile.data.network.ProfileRetrofitInstance
@@ -34,7 +30,6 @@ import com.example.myapplication.token.data.TokenEncryptedRepositoryImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import kotlin.math.sin
 
 
 val dataModule = module {
@@ -45,7 +40,7 @@ val dataModule = module {
     }
 
     single<NetworkClient> {
-        RetrofitNetworkClient(get())
+        RetrofitNetworkClient(get(), androidContext())
     }
 
     single {
@@ -128,10 +123,6 @@ val dataModule = module {
     }
 
 
-    //dataOrder
-    single<OrderRepository>{
-        OrderRepositoryImpl(get())
-    }
 
     single {
         Room.databaseBuilder(androidContext(),OrderDataBase::class.java, "order.db")

@@ -9,9 +9,12 @@ import android.widget.Filter
 import android.widget.TextView
 import com.example.myapplication.order.domain.models.Place
 
-class PlaceAdapter(context: Context, private val places: MutableList<Place>, private val onItemClick: (Place) -> Unit) :
+class PlaceAdapter(
+    context: Context,
+    private val places: MutableList<Place>,
+    private val onItemClick: (Place) -> Unit
+) :
     ArrayAdapter<Place>(context, android.R.layout.simple_dropdown_item_1line, places) {
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context)
             .inflate(android.R.layout.simple_dropdown_item_1line, parent, false)
@@ -23,7 +26,6 @@ class PlaceAdapter(context: Context, private val places: MutableList<Place>, pri
         view.setOnClickListener {
             place?.let { onItemClick(it) }
         }
-
         return view
     }
 

@@ -7,19 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
-import com.example.myapplication.order.domain.api.OrderInteractorInterface
-import com.example.myapplication.order.domain.interactor.OrderInteractor
-import com.example.myapplication.order.ui.listOrder.Order
-import kotlinx.coroutines.flow.first
+import com.example.myapplication.order.domain.models.Order
 import kotlinx.coroutines.launch
 
-class OrderViewModel(
-    private val mapInteractor: MapInteractorInterface,
-    private val orderInteractor: OrderInteractorInterface
-) : ViewModel() {
-
-
-
+class OrderViewModel(private val mapInteractor: MapInteractorInterface) : ViewModel() {
 
     private val photoState = MutableLiveData<MutableList<Uri>>()
     fun getPhotoState() : LiveData<MutableList<Uri>>{
@@ -48,34 +39,12 @@ class OrderViewModel(
     fun getOrdersState() : LiveData<OrdersListState> = ordersState
 
 
-     fun addOrder(order: Order){
-        viewModelScope.launch {
-            orderInteractor.addOrder(order)
-            getAllOrders()
-        }
-    }
-
-     fun deleteOrder(order: Order){
-        viewModelScope.launch {
-            orderInteractor.deleteOrder(order)
-        }
-    }
-
-    private fun getAllOrders(){
-        viewModelScope.launch {
-            val list = orderInteractor.getAllOrders().first()
-            when{
-                list.size == 0 -> ordersState.postValue(OrdersListState.EmptyList)
-                else -> {
-                    ordersState.postValue(OrdersListState.Orders(list))
-                }
-            }
-        }
+    fun placeOrder(order: Order){
+       mapInteractor.placeOrder(order)
     }
 
 
     init {
-        getAllOrders()
         loadProfessionList()
     }
 
@@ -129,10 +98,6 @@ class OrderViewModel(
         Log.d("deleteByUri", "вызов после ${photoState.value?.size}")
     }
 
-    private fun deletedb(){
-        viewModelScope.launch {
-            orderInteractor.deleteAll()
-        }
-    }
+
 
 }
