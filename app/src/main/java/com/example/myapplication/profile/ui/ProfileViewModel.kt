@@ -8,13 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.profile.domain.api.LocalDataInteractorInterface
 import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
 import com.example.myapplication.profile.domain.model.UserSettingsModel
+import com.example.myapplication.sharing.ShareInteractor
 import com.example.myapplication.token.domain.TokenInteractor
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val userInfoUseCaseInterface: UserInfoUseCaseInterface,
     private val localUseCase: LocalDataInteractorInterface,
-    private val tokenInteractor: TokenInteractor
+    private val tokenInteractor: TokenInteractor,
+    private val shareInteractor: ShareInteractor
 ) : ViewModel() {
 
     private val infoState = MutableLiveData<ProfileInfoStateScreen>()
@@ -99,6 +101,10 @@ class ProfileViewModel(
             }
 
         }
+    }
+
+    fun messageToAdmins() {
+        shareInteractor.messageToSupport()
     }
 
 }

@@ -15,6 +15,7 @@ import com.example.myapplication.profile.domain.model.UserSettingsModel
 import com.example.myapplication.profile.ui.ProfileInfoStateScreen
 import com.example.myapplication.profile.ui.ProfileViewModel
 import com.example.myapplication.settings.domain.api.ThemeInteractor
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +26,7 @@ class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: ProfileViewModel by viewModel()
     private lateinit var switchMaterial: SwitchMaterial
-    private val themeInteractor : ThemeInteractor by inject()
+    private val themeInteractor: ThemeInteractor by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +43,8 @@ class SettingsFragment : Fragment() {
         observeScreen()
         navigateToChangeScreen()
         switchTheme()
+        showLogOutDialog()
+        sendMessageToAdmin()
     }
 
     override fun onResume() {
@@ -62,9 +65,13 @@ class SettingsFragment : Fragment() {
                     networkErrorStub()
                 }
 
-                is ProfileInfoStateScreen.ConnectionFailed ->{
+                is ProfileInfoStateScreen.ConnectionFailed -> {
                     networkErrorStub()
-                    Toast.makeText(requireContext(), "Проблемы с подключением к интернету", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Проблемы с подключением к интернету",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
@@ -81,19 +88,48 @@ class SettingsFragment : Fragment() {
         binding.phoneNumberId.text = "+77777777777"
     }
 
-    private fun navigateToChangeScreen(){
+    private fun navigateToChangeScreen() {
         binding.editButton.setOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment2_to_changeProfileFragment)
         }
+
+        binding.accountContainerId.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment2_to_changeProfileFragment)
+        }
     }
-    
-    private fun switchTheme(){
+
+    private fun switchTheme() {
         switchMaterial = binding.themeSwitcherId
         val currentTheme = themeInteractor.getTheme()
         switchMaterial.setChecked(currentTheme)
 
         switchMaterial.setOnCheckedChangeListener { compoundButton, checked ->
             (requireContext().applicationContext as App).switchTheme(checked)
+        }
+    }
+
+    private fun logOut() {
+        findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
+    }
+
+    private fun showLogOutDialog() {
+        binding.logoutContainerId.setOnClickListener {
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Выйти?")
+                .setMessage("Нужно будет заново авторизоваться в приложение")
+                .setNegativeButton("Отмена") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .setPositiveButton("Да") { dialog, which ->
+                    logOut()
+                }
+            dialog.show()
+        }
+    }
+
+    private fun sendMessageToAdmin(){
+        binding.aboutContainerId.setOnClickListener {
+            viewModel.messageToAdmins()
         }
     }
 

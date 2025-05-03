@@ -243,7 +243,7 @@
                 app:layout_constraintStart_toEndOf="@id/about_image_id"
                 app:layout_constraintTop_toBottomOf="@id/about_title_id"
                 app:layout_constraintBottom_toBottomOf="@id/about_image_id"
-                android:text="Подробная информация о нас"
+                android:text="Связаться с нами"
                 style="@style/second_text_style_settings"
                 >
             </TextView>

@@ -25,6 +25,9 @@ import com.example.myapplication.profile.domain.api.LocalProfileRepository
 import com.example.myapplication.profile.domain.api.SettingsRepositoryInterface
 import com.example.myapplication.settings.domain.api.ThemeRepository
 import com.example.myapplication.settings.data.ThemeRepositoryImpl
+import com.example.myapplication.sharing.ShareInteractorImpl
+import com.example.myapplication.sharing.ShareRepository
+import com.example.myapplication.sharing.ShareRepositoryImpl
 import com.example.myapplication.token.data.TokenEncryptedRepository
 import com.example.myapplication.token.data.TokenEncryptedRepositoryImpl
 import org.koin.android.ext.koin.androidContext
@@ -128,6 +131,11 @@ val dataModule = module {
         Room.databaseBuilder(androidContext(),OrderDataBase::class.java, "order.db")
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+
+    single<ShareRepository>{
+        ShareRepositoryImpl(androidContext())
     }
 
 

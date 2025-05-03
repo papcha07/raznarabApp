@@ -11,6 +11,9 @@
     import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
     import com.example.myapplication.settings.domain.ThemeInteractorImpl
     import com.example.myapplication.settings.domain.api.ThemeInteractor
+    import com.example.myapplication.sharing.ShareInteractor
+    import com.example.myapplication.sharing.ShareInteractorImpl
+    import com.example.myapplication.sharing.ShareRepository
     import com.example.myapplication.token.domain.TokenInteractor
     import com.example.myapplication.token.domain.TokenInteractorImpl
     import org.koin.dsl.module
@@ -38,6 +41,10 @@
         }
         single<ThemeInteractor>{
             ThemeInteractorImpl(get())
+        }
+
+        single<ShareInteractor>{
+            ShareInteractorImpl(get())
         }
 
 
