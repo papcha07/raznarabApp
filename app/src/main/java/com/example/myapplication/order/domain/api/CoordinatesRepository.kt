@@ -11,5 +11,5 @@ import kotlinx.coroutines.flow.Flow
 interface CoordinatesRepository {
     fun searchAddress(address: String) : Flow<Resource<MutableList<Place>>>
     fun getProfessions() : Flow<Resource<MutableList<Profession>>>
-    fun placeOrder(order: Order) : Flow<String?>
+    fun placeOrder(token : String,order: Order) : Flow<String?>
 }

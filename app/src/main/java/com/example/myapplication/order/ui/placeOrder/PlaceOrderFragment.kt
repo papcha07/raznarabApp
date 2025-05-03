@@ -61,6 +61,20 @@ class PlaceOrderFragment : Fragment() {
         observeAddressList()
         setUpProfessionAdapter()
         observerProfessionList()
+
+        binding.placeOrderButtonId.setOnClickListener {
+            val order = Order(
+                description = binding.descriptionEditTextId.text.toString(),
+                lat = address!!.lat.toDouble(),
+                lon = address!!.lon.toDouble(),
+                address = address!!.address,
+                price = binding.priceEdiTextId.text.toString().toDouble(),
+                imagesFiles = imageAdapter.getUriList(),
+                professionId = professionId
+            )
+            orderViewModel.placeOrder(order)
+        }
+
     }
 
     private fun pickImage() {
@@ -153,7 +167,7 @@ class PlaceOrderFragment : Fragment() {
         ){
             click ->
             professionId = click.id
-
+            binding.autoCompleteTextViewId.setText(click.name)
         }
 
         binding.autoCompleteTextViewId.setAdapter(professionAdapter)
@@ -171,7 +185,7 @@ class PlaceOrderFragment : Fragment() {
         }
     }
 
-    
+
 
 
 

@@ -1,5 +1,6 @@
 package com.example.myapplication.order.data.repository
 
+import android.media.session.MediaSession.Token
 import android.util.Log
 import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
 import com.example.myapplication.order.data.dto.geo.GeocodeResponse
@@ -32,8 +33,20 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
                     val places = mutableListOf<Place>()
                     for (obj in geoObject) {
                         val address = obj.geoObject.metaDataProperty.geocoderMetaData.text
-                        val coordinates =
-                            obj.geoObject.point.pos.split(" ").reversed().joinToString(", ")
+                        val coordinates = obj.geoObject.point.pos.replace(",", "")  // Удаляем запятую
+                        val coordinateParts = coordinates.split(" ")
+
+                        if (coordinateParts.size == 2) {
+                            val place = Place(
+                                address = address,
+                                lat = coordinateParts[1],  // широта
+                                lon = coordinateParts[0]   // долгота
+                            )
+                            places.add(place)
+                            Log.d("coordinate", "${coordinateParts[1]}, ${coordinateParts[0]}")
+                        } else {
+                            Log.d("coordinate", "Неверный формат координат: ${obj.geoObject.point.pos}")
+                        }
                         Log.d("coordinate","$coordinates")
                         Log.d("coordinate", "$address")
                         val place = Place(
@@ -75,8 +88,9 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
         }
     }
 
-    override fun placeOrder(order: Order): Flow<String?> = flow {
-        val response = networkClient.placeOrderRequest(order)
+    override fun placeOrder(token : String,order: Order): Flow<String?> = flow {
+        val response = networkClient.placeOrderRequest(token,order)
+        Log.d("placeorder", response.resultCode.toString())
         when(response.resultCode){
             200 -> {
                 val orderId = (response as OrderResponse).orderId

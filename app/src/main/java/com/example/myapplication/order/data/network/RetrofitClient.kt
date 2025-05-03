@@ -1,5 +1,7 @@
 package com.example.myapplication.order.data.network
 
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -34,6 +36,7 @@ object RetrofitClient {
         Retrofit
             .Builder()
             .baseUrl("https://hw-api-production.up.railway.app/")
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -41,5 +44,13 @@ object RetrofitClient {
     val orderApi : OrderApi by lazy {
         orderClient.create(OrderApi::class.java)
     }
+
+    val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(logging)
+        .build()
 
 }

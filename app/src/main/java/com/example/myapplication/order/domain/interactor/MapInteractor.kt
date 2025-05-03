@@ -40,8 +40,8 @@ class MapInteractor(private val coordinatesRepository: CoordinatesRepository) :
         }
     }
 
-    override fun placeOrder(order: Order): Flow<String?> {
-        return coordinatesRepository.placeOrder(order)
+    override fun placeOrder(token: String,order: Order): Flow<String?> {
+        return coordinatesRepository.placeOrder(token,order)
     }
 
 

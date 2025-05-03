@@ -6,6 +6,7 @@ import com.example.myapplication.order.data.FileConverter
 import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
 import com.example.myapplication.order.data.dto.Response
 import com.example.myapplication.order.data.dto.order.OrderDto
+import com.example.myapplication.order.domain.models.Order
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -56,14 +57,16 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
         }
     }
 
-    override suspend fun placeOrderRequest(dto: Any): Response {
+    override suspend fun placeOrderRequest(token : String,dto: Any): Response {
         return try {
-            if (dto is OrderDto) {
+            Log.d("REQCHECK", "dto is Order: ${dto is Order}, class: ${dto::class.qualifiedName}")
+            if (dto is Order) {
                 val imagesPart = dto.imagesFiles.map { uri ->
-                    FileConverter.prepareFilePart(context, "imagesFiles", uri)
+                    FileConverter.prepareFilePart(context, "ImagesFiles", uri)
                 }
                 withContext(Dispatchers.IO) {
                     val response = client.orderApi.createOrder(
+                        "Bearer ${token}",
                         dto.description.toRequestBody("text/plain".toMediaType()),
                         dto.lat.toString().toRequestBody("text/plain".toMediaType()),
                         dto.lon.toString().toRequestBody("text/plain".toMediaType()),
@@ -72,16 +75,19 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
                         imagesPart,
                         dto.professionId.toRequestBody("text/plain".toMediaType())
                     )
-                    response.apply {
-                        resultCode = 200
-                    }
+                    Log.d("PLACEORDER", "200")
+                    response.resultCode = 200
+                    response
                 }
             } else {
+                Log.d("PLACEORDER", "401")
                 Response().apply {
-                    resultCode = 401
+                    resultCode = -1
                 }
+
             }
         } catch (e: HttpException) {
+            Log.d("PLACEORDER", e.message())
             Response().apply {
                 resultCode = e.code()
             }

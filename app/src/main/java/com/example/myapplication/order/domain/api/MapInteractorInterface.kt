@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 interface MapInteractorInterface {
     fun execute(query: String) : Flow<Pair<MutableList<Place>?, String?>>
     fun getProfessions() : Flow<Pair<MutableList<Profession>?, String?>>
-    fun placeOrder(order: Order) : Flow<String?>
+    fun placeOrder(token : String,order: Order) : Flow<String?>
 }
