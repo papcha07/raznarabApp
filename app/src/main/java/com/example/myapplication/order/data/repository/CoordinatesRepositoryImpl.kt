@@ -4,17 +4,25 @@ import android.media.session.MediaSession.Token
 import android.util.Log
 import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
 import com.example.myapplication.order.data.dto.geo.GeocodeResponse
+import com.example.myapplication.order.data.dto.order.ErrorsResponseDto
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.data.dto.order.OrderResponse
+import com.example.myapplication.order.data.dto.order.OrdersResponse
 import com.example.myapplication.order.data.dto.prof.ProfessionResponse
+import com.example.myapplication.order.data.network.ImagesResponse
 import com.example.myapplication.order.data.network.NetworkClient
+import com.example.myapplication.order.data.network.RetrofitClient
 import com.example.myapplication.order.domain.api.CoordinatesRepository
 import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.domain.models.Resource
 import com.example.myapplication.order.domain.models.Profession
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import java.io.IOException
 
 class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesRepository {
 
@@ -90,15 +98,55 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
 
     override fun placeOrder(token : String,order: Order): Flow<String?> = flow {
         val response = networkClient.placeOrderRequest(token,order)
-        Log.d("placeorder", response.resultCode.toString())
         when(response.resultCode){
             200 -> {
                 val orderId = (response as OrderResponse).orderId
                 emit(orderId)
             }
+
             else -> {
                 emit(null)
             }
         }
     }
+
+    override fun getAllOrders(token: String,userId: String): Flow<Resource<List<OrderDto>>> = flow{
+        val response = networkClient.getAllOrdersRequest(token, userId)
+        Log.d("responseAllOrders", response.resultCode.toString())
+        when(response.resultCode){
+
+            200 -> {
+                val ordersList = (response as OrdersResponse).orders
+                emit(Resource.Success(ordersList))
+            }
+            else -> {
+                emit(Resource.Failed("Невозможно загрузить заказы"))
+            }
+        }
+    }
+
+    override fun getImagesByName(token: String, fileName: String): Flow<ByteArray?> {
+        return flow {
+            try {
+                val response = RetrofitClient.orderApi.getImagesByOrders(token, fileName)
+                if (response.isSuccessful) {
+                    val imageBytes = response.body()?.bytes()
+                    emit(imageBytes)
+                } else {
+                    emit(null)
+                }
+            } catch (e: Exception) {
+                emit(null)
+            }
+        }
+    }
+
+    override  fun deleteOrder(token: String, orderId: String) : Flow<Boolean> = flow {
+        val response = networkClient.deleteOrderById(token, orderId)
+        when(response.resultCode){
+            200 -> emit(true)
+            else -> emit(false)
+        }
+    }
+
 }

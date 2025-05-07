@@ -46,6 +46,28 @@
 
         </TextView>
 
+        <TextView
+            android:id="@+id/titleId"
+            style="@style/order_text_view"
+            android:layout_marginTop="20dp"
+            android:text="Название заказа"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintTop_toBottomOf="@id/orderTitleId"
+            >
+        </TextView>
+
+        <EditText
+            android:id="@+id/titleEditTextId"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/edit_text_background"
+            app:layout_constraintTop_toBottomOf="@id/titleId"
+            app:layout_constraintStart_toStartOf="@id/start"
+            app:layout_constraintEnd_toEndOf="@id/end"
+            android:layout_marginTop="5dp">
+        </EditText>
+
 
         <TextView
             android:id="@+id/enterAddressTvId"
@@ -53,7 +75,7 @@
             android:layout_marginTop="20dp"
             android:text="Адрес"
             app:layout_constraintStart_toStartOf="@id/start"
-            app:layout_constraintTop_toBottomOf="@id/orderTitleId">
+            app:layout_constraintTop_toBottomOf="@id/titleEditTextId">
 
         </TextView>
 
@@ -173,7 +195,6 @@
             android:src="@drawable/ic_add_photo"
             >
         </ImageButton>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvId"

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
 import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.token.domain.TokenInteractor
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -43,16 +44,30 @@ class OrderViewModel(
     fun getOrdersState(): LiveData<OrdersListState> = ordersState
 
 
+    private val placeOrderState = MutableLiveData<Boolean>()
+    fun getPlaceOrderState () : LiveData<Boolean>{
+        return placeOrderState
+    }
+
     fun placeOrder(order: Order) {
         val token = tokenInteractor.getToken()
         viewModelScope.launch {
-            mapInteractor.placeOrder(token!!,order).first()
+            val currentOrderId = mapInteractor.placeOrder(token!!,order).first()
+            when(currentOrderId){
+                null -> {
+                    placeOrderState.postValue(false)
+                }
+                else -> {
+                    placeOrderState.postValue(true)
+                }
+            }
         }
     }
 
 
     init {
         loadProfessionList()
+//        getAllOrders()
     }
 
     fun loadAddressList(address: String) {
@@ -101,6 +116,33 @@ class OrderViewModel(
         photoState.value = currentList
         Log.d("deleteByUri", "вызов после ${photoState.value?.size}")
     }
+
+    fun getAllOrders(){
+        val userId = tokenInteractor.getUserId()
+        val token = tokenInteractor.getToken()
+        Log.d("userId", userId.toString())
+        viewModelScope.launch {
+            mapInteractor.getOrdersWithImages(token!!, userId!!).collect {
+                list ->
+                ordersState.postValue(OrdersListState.Orders(list))
+            }
+        }
+    }
+
+    fun deleteOrder(orderId: String) {
+        val token = tokenInteractor.getToken()
+        viewModelScope.launch {
+            mapInteractor.deleteOrder(token!!, orderId).collect {
+                result ->
+                when(result){
+                    true -> getAllOrders()
+                    false -> Log.d("deleteOrder", "error")
+                }
+            }
+        }
+    }
+
+
 
 
 }

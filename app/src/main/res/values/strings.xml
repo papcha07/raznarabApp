@@ -2,4 +2,7 @@
     <string name="app_name">My Application</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="successOrderMessage">Ваш заказ успешно размещен!</string>
+    <string name="failedOrderMessage">Что-то пошло не так, повторите попытку позже!</string>
+    <string name="fillAllFields">Для размещения заказа заполните все поля</string>
 </resources>

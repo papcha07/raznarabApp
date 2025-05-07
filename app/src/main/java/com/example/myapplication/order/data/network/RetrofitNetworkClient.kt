@@ -8,10 +8,13 @@ import com.example.myapplication.order.data.dto.Response
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.models.Order
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
 import retrofit2.HttpException
+import java.io.File
 
 class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : NetworkClient {
 
@@ -67,6 +70,7 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
                 withContext(Dispatchers.IO) {
                     val response = client.orderApi.createOrder(
                         "Bearer ${token}",
+                        dto.title.toRequestBody("text/plain".toMediaType()),
                         dto.description.toRequestBody("text/plain".toMediaType()),
                         dto.lat.toString().toRequestBody("text/plain".toMediaType()),
                         dto.lon.toString().toRequestBody("text/plain".toMediaType()),
@@ -94,5 +98,37 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
         }
     }
 
+    override suspend fun getAllOrdersRequest(token : String,userId: String): Response {
+        return try {
+            withContext(Dispatchers.IO){
+                val response = client.orderApi.getAllOrders("Bearer $token",userId)
+                response.resultCode = 200
+                response
+            }
+        }
+
+        catch (e: HttpException){
+            Response().apply {
+                Log.d("responseMessage", e.response().toString())
+                resultCode = e.code()
+                val message = e.message
+            }
+        }
+    }
+
+    override suspend fun deleteOrderById(token: String, orderId: String): Response {
+        return try {
+            withContext(Dispatchers.IO){
+                val response = client.orderApi.deleteOrderById(token, orderId)
+                response.resultCode = 200
+                response
+            }
+        }
+        catch (e: HttpException){
+            Response().apply {
+                resultCode = e.code()
+            }
+        }
+    }
 
 }

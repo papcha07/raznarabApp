@@ -10,7 +10,6 @@ import com.example.myapplication.authorization.data.network.AuthRetrofitClient
 import com.example.myapplication.authorization.data.network.AuthRetrofitNetworkClient
 import com.example.myapplication.authorization.data.repository.AuthRepositoryImpl
 import com.example.myapplication.authorization.domain.api.AuthRepository
-import com.example.myapplication.order.data.db.OrderDataBase
 import com.example.myapplication.order.data.network.NetworkClient
 import com.example.myapplication.order.data.network.RetrofitClient
 import com.example.myapplication.order.data.network.RetrofitNetworkClient
@@ -127,11 +126,6 @@ val dataModule = module {
 
 
 
-    single {
-        Room.databaseBuilder(androidContext(),OrderDataBase::class.java, "order.db")
-            .fallbackToDestructiveMigration()
-            .build()
-    }
 
 
     single<ShareRepository>{

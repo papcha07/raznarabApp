@@ -3,13 +3,14 @@ package com.example.myapplication.token.data
 import androidx.security.crypto.EncryptedSharedPreferences
 import com.auth0.jwt.JWT
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class TokenEncryptedRepositoryImpl(
     private val encryptedSharedPreferences: EncryptedSharedPreferences
 ) : TokenEncryptedRepository {
 
     override suspend fun saveToken(token: String) {
-        with(Dispatchers.IO){
+        withContext(Dispatchers.IO){
             encryptedSharedPreferences.edit()
                 .putString("AUTH_TOKEN", token)
                 .apply()
