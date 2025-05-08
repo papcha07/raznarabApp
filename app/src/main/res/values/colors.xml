@@ -10,5 +10,7 @@
     <color name ="text_color_settings">#FF000000</color>
     <color name="place_button_color">#0601B4</color>
     <color name="background_edittext_color">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00AA00</color>
 
 </resources>

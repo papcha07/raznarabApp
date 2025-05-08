@@ -10,7 +10,8 @@
     <color name ="text_color_settings">#FFFFFFFF</color>
     <color name="place_button_color">#2f0082</color>
     <color name="background_edittext_color">#808080</color>
-
+    <color name="red">#FF0000</color>
+    <color name="green">#00AA00</color>
 
 
 

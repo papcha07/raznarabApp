@@ -47,5 +47,5 @@ interface OrderApi {
     suspend fun deleteOrderById(
         @Header("Authorization") token : String,
         @Path("orderId") orderId: String
-    ) : com.example.myapplication.order.data.dto.Response
+    ) : retrofit2.Response<Unit>
 }

@@ -112,9 +112,7 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
 
     override fun getAllOrders(token: String,userId: String): Flow<Resource<List<OrderDto>>> = flow{
         val response = networkClient.getAllOrdersRequest(token, userId)
-        Log.d("responseAllOrders", response.resultCode.toString())
         when(response.resultCode){
-
             200 -> {
                 val ordersList = (response as OrdersResponse).orders
                 emit(Resource.Success(ordersList))
@@ -141,7 +139,7 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
         }
     }
 
-    override  fun deleteOrder(token: String, orderId: String) : Flow<Boolean> = flow {
+    override fun deleteOrder(token: String, orderId: String) : Flow<Boolean> = flow {
         val response = networkClient.deleteOrderById(token, orderId)
         when(response.resultCode){
             200 -> emit(true)

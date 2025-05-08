@@ -6,14 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.order.domain.models.OrderForView
 import java.io.ByteArrayInputStream
+import java.time.OffsetDateTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class OrderAdapter(
-    private val orders: MutableList<OrderForView>
+    private val orders: MutableList<OrderForView>,
+    private val onOrderClick: (OrderForView) -> Unit
 ) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,33 +45,45 @@ class OrderAdapter(
             .load(order.mainImagePath)
             .into(holder.imageView)
         holder.statusTextView.text =
-            if(order.isCancelled){
+            if (order.isCancelled) {
+                holder.statusTextView.setTextColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.red)
+                )
                 "Отменен"
-            }
-            else{
-                "Активный"
+            } else {
+                holder.statusTextView.setTextColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.green)
+                )
+                "Активен"
             }
         holder.titleTextView.text = order.title
         holder.categoryTextView.text = order.professionName
         holder.priceTextView.text = "${order.price.toInt()} ₽"
-        holder.dateTextView.text = order.createdAt
+        holder.dateTextView.text = convertIsoToCustomFormat(order.createdAt)
+
+        holder.imageView.setOnClickListener {
+            onOrderClick(order)
+        }
 
 
     }
 
     override fun getItemCount(): Int = orders.size
 
-    fun setList(newOrders: List<OrderForView>){
+    fun setList(newOrders: List<OrderForView>) {
         orders.clear()
         orders.addAll(newOrders)
     }
 
-    fun removeItem(position: Int){
-        orders.removeAt(position)
-        notifyItemRemoved(position)
+    fun convertIsoToCustomFormat(time: String): String {
+        return try {
+            val inputFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+            val outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+            val parsedDate = OffsetDateTime.parse(time, inputFormatter)
+            outputFormatter.format(parsedDate)
+        } catch (e: Exception) {
+            time
+        }
     }
 
-    fun getItem(position: Int): OrderForView{
-        return orders[position]
-    }
 }

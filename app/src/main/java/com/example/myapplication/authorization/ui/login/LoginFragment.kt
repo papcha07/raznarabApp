@@ -17,9 +17,6 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private val loginViewModel: LoginViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +30,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         login()
         loginObservable()
-
+        goToRegistrationScreen()
     }
 
 
@@ -54,7 +51,6 @@ class LoginFragment : Fragment() {
                     val email = binding.emailEditTextId.text.toString()
                     val password = binding.passwordEditText.text.toString()
                     loginViewModel.login(email, password)
-                    findNavController().navigate(R.id.action_loginFragment_to_placeOrderFragment)
                 }
 
                 else -> {
@@ -68,21 +64,25 @@ class LoginFragment : Fragment() {
         loginViewModel.getLoginState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is LoginScreenState.Success -> {
-                    showMessage(state.token)
-                    Log.d("TOKEN_TOKEN", state.token )
+                    findNavController().navigate(R.id.action_loginFragment_to_placeOrderFragment)
                 }
 
-                is LoginScreenState.Error ->
-                {
+                is LoginScreenState.Error -> {
                     showMessage(state.message)
                 }
             }
         }
     }
 
-    private fun showMessage(message : String){
+    private fun showMessage(message: String) {
         binding.errorMessageTextViewId.setText(message)
         binding.errorMessageTextViewId.visibility = View.VISIBLE
+    }
+
+    private fun goToRegistrationScreen(){
+        binding.noAccountButtonId.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        }
     }
 
 

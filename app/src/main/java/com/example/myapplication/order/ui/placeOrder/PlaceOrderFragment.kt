@@ -210,10 +210,16 @@ class PlaceOrderFragment : Fragment() {
                 true -> {
                     placedMessage(getString(R.string.successOrderMessage))
                     clearDetails()
+                    orderViewModel.clearObserve()
                 }
 
                 false -> {
                     placedMessage(getString(R.string.failedOrderMessage))
+                    orderViewModel.clearObserve()
+                }
+
+                null -> {
+                    return@observe
                 }
             }
         }

@@ -12,7 +12,7 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.myapplication.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment2_to_changeProfileFragment"
             app:destination="@id/changeProfileFragment" />
@@ -24,7 +24,7 @@
         android:id="@+id/placeOrderFragment"
         android:name="com.example.myapplication.order.ui.placeOrder.PlaceOrderFragment"
         android:label="fragment_place_order"
-        tools:layout="@layout/fragment_place_order" >
+        tools:layout="@layout/fragment_place_order">
         <action
             android:id="@+id/action_placeOrderFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
@@ -33,17 +33,25 @@
         android:id="@+id/loginFragment"
         android:name="com.example.myapplication.authorization.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_placeOrderFragment"
-            app:destination="@id/placeOrderFragment" />
+            app:destination="@id/placeOrderFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.myapplication.authorization.ui.registration.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
-
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/imageFragment"
@@ -57,9 +65,31 @@
             android:id="@+id/action_imageFragment_to_placeOrderFragment"
             app:destination="@id/placeOrderFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/orderListFragment3"
         android:name="com.example.myapplication.order.ui.placeOrder.OrderListFragment"
         android:label="fragment_order_list2"
-        tools:layout="@layout/fragment_order_list2" />
+        tools:layout="@layout/fragment_order_list2">
+        <action
+            android:id="@+id/action_orderListFragment3_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.OrderDetailsFragment"
+        android:label="OrderDetailsFragment">
+        <argument
+            android:name="orderInfo"
+            app:argType="string"
+            />
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_orderListFragment3"
+            app:destination="@id/orderListFragment3"
+            app:popUpTo="@layout/fragment_order_details"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+
 </navigation>

@@ -7,4 +7,5 @@ import com.example.myapplication.order.domain.models.OrderForView
 sealed interface OrdersListState {
     data class Orders(val data: List<OrderForView>) : OrdersListState
     object EmptyList : OrdersListState
+    object Loading: OrdersListState
 }

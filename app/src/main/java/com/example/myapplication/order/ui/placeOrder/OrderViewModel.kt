@@ -33,30 +33,28 @@ class OrderViewModel(
     fun getProfState(): LiveData<ProfessionState> = profState
 
 
-    private val stateAddressClick = MutableLiveData<Boolean>()
-
-    fun getAddressClickState(): LiveData<Boolean> {
-        return stateAddressClick
-    }
-
-
     private val ordersState = MutableLiveData<OrdersListState>()
     fun getOrdersState(): LiveData<OrdersListState> = ordersState
 
 
-    private val placeOrderState = MutableLiveData<Boolean>()
-    fun getPlaceOrderState () : LiveData<Boolean>{
+    private val placeOrderState = MutableLiveData<Boolean?>()
+    fun getPlaceOrderState(): LiveData<Boolean?> {
         return placeOrderState
     }
+
+
+    private val cancelOrderState = MutableLiveData<Boolean>()
+    fun getCancelOrderState () : LiveData<Boolean> = cancelOrderState
 
     fun placeOrder(order: Order) {
         val token = tokenInteractor.getToken()
         viewModelScope.launch {
-            val currentOrderId = mapInteractor.placeOrder(token!!,order).first()
-            when(currentOrderId){
+            val currentOrderId = mapInteractor.placeOrder(token!!, order).first()
+            when (currentOrderId) {
                 null -> {
                     placeOrderState.postValue(false)
                 }
+
                 else -> {
                     placeOrderState.postValue(true)
                 }
@@ -67,7 +65,7 @@ class OrderViewModel(
 
     init {
         loadProfessionList()
-//        getAllOrders()
+        getAllOrders()
     }
 
     fun loadAddressList(address: String) {
@@ -98,13 +96,6 @@ class OrderViewModel(
         }
     }
 
-    fun chooseAddress() {
-        stateAddressClick.postValue(true)
-    }
-
-    fun notChooseAddress() {
-        stateAddressClick.postValue(false)
-    }
 
     fun setPhotoState(items: MutableList<Uri>) {
         photoState.postValue(items)
@@ -117,32 +108,42 @@ class OrderViewModel(
         Log.d("deleteByUri", "вызов после ${photoState.value?.size}")
     }
 
-    fun getAllOrders(){
+    fun getAllOrders() {
         val userId = tokenInteractor.getUserId()
         val token = tokenInteractor.getToken()
-        Log.d("userId", userId.toString())
+        ordersState.postValue(OrdersListState.Loading)
         viewModelScope.launch {
-            mapInteractor.getOrdersWithImages(token!!, userId!!).collect {
-                list ->
-                ordersState.postValue(OrdersListState.Orders(list))
-            }
-        }
-    }
-
-    fun deleteOrder(orderId: String) {
-        val token = tokenInteractor.getToken()
-        viewModelScope.launch {
-            mapInteractor.deleteOrder(token!!, orderId).collect {
-                result ->
-                when(result){
-                    true -> getAllOrders()
-                    false -> Log.d("deleteOrder", "error")
+            mapInteractor.getOrdersWithImages(token!!, userId!!).collect { list ->
+                if (list.isNullOrEmpty()) {
+                    ordersState.postValue(OrdersListState.EmptyList)
+                } else {
+                    ordersState.postValue(OrdersListState.Orders(list))
                 }
             }
         }
     }
 
+    fun clearObserve(){
+        placeOrderState.postValue(null)
+    }
 
+    fun cancelOrder(orderId: String){
+        val token = tokenInteractor.getToken()!!
+        viewModelScope.launch {
+            mapInteractor.deleteOrder(token, orderId).collect{
+                state ->
+                when(state){
+                    true -> {
+                        cancelOrderState.postValue(true)
+                        getAllOrders()
+                    }
 
+                    false -> {
+                        cancelOrderState.postValue(false)
+                    }
+                }
+            }
+        }
+    }
 
 }

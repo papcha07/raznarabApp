@@ -119,9 +119,10 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
     override suspend fun deleteOrderById(token: String, orderId: String): Response {
         return try {
             withContext(Dispatchers.IO){
-                val response = client.orderApi.deleteOrderById(token, orderId)
-                response.resultCode = 200
-                response
+                val response = client.orderApi.deleteOrderById("Bearer $token", orderId)
+                Response().apply {
+                    resultCode = if (response.isSuccessful) 200 else response.code()
+                }
             }
         }
         catch (e: HttpException){

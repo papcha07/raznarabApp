@@ -1,15 +1,20 @@
 package com.example.myapplication.order.ui.placeOrder
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentOrderList2Binding
+import com.example.myapplication.order.domain.models.OrderForView
+import com.google.gson.Gson
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -19,6 +24,7 @@ class OrderListFragment : Fragment() {
     private lateinit var binding: FragmentOrderList2Binding
     private lateinit var orderAdapter: OrderAdapter
     private lateinit var recyclerView: RecyclerView
+    private val gson: Gson by inject()
     private val ordersViewModel : OrderViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,13 +38,17 @@ class OrderListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerVIew()
         observeAllOrders()
-//        setUpTouchHelperCallBack()
     }
 
     private fun setUpRecyclerVIew(){
         orderAdapter = OrderAdapter(
             mutableListOf()
-        )
+        ){
+            order ->
+            if(!order.isCancelled){
+                navigateToOrderDetailScree(order)
+            }
+        }
         recyclerView = binding.recyclerViewId
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = orderAdapter
@@ -49,33 +59,44 @@ class OrderListFragment : Fragment() {
             state ->
             when(state){
                 is OrdersListState.Orders -> {
-                    orderAdapter.setList(state.data)
+                    showList(state.data)
                 }
                 is OrdersListState.EmptyList -> {
+                    showEmptyContainer()
+                }
 
+                OrdersListState.Loading -> {
+                    showProgressBar()
                 }
             }
         }
     }
 
 
-//    private fun setUpTouchHelperCallBack(){
-//        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
-//            override fun onMove(
-//                recyclerView: RecyclerView,
-//                viewHolder: RecyclerView.ViewHolder,
-//                target: RecyclerView.ViewHolder
-//            ): Boolean = false
-//
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                val position = viewHolder.adapterPosition
-//                orderAdapter.removeItem(position)
-//                val currentOrder = orderAdapter.getItem(position)
-//                ordersViewModel.deleteOrder(currentOrder.id)
-//            }
-//        }
-//        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
-//    }
+    private fun showList(list: List<OrderForView>){
+        orderAdapter.setList(list)
+        binding.progressBarId.visibility = View.GONE
+        binding.recyclerViewId.visibility = View.VISIBLE
+        binding.emptyContainerId.visibility = View.GONE
+    }
+
+    private fun showEmptyContainer(){
+        binding.progressBarId.visibility = View.GONE
+        binding.recyclerViewId.visibility = View.GONE
+        binding.emptyContainerId.visibility = View.VISIBLE
+    }
+
+    private fun showProgressBar(){
+        binding.progressBarId.visibility = View.VISIBLE
+        binding.recyclerViewId.visibility = View.GONE
+        binding.emptyContainerId.visibility = View.GONE
+    }
+
+    private fun navigateToOrderDetailScree(order: OrderForView){
+        val gsonOrder = gson.toJson(order)
+        val action = OrderListFragmentDirections.actionOrderListFragment3ToOrderDetailsFragment(gsonOrder)
+        findNavController().navigate(action)
+    }
 
 
 
