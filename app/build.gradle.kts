@@ -80,7 +80,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.3.0")
 
     //MapKit
-    implementation("com.yandex.android:maps.mobile:4.10.1-lite")
+    implementation("com.yandex.android:maps.mobile:4.10.0-lite")
 
     //EncryptedSharedPreferences
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
@@ -88,8 +88,11 @@ dependencies {
     implementation("com.auth0:java-jwt:3.18.2")
 
     implementation ("io.realm:realm-android-library:10.10.1")
-    implementation("com.mobsandgeeks:android-saripaar:2.0.3")
 
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0")
+    implementation("com.mobsandgeeks:android-saripaar:2.0.3")
+    implementation ("com.markodevcic:peko:3.0.5")
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)

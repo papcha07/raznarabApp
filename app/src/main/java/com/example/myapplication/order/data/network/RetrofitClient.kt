@@ -1,5 +1,6 @@
 package com.example.myapplication.order.data.network
 
+import com.example.myapplication.raznarab.ui.data.network.RaznarabApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -45,6 +46,10 @@ object RetrofitClient {
         orderClient.create(OrderApi::class.java)
     }
 
+    val raznarabApi: RaznarabApi by lazy {
+        orderClient.create(RaznarabApi::class.java)
+    }
+
     val logging = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
@@ -52,6 +57,7 @@ object RetrofitClient {
     val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(logging)
         .build()
+
 
 
 }

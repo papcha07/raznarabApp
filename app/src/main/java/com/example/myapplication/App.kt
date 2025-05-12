@@ -7,6 +7,8 @@ import com.example.di.dataModule
 import com.example.di.domainModule
 import com.example.di.viewModelModule
 import com.example.myapplication.settings.domain.api.ThemeInteractor
+import com.markodevcic.peko.PermissionRequester
+import com.yandex.mapkit.MapKitFactory
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import org.koin.android.ext.android.inject
@@ -22,6 +24,8 @@ class App() : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        MapKitFactory.setApiKey("6db25a42-c647-4ed9-bcc6-e98fb4d351d7")
+        MapKitFactory.initialize(applicationContext)
         startKoin {
             androidContext(this@App)
             modules(listOf(appModule,dataModule, domainModule, viewModelModule))
@@ -42,7 +46,7 @@ class App() : Application() {
 
     }
 
-    public fun switchTheme(isDark : Boolean){
+     fun switchTheme(isDark : Boolean){
         theme = isDark
         AppCompatDelegate.setDefaultNightMode(
             if(theme) {

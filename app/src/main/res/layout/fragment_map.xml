@@ -4,50 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".map.ui.MapFragment">
+    tools:context=".raznarab.ui.MapFragment">
 
     <com.yandex.mapkit.mapview.MapView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/mapViewId"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
     </com.yandex.mapkit.mapview.MapView>
 
 
-    <ImageButton
-        android:id="@+id/plusImageId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_plus"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </ImageButton>
 
-    <ImageButton
-        android:id="@+id/minusImageId"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_minus"
+        android:orientation="vertical"
+        android:background="@drawable/nav_map_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/plusImageId">
-    </ImageButton>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ImageButton
+            android:id="@+id/plusImageId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_plus">
+        </ImageButton>
 
-    <ImageButton
-        android:id="@+id/positionImageId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_curlocation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/minusImageId">
-    </ImageButton>
+        <ImageButton
+            android:id="@+id/minusImageId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_minus">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/positionImageId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_curlocation">
+        </ImageButton>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

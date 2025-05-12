@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNavId"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/navigation_customer"
+        app:navGraph="@navigation/navigation_executor"
         app:defaultNavHost="true">
     </androidx.fragment.app.FragmentContainerView>
 
@@ -26,7 +26,7 @@
         android:layout_height="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:menu="@menu/bottom_navigation_menu_customers"
+        app:menu="@menu/bottom_navigation_menu_executors"
         app:layout_constraintBottom_toBottomOf="parent">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

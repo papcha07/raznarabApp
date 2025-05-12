@@ -3,16 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_ececutor"
-    app:startDestination="@id/placeOrderFragment2">
-
+    app:startDestination="@id/mapFragment2">
     <fragment
-        android:id="@+id/placeOrderFragment2"
-        android:name="com.example.myapplication.order.ui.placeOrder.PlaceOrderFragment"
-        android:label="fragment_place_order"
-        tools:layout="@layout/fragment_place_order" />
+        android:id="@+id/mapFragment2"
+        android:name="com.example.myapplication.raznarab.ui.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
     <fragment
-        android:id="@+id/orderListFragment2"
-        android:name="com.example.myapplication.order.ui.listOrder.OrderListFragment"
-        android:label="fragment_order_list"
-        tools:layout="@layout/fragment_order_list" />
+        android:id="@+id/settingsFragment2"
+        android:name="com.example.myapplication.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

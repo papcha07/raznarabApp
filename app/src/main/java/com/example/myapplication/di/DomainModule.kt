@@ -9,6 +9,8 @@
     import com.example.myapplication.profile.domain.UserInfoUseCase
     import com.example.myapplication.profile.domain.api.LocalDataInteractorInterface
     import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
+    import com.example.myapplication.raznarab.ui.domain.api.CoordinatesInteractor
+    import com.example.myapplication.raznarab.ui.domain.impl.CoordinatesInteractorImpl
     import com.example.myapplication.settings.domain.ThemeInteractorImpl
     import com.example.myapplication.settings.domain.api.ThemeInteractor
     import com.example.myapplication.sharing.ShareInteractor
@@ -47,7 +49,9 @@
             ShareInteractorImpl(get())
         }
 
-
+        single<CoordinatesInteractor>{
+            CoordinatesInteractorImpl(get())
+        }
 
 
 

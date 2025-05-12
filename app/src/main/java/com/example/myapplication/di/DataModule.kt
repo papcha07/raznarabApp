@@ -22,6 +22,10 @@ import com.example.myapplication.profile.data.network.SettingsNetworkClient
 import com.example.myapplication.profile.data.network.SettingsNetworkClientInterface
 import com.example.myapplication.profile.domain.api.LocalProfileRepository
 import com.example.myapplication.profile.domain.api.SettingsRepositoryInterface
+import com.example.myapplication.raznarab.ui.data.MapRepositoryImpl
+import com.example.myapplication.raznarab.ui.data.network.MapNetworkClient
+import com.example.myapplication.raznarab.ui.data.network.MapNetworkClientInterface
+import com.example.myapplication.raznarab.ui.domain.api.MapRepository
 import com.example.myapplication.settings.domain.api.ThemeRepository
 import com.example.myapplication.settings.data.ThemeRepositoryImpl
 import com.example.myapplication.sharing.ShareInteractorImpl
@@ -130,6 +134,20 @@ val dataModule = module {
 
     single<ShareRepository>{
         ShareRepositoryImpl(androidContext())
+    }
+
+
+    //рабочий di
+    single<MapRepository>{
+        MapRepositoryImpl(get())
+    }
+
+    single<MapNetworkClientInterface>{
+        MapNetworkClient(get())
+    }
+
+    single{
+        RetrofitClient
     }
 
 
