@@ -6,6 +6,6 @@ import com.example.myapplication.profile.domain.model.UserSettingsModel
 import kotlinx.coroutines.flow.Flow
 
 interface SettingsRepositoryInterface {
-    fun getUserInfo(userId: String,token: String) : Flow<Resource<UserInfoResponse>>
+    fun getUserInfo(userId: String,token: String) : Flow<Resource<UserSettingsModel>>
     fun updateUserInfo(userId: String, token: String, userInfo: UserSettingsModel) : Flow<Resource<UserInfoResponse>>
 }

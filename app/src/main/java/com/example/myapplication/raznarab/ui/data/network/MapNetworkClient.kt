@@ -24,4 +24,25 @@ class MapNetworkClient(val client: RetrofitClient) : MapNetworkClientInterface {
         }
     }
 
+    override suspend fun getInfoByOrders(
+        token: String,
+        latitude: Double,
+        longitude: Double
+    ): Response {
+        return try {
+            withContext(Dispatchers.IO){
+                val response = client.raznarabApi.getInfoByCoordinates(token, latitude, longitude)
+                response.resultCode = 200
+                response
+            }
+        }
+
+        catch (e:HttpException){
+            Response().apply {
+                resultCode = e.code()
+            }
+        }
+    }
+
+
 }

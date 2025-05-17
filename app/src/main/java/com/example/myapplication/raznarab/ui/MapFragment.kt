@@ -13,10 +13,15 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.card.MaterialCardView
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -34,6 +39,10 @@ class MapFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val mapViewModel: MapViewModel by viewModel()
+    private lateinit var bottomAdapter: BottomAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<MaterialCardView>
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,19 +67,21 @@ class MapFragment : Fragment() {
 
         getAllCoordinates()
 
-
+        observeOrderClick()
+        initRecyclerView()
+        openOrderScreen()
+        initBottomMenu()
+        openProfileScreen()
     }
 
     override fun onStop() {
         super.onStop()
-        MapKitFactory.getInstance().onStop()
         mapView.onStop()
     }
 
     override fun onStart() {
         super.onStart()
         mapView.onStart()
-        MapKitFactory.getInstance().onStart()
 
     }
 
@@ -155,10 +166,92 @@ class MapFragment : Fragment() {
     private fun addPointsToMap(list: List<Point>){
         val map = mapView.mapWindow.map
         val mapObjects = map.mapObjects
+        mapObjects.clear() // Очистить старые метки
 
         for(point in list){
             val placemark = mapObjects.addPlacemark(point)
             placemark.setIcon(ImageProvider.fromResource(requireContext(), R.drawable.ic_money))
+
+            placemark.addTapListener { _, currentPoint ->
+                Toast.makeText(
+                    requireContext(),
+                    "${currentPoint.latitude}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                mapViewModel.getInfoByPoint(point.latitude, point.longitude)
+                true
+            }
         }
     }
+
+    private fun initRecyclerView(){
+        bottomAdapter = BottomAdapter(mutableListOf())
+        recyclerView = binding.orderBottomNavigation.recyclerViewId
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = bottomAdapter
+    }
+
+
+
+    private fun initBottomMenu(){
+        val bottomSheetContainer = binding.orderBottomNavigation.bottomContainerId
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer).apply {
+            state = BottomSheetBehavior.STATE_HIDDEN
+        }
+
+        bottomSheetBehavior.addBottomSheetCallback(
+            object : BottomSheetBehavior.BottomSheetCallback(){
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when(newState){
+                        BottomSheetBehavior.STATE_HIDDEN -> {
+                            binding.overlay.visibility = View.GONE
+                        }
+                        else -> {
+                            binding.overlay.visibility = View.VISIBLE
+                        }
+                    }
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+                }
+
+            }
+        )
+    }
+
+    private fun observeOrderClick(){
+        mapViewModel.getOrderInfoState().observe(viewLifecycleOwner){
+            state ->
+            Log.d("OrderInfoState", "State: $state")
+            when(state){
+                is OrderInfoState.Success -> {
+                    bottomAdapter.setContent(state.orderList)
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+                }
+                is OrderInfoState.Failed -> {
+                    Toast.makeText(
+                        requireContext(),
+                        state.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun openOrderScreen(){
+        binding.placeOrderButtonId.setOnClickListener {
+            findNavController().navigate(R.id.action_mapFragment2_to_placeOrderFragment2)
+        }
+    }
+
+    private fun openProfileScreen(){
+        binding.profileButtonId.setOnClickListener {
+            findNavController().navigate(R.id.action_mapFragment2_to_settingsFragment2)
+        }
+    }
+
+
 }

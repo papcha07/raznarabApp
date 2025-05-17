@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.R
 import com.example.myapplication.authorization.ui.registration.RegistrationViewModel
 import com.example.myapplication.databinding.FragmentChangeProfileBinding
 import com.example.myapplication.profile.domain.model.UserSettingsModel
@@ -17,8 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ChangeProfileFragment : Fragment() {
     private lateinit var binding: FragmentChangeProfileBinding
     private val viewModel: ProfileViewModel by viewModel()
-
-
+    private val apiBaseUrl = "https://hw-api-production.up.railway.app"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -34,7 +36,6 @@ class ChangeProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stateObserve()
-        changeInfo()
         pickImage()
     }
 
@@ -66,26 +67,41 @@ class ChangeProfileFragment : Fragment() {
         binding.lastNameEditTextId.setText(userModel.secondName)
         binding.phoneEditTextId.setText(userModel.phoneNumber)
         binding.abouEditTextId.setText(userModel.description)
-    }
 
-    private fun changeInfo() {
-        binding.saveButtonId.setOnClickListener {
-            val email: String? = null
-            val phoneNumber: String? = binding.phoneEditTextId.text.toString()
-            val firstName: String? = binding.nameEditTextId.text.toString()
-            val secondName: String? = binding.lastNameEditTextId.text.toString()
-            val patronymic: String? = null
-            val description: String? = binding.abouEditTextId.text.toString()
-            viewModel.updateInfo(UserSettingsModel(
-                email,
-                phoneNumber,
-                firstName,
-                secondName,
-                patronymic,
-                description
-            ))
+        val avatarPath = userModel.avatarPath
+        if(avatarPath != null){
+            val avatarUrl = "${apiBaseUrl}/image/show/$avatarPath"
+            Glide.with(requireContext())
+                .load(avatarUrl)
+                .placeholder(R.drawable.ic_account)
+                .error(R.drawable.ic_account)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imageViewId)
+        }
+
+        else {
+            binding.imageViewId.setImageResource(R.drawable.ic_account)
         }
     }
+
+//    private fun changeInfo() {
+//        binding.saveButtonId.setOnClickListener {
+//            val email: String? = null
+//            val phoneNumber: String? = binding.phoneEditTextId.text.toString()
+//            val firstName: String? = binding.nameEditTextId.text.toString()
+//            val secondName: String? = binding.lastNameEditTextId.text.toString()
+//            val patronymic: String? = null
+//            val description: String? = binding.abouEditTextId.text.toString()
+//            viewModel.updateInfo(UserSettingsModel(
+//                email,
+//                phoneNumber,
+//                firstName,
+//                secondName,
+//                patronymic,
+//                description,
+//            ))
+//        }
+//    }
 
     fun pickImage(){
         val picker = registerForActivityResult(

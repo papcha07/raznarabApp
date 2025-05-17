@@ -19,15 +19,7 @@ class UserInfoUseCase(private val settingsRepository: SettingsRepositoryInterfac
                     Log.d("RESULT",
                         "${result.data.email} " +
                                 "${result.data.firstName}")
-                    Pair(
-                        UserSettingsModel(
-                        email = result.data.email,
-                        phoneNumber = result.data.phoneNumber,
-                        firstName = result.data.firstName,
-                        secondName = result.data.secondName,
-                        patronymic = result.data.patronymic,
-                        description = result.data.description ?: "Нет информации"
-                    ), null)
+                    Pair(result.data, null)
                 }
 
                 is Resource.Failed -> {
@@ -56,8 +48,10 @@ class UserInfoUseCase(private val settingsRepository: SettingsRepositoryInterfac
                             phoneNumber = result.data.phoneNumber,
                             firstName = result.data.firstName,
                             secondName = result.data.secondName,
-                            patronymic = result.data.patronymic ,
-                            description = result.data.description
+                            patronymic = result.data.patronymic,
+                            description = result.data.description,
+                            rating = 1,
+                            avatarPath = ""
                         ), null)
                 }
                 is Resource.Failed -> {

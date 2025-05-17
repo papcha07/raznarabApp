@@ -2,8 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_customer"
-    app:startDestination="@id/loginFragment">
+    android:id="@+id/navigation_customer">
     <fragment
         android:id="@+id/changeProfileFragment"
         android:name="com.example.myapplication.profile.ui.ChangeProfileFragment"
@@ -16,9 +15,6 @@
         <action
             android:id="@+id/action_settingsFragment2_to_changeProfileFragment"
             app:destination="@id/changeProfileFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/placeOrderFragment"
@@ -28,29 +24,6 @@
         <action
             android:id="@+id/action_placeOrderFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.myapplication.authorization.ui.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_placeOrderFragment"
-            app:destination="@id/placeOrderFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_loginFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registrationFragment"
-        android:name="com.example.myapplication.authorization.ui.registration.RegistrationFragment"
-        android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration">
-        <action
-            android:id="@+id/action_registrationFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment

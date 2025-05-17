@@ -27,4 +27,8 @@ class TokenEncryptedRepositoryImpl(
         return decodedJWT.getClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").asString()
     }
 
+    override fun getRole(): String {
+        return ""
+    }
+
 }

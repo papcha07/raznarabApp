@@ -6,10 +6,12 @@ import com.google.gson.annotations.Expose
 data class UserInfoResponse(
     val email: String?,
     val phoneNumber: String?,
+    val rating: Int?,
     val firstName: String?,
     val secondName: String?,
     val patronymic: String?,
-    val description: String?
+    val description: String?,
+    val avatarPath: String?
 ) : Response()
 {
     override fun toString(): String {

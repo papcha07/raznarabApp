@@ -50,7 +50,7 @@
         }
 
         single<CoordinatesInteractor>{
-            CoordinatesInteractorImpl(get())
+            CoordinatesInteractorImpl(get(), get())
         }
 
 

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.App
 import com.example.myapplication.R
@@ -90,11 +89,11 @@ class SettingsFragment : Fragment() {
 
     private fun navigateToChangeScreen() {
         binding.editButton.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment2_to_changeProfileFragment)
+            findNavController().navigate(R.id.action_settingsFragment2_to_changeProfileFragment2)
         }
 
         binding.accountContainerId.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment2_to_changeProfileFragment)
+            findNavController().navigate(R.id.action_settingsFragment2_to_changeProfileFragment2)
         }
     }
 
@@ -109,7 +108,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun logOut() {
-        findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
+//        findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
     }
 
     private fun showLogOutDialog() {

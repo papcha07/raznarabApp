@@ -8,10 +8,44 @@
         android:id="@+id/mapFragment2"
         android:name="com.example.myapplication.raznarab.ui.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment2_to_placeOrderFragment2"
+            app:destination="@id/placeOrderFragment2" />
+        <action
+            android:id="@+id/action_mapFragment2_to_settingsFragment2"
+            app:destination="@id/settingsFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment2"
         android:name="com.example.myapplication.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment2_to_changeProfileFragment2"
+            app:destination="@id/changeProfileFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.example.myapplication.authorization.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment2_to_mapFragment2"
+            app:destination="@id/mapFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeProfileFragment2"
+        android:name="com.example.myapplication.profile.ui.ChangeProfileFragment"
+        android:label="fragment_change_profile"
+        tools:layout="@layout/fragment_change_profile" />
+    <fragment
+        android:id="@+id/placeOrderFragment2"
+        android:name="com.example.myapplication.order.ui.placeOrder.PlaceOrderFragment"
+        android:label="PlaceOrderFragment" />
+    <fragment
+        android:id="@+id/orderListFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.OrderListFragment"
+        android:label="fragment_order_list2"
+        tools:layout="@layout/fragment_order_list2" />
 </navigation>

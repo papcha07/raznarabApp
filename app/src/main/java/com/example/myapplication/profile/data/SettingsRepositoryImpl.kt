@@ -14,14 +14,24 @@ import kotlinx.coroutines.flow.flow
 class SettingsRepositoryImpl(private val networkClient: SettingsNetworkClientInterface) :
     SettingsRepositoryInterface {
 
-    override fun getUserInfo(userId: String ,token: String): Flow<Resource<UserInfoResponse>> = flow {
+    override fun getUserInfo(userId: String ,token: String): Flow<Resource<UserSettingsModel>> = flow {
         val resultCode = networkClient.doRequestInfo(TokenRequest(userId, token))
         Log.d("RESULT_CODE_LOAD", resultCode.resultCode.toString())
         when(resultCode.resultCode){
 
             200 -> {
-                val userInfo = (resultCode as UserInfoResponse)
-                emit(Resource.Success(userInfo))
+                val userResponse = (resultCode as UserInfoResponse)
+                val userSettingsModel = UserSettingsModel(
+                    email = userResponse.email,
+                    phoneNumber = userResponse.phoneNumber,
+                    rating = userResponse.rating,
+                    firstName = userResponse.firstName,
+                    secondName = userResponse.secondName,
+                    patronymic = userResponse.patronymic,
+                    description = userResponse.description,
+                    avatarPath = userResponse.avatarPath
+                )
+                emit(Resource.Success(userSettingsModel))
             }
 
             401 -> {
@@ -63,7 +73,6 @@ class SettingsRepositoryImpl(private val networkClient: SettingsNetworkClientInt
         when(resultCode.resultCode) {
             200 -> {
                 val userInfo = (resultCode as UserInfoResponse)
-                Log.d("RESPONSE_FROM_SERVER", "${userInfo.toString()}")
                 emit(Resource.Success(userInfo))
             }
 

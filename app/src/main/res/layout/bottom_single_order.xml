@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomContainerId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:behavior_hideable = "true"
+    android:background="@drawable/bottom_dialog_background"
+    android:orientation="vertical"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <View
+        android:id="@+id/scrollPlaceId"
+        android:layout_width="50dp"
+        android:layout_height="4dp"
+        android:background="@drawable/scroll_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        >
+    </View>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewId"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+</com.google.android.material.card.MaterialCardView>

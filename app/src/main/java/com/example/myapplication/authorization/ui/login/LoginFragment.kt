@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
         loginViewModel.getLoginState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is LoginScreenState.Success -> {
-                    findNavController().navigate(R.id.action_loginFragment_to_placeOrderFragment)
+                    findNavController().navigate(R.id.action_loginFragment2_to_mapFragment2)
                 }
 
                 is LoginScreenState.Error -> {

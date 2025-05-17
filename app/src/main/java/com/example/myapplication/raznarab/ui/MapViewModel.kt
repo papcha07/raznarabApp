@@ -37,11 +37,32 @@ class MapViewModel(
                         Point(it.latitude, it.longitude)
                     }
                     coordState.postValue(MapPointStateScreen.CoordinatesContent(newData))
-                }
-                else {
+                } else {
                     coordState.postValue(MapPointStateScreen.ErrorData(message!!))
                 }
             }
+        }
+    }
+
+
+    private val orderInfoState = MutableLiveData<OrderInfoState>()
+    fun getOrderInfoState(): LiveData<OrderInfoState> = orderInfoState
+
+    fun getInfoByPoint(latitude: Double, longitude: Double) {
+        val token = tokenInteractor.getToken()!!
+        viewModelScope.launch {
+            val infoList =
+                coordinatesInteractor.getOrdersInfoByCoordinates(token, latitude, longitude)
+                    .collect { pair ->
+                        val data = pair.first
+                        val message = pair.second
+
+                        if (data != null) {
+                            orderInfoState.postValue(OrderInfoState.Success(data))
+                        } else {
+                            orderInfoState.postValue(OrderInfoState.Failed(message!!))
+                        }
+                    }
         }
     }
 }
