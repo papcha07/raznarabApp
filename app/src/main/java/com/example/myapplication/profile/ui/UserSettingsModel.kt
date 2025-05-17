@@ -1,4 +1,4 @@
-package com.example.myapplication.profile.domain.model
+package com.example.myapplication.profile.ui
 
 data class UserSettingsModel(
     val email: String?,

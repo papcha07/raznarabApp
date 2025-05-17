@@ -16,7 +16,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_BASE_URL", "https://hw-api-production.up.railway.app")
     }
 
     buildTypes {

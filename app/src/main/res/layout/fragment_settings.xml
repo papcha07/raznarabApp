@@ -54,7 +54,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:shapeAppearanceOverlay="@style/RoundedImageViewStyle"
-                android:src="@drawable/ic_launcher_background"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="18dp"/>
 

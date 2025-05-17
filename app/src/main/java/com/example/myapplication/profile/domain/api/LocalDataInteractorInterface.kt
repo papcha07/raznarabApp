@@ -1,6 +1,6 @@
 package com.example.myapplication.profile.domain.api
 
-import com.example.myapplication.profile.domain.model.UserSettingsModel
+import com.example.myapplication.profile.ui.UserSettingsModel
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataInteractorInterface {

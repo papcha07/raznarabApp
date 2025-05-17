@@ -1,5 +1,6 @@
 package com.example.myapplication.profile.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,15 +13,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.R
-import com.example.myapplication.authorization.ui.registration.RegistrationViewModel
 import com.example.myapplication.databinding.FragmentChangeProfileBinding
-import com.example.myapplication.profile.domain.model.UserSettingsModel
+import com.example.myapplication.profile.data.uriToFile
+import com.example.myapplication.profile.domain.model.UserInfoRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangeProfileFragment : Fragment() {
     private lateinit var binding: FragmentChangeProfileBinding
     private val viewModel: ProfileViewModel by viewModel()
     private val apiBaseUrl = "https://hw-api-production.up.railway.app"
+    private var currentUri: Uri ? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,6 +39,8 @@ class ChangeProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         stateObserve()
         pickImage()
+        changeInfo()
+
     }
 
 
@@ -62,6 +66,8 @@ class ChangeProfileFragment : Fragment() {
         Toast.makeText(requireContext(), "Ошибка подключения к интернету", Toast.LENGTH_LONG).show()
     }
 
+
+
     private fun fillProfile(userModel: UserSettingsModel) {
         binding.nameEditTextId.setText(userModel.firstName)
         binding.lastNameEditTextId.setText(userModel.secondName)
@@ -75,6 +81,7 @@ class ChangeProfileFragment : Fragment() {
                 .load(avatarUrl)
                 .placeholder(R.drawable.ic_account)
                 .error(R.drawable.ic_account)
+                .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.imageViewId)
         }
@@ -84,24 +91,23 @@ class ChangeProfileFragment : Fragment() {
         }
     }
 
-//    private fun changeInfo() {
-//        binding.saveButtonId.setOnClickListener {
-//            val email: String? = null
-//            val phoneNumber: String? = binding.phoneEditTextId.text.toString()
-//            val firstName: String? = binding.nameEditTextId.text.toString()
-//            val secondName: String? = binding.lastNameEditTextId.text.toString()
-//            val patronymic: String? = null
-//            val description: String? = binding.abouEditTextId.text.toString()
-//            viewModel.updateInfo(UserSettingsModel(
-//                email,
-//                phoneNumber,
-//                firstName,
-//                secondName,
-//                patronymic,
-//                description,
-//            ))
-//        }
-//    }
+    private fun changeInfo() {
+        binding.saveButtonId.setOnClickListener {
+            val phoneNumber: String? = binding.phoneEditTextId.text.toString()
+            val firstName: String? = binding.nameEditTextId.text.toString()
+            val secondName: String? = binding.lastNameEditTextId.text.toString()
+            val description: String? = binding.abouEditTextId.text.toString()
+            viewModel.updateInfo(
+                UserInfoRequest(
+                    phoneNumber = phoneNumber,
+                    firstName = firstName,
+                    secondName = secondName,
+                    description = description,
+                    image = viewModel.uriState.value,
+                )
+            )
+        }
+    }
 
     fun pickImage(){
         val picker = registerForActivityResult(
@@ -109,6 +115,7 @@ class ChangeProfileFragment : Fragment() {
         ){
             uris ->
             if(uris != null){
+                viewModel.uriState.postValue(uris)
                 binding.imageViewId.setImageURI(uris)
             }
         }

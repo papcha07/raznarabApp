@@ -23,6 +23,7 @@
         tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/action_settingsFragment2_to_changeProfileFragment2"
+            app:enterAnim="@anim/slide_in_right"
             app:destination="@id/changeProfileFragment2" />
     </fragment>
     <fragment
@@ -33,6 +34,9 @@
         <action
             android:id="@+id/action_loginFragment2_to_mapFragment2"
             app:destination="@id/mapFragment2" />
+        <action
+            android:id="@+id/action_loginFragment2_to_registrationFragment2"
+            app:destination="@id/registrationFragment2" />
     </fragment>
     <fragment
         android:id="@+id/changeProfileFragment2"
@@ -48,4 +52,13 @@
         android:name="com.example.myapplication.order.ui.placeOrder.OrderListFragment"
         android:label="fragment_order_list2"
         tools:layout="@layout/fragment_order_list2" />
+    <fragment
+        android:id="@+id/registrationFragment2"
+        android:name="com.example.myapplication.authorization.ui.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment2_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
+    </fragment>
 </navigation>

@@ -3,7 +3,7 @@ package com.example.myapplication.profile.domain
 import com.example.myapplication.order.domain.models.Resource
 import com.example.myapplication.profile.domain.api.LocalDataInteractorInterface
 import com.example.myapplication.profile.domain.api.LocalProfileRepository
-import com.example.myapplication.profile.domain.model.UserSettingsModel
+import com.example.myapplication.profile.ui.UserSettingsModel
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

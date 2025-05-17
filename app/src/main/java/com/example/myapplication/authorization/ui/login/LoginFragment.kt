@@ -81,7 +81,7 @@ class LoginFragment : Fragment() {
 
     private fun goToRegistrationScreen(){
         binding.noAccountButtonId.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+            findNavController().navigate(R.id.action_loginFragment2_to_registrationFragment2)
         }
     }
 

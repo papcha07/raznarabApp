@@ -1,5 +1,6 @@
 package com.example.myapplication.profile.ui
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.profile.domain.api.LocalDataInteractorInterface
 import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
-import com.example.myapplication.profile.domain.model.UserSettingsModel
+import com.example.myapplication.profile.domain.model.UserInfoRequest
 import com.example.myapplication.sharing.ShareInteractor
 import com.example.myapplication.token.domain.TokenInteractor
 import kotlinx.coroutines.launch
@@ -22,8 +23,10 @@ class ProfileViewModel(
     private val infoState = MutableLiveData<ProfileInfoStateScreen>()
     fun getInfoState(): LiveData<ProfileInfoStateScreen> = infoState
 
+    val uriState = MutableLiveData<Uri?>()
+
+
     init {
-        getLocalData()
         loadInfo()
     }
 
@@ -37,10 +40,6 @@ class ProfileViewModel(
             userInfoUseCaseInterface.getUserInfo(id, token).collect { pair ->
                 val userInfo = pair.first
                 val message = pair.second
-
-                Log.d("userInfo", "${userInfo.toString()}")
-                Log.d("userInfo", "${message}")
-
                 when {
                     userInfo == null -> {
                         if (message == "Ошибка подключения") {
@@ -51,7 +50,6 @@ class ProfileViewModel(
                     }
 
                     else -> {
-                        saveLocalData(userInfo)
                         infoState.postValue(ProfileInfoStateScreen.Content(userInfo))
                     }
                 }
@@ -59,7 +57,7 @@ class ProfileViewModel(
         }
     }
 
-    fun updateInfo(userInfo: UserSettingsModel) {
+    fun updateInfo(userInfo: UserInfoRequest) {
 
         val id = getUserId()
         val token = getToken()
@@ -77,29 +75,6 @@ class ProfileViewModel(
                     }
                 }
             }
-        }
-    }
-
-    private fun saveLocalData(user: UserSettingsModel) {
-        localUseCase.saveUserData(user)
-    }
-
-    private fun getLocalData() {
-        viewModelScope.launch {
-
-            localUseCase.getUserData().collect { pair ->
-                val userInfo = pair.first
-                val message = pair.second
-                when {
-                    userInfo == null -> {
-                        infoState.postValue(ProfileInfoStateScreen.Error(message!!))
-                    }
-                    else -> {
-                        infoState.postValue(ProfileInfoStateScreen.ConnectionFailed(userInfo))
-                    }
-                }
-            }
-
         }
     }
 
