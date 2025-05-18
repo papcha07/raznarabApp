@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentOrderDetailsBinding
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
@@ -54,7 +57,17 @@ class OrderDetailsFragment : Fragment() {
 
     private fun fillScreen(){
         binding.textOrderTitle.text = orderForView.title
-        binding.textOrderDescription.text = orderForView.professionName
+        binding.textOrderPrice.text = "${orderForView.price.toInt()}₽"
+        binding.textOrderDate.text = orderForView.createdAt
+
+        val avatarUrl = "${BuildConfig.BASE_URL}/image/show/${orderForView.mainImagePath}"
+        Glide.with(requireContext())
+            .load(avatarUrl)
+            .placeholder(R.drawable.ic_account)
+            .error(R.drawable.ic_account)
+            .dontAnimate()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(binding.imageOrderPhoto)
     }
 
     private fun observeCancelState(){
