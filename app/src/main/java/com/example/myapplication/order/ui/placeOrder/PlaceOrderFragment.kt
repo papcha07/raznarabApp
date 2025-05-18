@@ -114,7 +114,7 @@ class PlaceOrderFragment : Fragment() {
     }
 
     private fun openImage(uri: Uri) {
-        val action = PlaceOrderFragmentDirections.actionPlaceOrderFragmentToImageFragment(uri)
+        val action = PlaceOrderFragmentDirections.actionPlaceOrderFragment2ToImageFragment(uri)
         findNavController().navigate(action)
     }
 

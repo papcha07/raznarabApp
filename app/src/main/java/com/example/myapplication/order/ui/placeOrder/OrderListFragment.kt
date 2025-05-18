@@ -99,7 +99,7 @@ class OrderListFragment : Fragment() {
 
     private fun navigateToOrderDetailScree(order: OrderDto){
         val gsonOrder = gson.toJson(order)
-        val action = OrderListFragmentDirections.actionOrderListFragment3ToOrderDetailsFragment(gsonOrder)
+        val action = OrderListFragmentDirections.actionOrderListFragmentToOrderDetailsFragment2(gsonOrder)
         findNavController().navigate(action)
     }
 

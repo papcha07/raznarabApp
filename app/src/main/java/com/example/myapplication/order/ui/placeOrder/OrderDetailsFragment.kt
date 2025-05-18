@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentOrderDetailsBinding
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
+import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.models.OrderForView
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
@@ -20,13 +21,13 @@ class OrderDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentOrderDetailsBinding
     private val orderViewModel: OrderViewModel by viewModel()
-    private lateinit var orderForView: OrderForView
+    private lateinit var orderForView: OrderDto
     private val gson: Gson by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val args = OrderDetailsFragmentArgs.fromBundle(requireArguments()).orderInfo
-        val order = gson.fromJson(args, OrderForView::class.java)
+        val order = gson.fromJson(args, OrderDto::class.java)
         orderForView = order
     }
 
@@ -61,7 +62,7 @@ class OrderDetailsFragment : Fragment() {
             state ->
             when(state){
                 true -> {
-                    findNavController().navigate(R.id.action_orderDetailsFragment_to_orderListFragment3)
+                    findNavController().navigate(R.id.action_orderDetailsFragment2_to_orderListFragment)
                 }
                 false -> {
                     Toast.makeText(requireContext(), "Ошибка отмена заказа\nПопробуйте позже", Toast.LENGTH_SHORT).show()

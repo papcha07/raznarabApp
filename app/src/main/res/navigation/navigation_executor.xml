@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_ececutor"
-    app:startDestination="@id/mapFragment2">
+    app:startDestination="@id/loginFragment2">
     <fragment
         android:id="@+id/mapFragment2"
         android:name="com.example.myapplication.raznarab.ui.MapFragment"
@@ -46,12 +46,20 @@
     <fragment
         android:id="@+id/placeOrderFragment2"
         android:name="com.example.myapplication.order.ui.placeOrder.PlaceOrderFragment"
-        android:label="PlaceOrderFragment" />
+        android:label="PlaceOrderFragment" >
+        <action
+            android:id="@+id/action_placeOrderFragment2_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/orderListFragment"
         android:name="com.example.myapplication.order.ui.placeOrder.OrderListFragment"
         android:label="fragment_order_list2"
-        tools:layout="@layout/fragment_order_list2" />
+        tools:layout="@layout/fragment_order_list2" >
+        <action
+            android:id="@+id/action_orderListFragment_to_orderDetailsFragment2"
+            app:destination="@id/orderDetailsFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/registrationFragment2"
         android:name="com.example.myapplication.authorization.ui.registration.RegistrationFragment"
@@ -60,5 +68,32 @@
         <action
             android:id="@+id/action_registrationFragment2_to_loginFragment2"
             app:destination="@id/loginFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment2"
+        android:name="com.example.myapplication.order.ui.placeOrder.OrderDetailsFragment"
+        android:label="OrderDetailsFragment" >
+        <argument
+            android:name="orderInfo"
+            app:argType="string"
+            />
+        <action
+            android:id="@+id/action_orderDetailsFragment2_to_orderListFragment"
+            app:destination="@id/orderListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" >
+
+        <argument
+            android:name="uri"
+            app:argType= "android.net.Uri"
+            />
+        <action
+            android:id="@+id/action_imageFragment_to_placeOrderFragment2"
+            app:destination="@id/placeOrderFragment2" />
     </fragment>
 </navigation>
