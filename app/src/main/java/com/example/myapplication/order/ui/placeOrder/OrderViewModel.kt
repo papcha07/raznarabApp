@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
+import com.example.myapplication.order.domain.models.Candidate
 import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.token.domain.TokenInteractor
 import com.mobsandgeeks.saripaar.annotation.Or
@@ -153,6 +154,32 @@ class OrderViewModel(
 
                     false -> {
                         cancelOrderState.postValue(false)
+                    }
+                }
+            }
+        }
+    }
+
+    private val candidatesState = MutableLiveData<CandidatesState>()
+    fun getCandidateState(): LiveData<CandidatesState> = candidatesState
+
+    fun getAllCandidates(orderId: String) {
+        val token = tokenInteractor.getToken()!!
+        viewModelScope.launch {
+            mapInteractor.getCandidatesById(token, orderId).collect { pair ->
+                val data = pair.first
+                val message = pair.second
+
+                when {
+                    data != null -> {
+                        candidatesState.postValue(CandidatesState.Content(data))
+                    }
+                    else -> {
+                        if (message == "Нет интернета") {
+                            candidatesState.postValue(CandidatesState.NoInternet)
+                        } else {
+                            candidatesState.postValue(CandidatesState.Failed)
+                        }
                     }
                 }
             }

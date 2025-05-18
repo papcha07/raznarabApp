@@ -200,7 +200,10 @@ class MapFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        bottomAdapter = BottomAdapter(mutableListOf())
+        bottomAdapter = BottomAdapter(mutableListOf()){
+            order ->
+            respondToOrder(order.id)
+        }
         recyclerView = binding.orderBottomNavigation.recyclerViewId
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = bottomAdapter
@@ -269,7 +272,6 @@ class MapFragment : Fragment() {
     }
 
     private fun setAvatar() {
-
         mapViewModel.getAvatarState().observe(viewLifecycleOwner){
             path ->
             val avatarUrl = "${BuildConfig.BASE_URL}/image/show/$path"
@@ -283,6 +285,12 @@ class MapFragment : Fragment() {
                 .into(binding.profileButtonId)
         }
     }
+
+    private fun respondToOrder(orderId: String){
+        mapViewModel.respondToOrder(orderId)
+    }
+
+
 
 
 }

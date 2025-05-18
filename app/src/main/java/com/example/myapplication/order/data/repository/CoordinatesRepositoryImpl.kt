@@ -1,28 +1,24 @@
 package com.example.myapplication.order.data.repository
 
-import android.media.session.MediaSession.Token
 import android.util.Log
 import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
 import com.example.myapplication.order.data.dto.geo.GeocodeResponse
-import com.example.myapplication.order.data.dto.order.ErrorsResponseDto
+import com.example.myapplication.order.data.dto.order.CandidatesResponse
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.data.dto.order.OrderResponse
 import com.example.myapplication.order.data.dto.order.OrdersResponse
 import com.example.myapplication.order.data.dto.prof.ProfessionResponse
-import com.example.myapplication.order.data.network.ImagesResponse
 import com.example.myapplication.order.data.network.NetworkClient
 import com.example.myapplication.order.data.network.RetrofitClient
 import com.example.myapplication.order.domain.api.CoordinatesRepository
+import com.example.myapplication.order.domain.models.Candidate
 import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.domain.models.Resource
 import com.example.myapplication.order.domain.models.Profession
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
-import java.io.IOException
+
 
 class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesRepository {
 
@@ -144,6 +140,39 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
         when(response.resultCode){
             200 -> emit(true)
             else -> emit(false)
+        }
+    }
+
+    override fun getCandidatesByOrderId(
+        token: String,
+        orderId: String
+    ): Flow<Resource<List<Candidate>>> = flow {
+        val response = networkClient.getCandidatesByOrderId(token, orderId)
+        when(response.resultCode){
+
+            200 -> {
+                val candidates = (response as CandidatesResponse).candidates
+                emit(Resource.Success(candidates))
+            }
+
+            -1 -> {
+                emit(Resource.Failed("Нет интернета"))
+            }
+
+            else -> {
+                emit(Resource.Failed("Что-то пошло не так.."))
+            }
+        }
+    }
+
+    override fun respondToOrder(token: String, orderId: String): Flow<Boolean> = flow {
+        val response = networkClient.respondToOrder(token, orderId)
+        when(response.resultCode){
+
+            200 -> {emit(true)}
+            else -> {
+                emit(false)
+            }
         }
     }
 

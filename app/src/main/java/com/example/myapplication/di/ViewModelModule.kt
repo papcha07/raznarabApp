@@ -29,6 +29,7 @@ val viewModelModule = module {
         MapViewModel(
             get(),
             get(),
+            get(),
             get()
         )
     }

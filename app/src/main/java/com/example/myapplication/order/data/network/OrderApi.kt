@@ -1,5 +1,6 @@
 package com.example.myapplication.order.data.network
 
+import com.example.myapplication.order.data.dto.order.CandidatesResponse
 import com.example.myapplication.order.data.dto.order.OrderResponse
 import com.example.myapplication.order.data.dto.order.OrdersResponse
 import okhttp3.MultipartBody
@@ -45,6 +46,18 @@ interface OrderApi {
 
     @PATCH("/order/cancel/{orderId}")
     suspend fun deleteOrderById(
+        @Header("Authorization") token : String,
+        @Path("orderId") orderId: String
+    ) : retrofit2.Response<Unit>
+
+    @GET("/order/candidates/{orderId}")
+    suspend fun getCandidatesByOrderId(
+        @Header("Authorization") token: String,
+        @Path("orderId") orderId: String
+    ) : CandidatesResponse
+
+    @POST("/user/respond/{orderId}")
+    suspend fun respondToOrder(
         @Header("Authorization") token : String,
         @Path("orderId") orderId: String
     ) : retrofit2.Response<Unit>

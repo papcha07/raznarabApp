@@ -48,6 +48,7 @@ class OrderListFragment : Fragment() {
             order ->
             if(!order.isCancelled){
                 navigateToOrderDetailScree(order)
+                ordersViewModel.getAllCandidates(order.id)
             }
         }
         recyclerView = binding.recyclerViewId

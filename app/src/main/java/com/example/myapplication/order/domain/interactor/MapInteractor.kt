@@ -3,8 +3,10 @@ package com.example.myapplication.order.domain.interactor
 import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.data.network.ImagesResponse
+import com.example.myapplication.order.domain.TimeFormatter
 import com.example.myapplication.order.domain.api.CoordinatesRepository
 import com.example.myapplication.order.domain.api.MapInteractorInterface
+import com.example.myapplication.order.domain.models.Candidate
 import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.order.domain.models.OrderForView
 import com.example.myapplication.order.domain.models.Place
@@ -70,7 +72,32 @@ class MapInteractor(private val coordinatesRepository: CoordinatesRepository) :
         return coordinatesRepository.deleteOrder(token, orderId)
     }
 
+    override fun getCandidatesById(
+        token: String,
+        orderId: String
+    ): Flow<Pair<List<Candidate>?, String?>> {
+        return coordinatesRepository.getCandidatesByOrderId(token, orderId).map {
+            result ->
+            when(result){
+                is Resource.Success ->{
+                    val data = result.data
+                    for(candidate in data){
+                        val time = TimeFormatter.formatResponseTime(candidate.responseTime)
+                        candidate.responseTime = time
+                    }
+                    Pair(result.data, null)
+                }
 
+                is Resource.Failed -> {
+                    Pair(null, result.message)
+                }
+            }
+        }
+    }
+
+    override fun respondToOrder(token: String, orderId: String): Flow<Boolean> {
+        return coordinatesRepository.respondToOrder(token,orderId)
+    }
 
 
 }

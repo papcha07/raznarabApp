@@ -1,6 +1,9 @@
 package com.example.myapplication.order.data.network
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.util.Log
 import com.example.myapplication.order.data.FileConverter
 import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
@@ -17,6 +20,21 @@ import retrofit2.HttpException
 import java.io.File
 
 class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : NetworkClient {
+
+    private fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                    capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        } else {
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnected
+        }
+    }
 
     override suspend fun doRequest(dto: Any): Response {
         return try {
@@ -122,6 +140,52 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
                 val response = client.orderApi.deleteOrderById("Bearer $token", orderId)
                 Response().apply {
                     resultCode = if (response.isSuccessful) 200 else response.code()
+                }
+            }
+        }
+        catch (e: HttpException){
+            Response().apply {
+                resultCode = e.code()
+            }
+        }
+    }
+
+    override suspend fun getCandidatesByOrderId(token: String, orderId: String): Response {
+        return try {
+            withContext(Dispatchers.IO){
+                if(isInternetAvailable(context)){
+                    val response = client.orderApi.getCandidatesByOrderId("Bearer $token", orderId)
+                    response.resultCode = 200
+                    response
+                }
+                else{
+                    Response().apply {
+                        resultCode = -1
+                    }
+                }
+            }
+        }
+
+        catch (e: HttpException){
+            Response().apply {
+                resultCode = e.code()
+            }
+        }
+    }
+
+    override suspend fun respondToOrder(token: String, orderId: String): Response {
+        return try {
+            withContext(Dispatchers.IO){
+                if(isInternetAvailable(context)){
+                    val response = client.orderApi.respondToOrder("Bearer $token", orderId)
+                    Response().apply {
+                        resultCode = if (response.isSuccessful) 200 else response.code()
+                    }
+                }
+                else{
+                    Response().apply {
+                        resultCode = -1
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ package com.example.myapplication.order.domain.api
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.data.dto.order.OrderResponse
 import com.example.myapplication.order.data.network.ImagesResponse
+import com.example.myapplication.order.domain.models.Candidate
 import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.order.domain.models.OrderForView
 import com.example.myapplication.order.domain.models.Place
@@ -17,4 +18,6 @@ interface CoordinatesRepository {
     fun getAllOrders(token: String, userId: String): Flow<Resource<List<OrderDto>>>
     fun getImagesByName(token: String, fileName: String): Flow<Any?>
     fun deleteOrder(token: String, orderId: String): Flow<Boolean>
+    fun getCandidatesByOrderId(token: String, orderId: String): Flow<Resource<List<Candidate>>>
+    fun respondToOrder(token: String, orderId: String) : Flow<Boolean>
 }

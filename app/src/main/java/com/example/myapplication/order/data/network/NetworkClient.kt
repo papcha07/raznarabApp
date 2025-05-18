@@ -7,4 +7,6 @@ interface NetworkClient {
     suspend fun placeOrderRequest(token: String,dto: Any) : Response
     suspend fun getAllOrdersRequest(token: String,userId: String) : Response
     suspend fun deleteOrderById(token: String, orderId : String): Response
+    suspend fun getCandidatesByOrderId(token: String, orderId: String): Response
+    suspend fun respondToOrder(token: String, orderId: String) : Response
 }

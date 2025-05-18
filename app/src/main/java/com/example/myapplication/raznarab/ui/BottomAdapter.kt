@@ -11,6 +11,7 @@ import com.example.myapplication.raznarab.ui.domain.dto.MapOrderForView
 
 class BottomAdapter(
     private val albumList: MutableList<MapOrder>,
+    private val onOrderClick : (MapOrder) -> Unit
     ) : RecyclerView.Adapter<BottomViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.order_item, parent, false)
@@ -23,6 +24,9 @@ class BottomAdapter(
 
     override fun onBindViewHolder(holder: BottomViewHolder, position: Int) {
         holder.bind(albumList[position])
+        holder.itemView.setOnClickListener {
+            onOrderClick(albumList[position])
+        }
     }
 
     fun setContent(list: List<MapOrder>) {

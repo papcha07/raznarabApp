@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
+import com.example.myapplication.order.domain.interactor.MapInteractor
 import com.example.myapplication.profile.domain.UserInfoUseCase
 import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
 import com.example.myapplication.raznarab.ui.domain.api.CoordinatesInteractor
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 class MapViewModel(
     private val coordinatesInteractor: CoordinatesInteractor,
     private val tokenInteractor: TokenInteractor,
-    private val userInfoUseCase: UserInfoUseCaseInterface
+    private val userInfoUseCase: UserInfoUseCaseInterface,
+    private val mapInteractor: MapInteractorInterface
 ) : ViewModel() {
     private val coordState = MutableLiveData<MapPointStateScreen>()
     fun getCoordState(): LiveData<MapPointStateScreen> {
@@ -82,6 +84,26 @@ class MapViewModel(
                     pair ->
                 val imagePath = pair.first?.avatarPath
                 avatarImageState.postValue(imagePath)
+            }
+        }
+    }
+
+    private val respondOrderState = MutableLiveData<Boolean>()
+    fun getRespondOrderState () : LiveData<Boolean>{
+        return respondOrderState
+    }
+
+    fun respondToOrder(orderId: String){
+        val token = tokenInteractor.getToken()!!
+        viewModelScope.launch {
+            mapInteractor.respondToOrder(token, orderId).collect{
+                    boolean ->
+                when(boolean){
+                    true -> {
+                        respondOrderState.postValue(true)
+                    }
+                    false -> respondOrderState.postValue(false)
+                }
             }
         }
     }
