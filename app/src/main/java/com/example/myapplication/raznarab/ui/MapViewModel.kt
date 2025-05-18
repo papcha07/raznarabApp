@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
 import com.example.myapplication.profile.domain.UserInfoUseCase
+import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
 import com.example.myapplication.raznarab.ui.domain.api.CoordinatesInteractor
 import com.example.myapplication.raznarab.ui.domain.dto.Coordinate
 import com.example.myapplication.token.domain.TokenInteractor
@@ -16,14 +17,20 @@ import kotlinx.coroutines.launch
 class MapViewModel(
     private val coordinatesInteractor: CoordinatesInteractor,
     private val tokenInteractor: TokenInteractor,
+    private val userInfoUseCase: UserInfoUseCaseInterface
 ) : ViewModel() {
     private val coordState = MutableLiveData<MapPointStateScreen>()
     fun getCoordState(): LiveData<MapPointStateScreen> {
         return coordState
     }
 
+    private val avatarImageState = MutableLiveData<String?>()
+    fun getAvatarState() : LiveData<String?> = avatarImageState
+
+
     init {
         getAllCoordinates()
+        getAvatarImage()
     }
 
     private fun getAllCoordinates() {
@@ -64,6 +71,18 @@ class MapViewModel(
                             orderInfoState.postValue(OrderInfoState.Failed(message!!))
                         }
                     }
+        }
+    }
+
+    fun getAvatarImage(){
+        val id = tokenInteractor.getUserId()
+        val token = tokenInteractor.getToken()
+        viewModelScope.launch {
+            userInfoUseCase.getUserInfo(id!!, token!!).collect{
+                    pair ->
+                val imagePath = pair.first?.avatarPath
+                avatarImageState.postValue(imagePath)
+            }
         }
     }
 }

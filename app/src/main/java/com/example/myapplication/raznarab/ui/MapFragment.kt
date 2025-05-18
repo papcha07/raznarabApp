@@ -16,6 +16,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -60,7 +63,8 @@ class MapFragment : Fragment() {
             CameraPosition(Point(56.013260, 92.867194), 14.0f, 0.0f, 0.0f)
         )
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
         fetchLocation()
         zoomMap()
         unZoomMap()
@@ -72,6 +76,7 @@ class MapFragment : Fragment() {
         openOrderScreen()
         initBottomMenu()
         openProfileScreen()
+        setAvatar()
     }
 
     override fun onStop() {
@@ -117,7 +122,7 @@ class MapFragment : Fragment() {
     }
 
 
-    private fun zoomMap(){
+    private fun zoomMap() {
         binding.plusImageId.setOnClickListener {
             val map = mapView.mapWindow.map
             val currentPosition = map.cameraPosition
@@ -125,14 +130,19 @@ class MapFragment : Fragment() {
             val newZoomLevel = currentPosition.zoom + 1
 
             map.move(
-                CameraPosition(currentPosition.target, newZoomLevel, currentPosition.azimuth, currentPosition.tilt),
+                CameraPosition(
+                    currentPosition.target,
+                    newZoomLevel,
+                    currentPosition.azimuth,
+                    currentPosition.tilt
+                ),
                 Animation(Animation.Type.SMOOTH, 0.5f),
                 null
             )
         }
     }
 
-    private fun unZoomMap(){
+    private fun unZoomMap() {
         binding.minusImageId.setOnClickListener {
             val map = mapView.mapWindow.map
             val currentPosition = map.cameraPosition
@@ -140,35 +150,40 @@ class MapFragment : Fragment() {
             val newUnZoomLevel = currentPosition.zoom - 1
 
             map.move(
-                CameraPosition(currentPosition.target, newUnZoomLevel, currentPosition.azimuth, currentPosition.tilt),
+                CameraPosition(
+                    currentPosition.target,
+                    newUnZoomLevel,
+                    currentPosition.azimuth,
+                    currentPosition.tilt
+                ),
                 Animation(Animation.Type.SMOOTH, 0.5f),
                 null
             )
         }
     }
 
-    private fun getAllCoordinates(){
-        mapViewModel.getCoordState().observe(viewLifecycleOwner){
-            state ->
-            when(state){
+    private fun getAllCoordinates() {
+        mapViewModel.getCoordState().observe(viewLifecycleOwner) { state ->
+            when (state) {
 
-                is MapPointStateScreen.CoordinatesContent ->{
+                is MapPointStateScreen.CoordinatesContent -> {
                     addPointsToMap(state.data)
                 }
 
                 is MapPointStateScreen.ErrorData -> {
-                    Toast.makeText(requireContext(), state.message.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), state.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
     }
 
-    private fun addPointsToMap(list: List<Point>){
+    private fun addPointsToMap(list: List<Point>) {
         val map = mapView.mapWindow.map
         val mapObjects = map.mapObjects
         mapObjects.clear() // Очистить старые метки
 
-        for(point in list){
+        for (point in list) {
             val placemark = mapObjects.addPlacemark(point)
             placemark.setIcon(ImageProvider.fromResource(requireContext(), R.drawable.ic_money))
 
@@ -184,7 +199,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
         bottomAdapter = BottomAdapter(mutableListOf())
         recyclerView = binding.orderBottomNavigation.recyclerViewId
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -192,20 +207,20 @@ class MapFragment : Fragment() {
     }
 
 
-
-    private fun initBottomMenu(){
+    private fun initBottomMenu() {
         val bottomSheetContainer = binding.orderBottomNavigation.bottomContainerId
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer).apply {
             state = BottomSheetBehavior.STATE_HIDDEN
         }
 
         bottomSheetBehavior.addBottomSheetCallback(
-            object : BottomSheetBehavior.BottomSheetCallback(){
+            object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    when(newState){
+                    when (newState) {
                         BottomSheetBehavior.STATE_HIDDEN -> {
                             binding.overlay.visibility = View.GONE
                         }
+
                         else -> {
                             binding.overlay.visibility = View.VISIBLE
                         }
@@ -220,16 +235,16 @@ class MapFragment : Fragment() {
         )
     }
 
-    private fun observeOrderClick(){
-        mapViewModel.getOrderInfoState().observe(viewLifecycleOwner){
-            state ->
+    private fun observeOrderClick() {
+        mapViewModel.getOrderInfoState().observe(viewLifecycleOwner) { state ->
             Log.d("OrderInfoState", "State: $state")
-            when(state){
+            when (state) {
                 is OrderInfoState.Success -> {
                     bottomAdapter.setContent(state.orderList)
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
                 }
+
                 is OrderInfoState.Failed -> {
                     Toast.makeText(
                         requireContext(),
@@ -241,15 +256,31 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun openOrderScreen(){
+    private fun openOrderScreen() {
         binding.placeOrderButtonId.setOnClickListener {
             findNavController().navigate(R.id.action_mapFragment2_to_placeOrderFragment2)
         }
     }
 
-    private fun openProfileScreen(){
+    private fun openProfileScreen() {
         binding.profileButtonId.setOnClickListener {
             findNavController().navigate(R.id.action_mapFragment2_to_settingsFragment2)
+        }
+    }
+
+    private fun setAvatar() {
+
+        mapViewModel.getAvatarState().observe(viewLifecycleOwner){
+            path ->
+            val avatarUrl = "${BuildConfig.BASE_URL}/image/show/$path"
+
+            Glide.with(requireContext())
+                .load(avatarUrl)
+                .placeholder(R.drawable.ic_account)
+                .error(R.drawable.ic_account)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.profileButtonId)
         }
     }
 

@@ -72,7 +72,7 @@
 
     <style name="RoundedImageView">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">30dp</item>
+        <item name="cornerSize">35dp</item>
     </style>
 
     <style name="playlistImageStyle">
