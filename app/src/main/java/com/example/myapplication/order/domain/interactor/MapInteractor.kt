@@ -65,49 +65,12 @@ class MapInteractor(private val coordinatesRepository: CoordinatesRepository) :
         }
     }
 
-    override fun getImagesByName(token: String, fileName: String): Flow<Any?> {
-        return coordinatesRepository.getImagesByName(token, fileName)
-    }
-
-    override fun getOrdersWithImages(token: String, userId: String): Flow<List<OrderForView>> {
-        return coordinatesRepository.getAllOrders(token, userId)
-            .flatMapLatest { resource ->
-                if (resource is Resource.Success) {
-                    val orders = resource.data
-                    combineOrdersWithImages(token, orders)
-                } else {
-                    flowOf(emptyList())
-                }
-            }
-    }
 
     override fun deleteOrder(token: String, orderId: String): Flow<Boolean> {
         return coordinatesRepository.deleteOrder(token, orderId)
     }
 
-    fun combineOrdersWithImages(token: String, orders: List<OrderDto>): Flow<List<OrderForView>> {
-        return flow {
-            val orderForListView = mutableListOf<OrderForView>()
-            for (order in orders) {
-                val imageFlow = coordinatesRepository.getImagesByName(token, order.mainImagePath)
-                imageFlow.collect { image ->
-                    if (image != null) {
-                        val orderForView = OrderForView(
-                            id = order.id,
-                            title = order.title,
-                            price = order.price,
-                            professionName = order.professionName,
-                            createdAt = order.createdAt,
-                            mainImagePath = image as ByteArray,
-                            isCancelled = order.isCancelled
-                        )
-                        orderForListView.add(orderForView)
-                    }
-                }
-            }
-            emit(orderForListView)
-        }
-    }
+
 
 
 }

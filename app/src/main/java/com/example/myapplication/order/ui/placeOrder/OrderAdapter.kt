@@ -1,15 +1,20 @@
 package com.example.myapplication.order.ui.placeOrder
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.BuildConfig
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.R
+import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.models.OrderForView
 import java.io.ByteArrayInputStream
 import java.time.OffsetDateTime
@@ -17,8 +22,9 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class OrderAdapter(
-    private val orders: MutableList<OrderForView>,
-    private val onOrderClick: (OrderForView) -> Unit
+    private val context: Context,
+    private val orders: MutableList<OrderDto>,
+    private val onOrderClick: (OrderDto) -> Unit
 ) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,7 +34,6 @@ class OrderAdapter(
         val priceTextView: TextView = itemView.findViewById(R.id.priceTextViewId)
         val dateTextView: TextView = itemView.findViewById(R.id.dateTextViewId)
         val statusTextView: TextView = itemView.findViewById(R.id.statusTextView)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -39,11 +44,14 @@ class OrderAdapter(
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val order = orders[position]
-
-
-        Glide.with(holder.itemView.context)
-            .load(order.mainImagePath)
+        Glide.with(context)
+            .load("${BuildConfig.BASE_URL}/image/show/${order.mainImagePath}")
+            .placeholder(R.drawable.ic_account)
+            .error(R.drawable.ic_account)
+            .dontAnimate()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.imageView)
+
         holder.statusTextView.text =
             if (order.isCancelled) {
                 holder.statusTextView.setTextColor(
@@ -70,7 +78,7 @@ class OrderAdapter(
 
     override fun getItemCount(): Int = orders.size
 
-    fun setList(newOrders: List<OrderForView>) {
+    fun setList(newOrders: List<OrderDto>) {
         orders.clear()
         orders.addAll(newOrders)
     }

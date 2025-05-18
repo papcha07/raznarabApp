@@ -9,6 +9,6 @@ data class OrderDto(
     val price: Double,
     val professionName: String,
     val createdAt: String,
-    val mainImagePath: String,
+    val mainImagePath: String?,
     val isCancelled: Boolean
 )

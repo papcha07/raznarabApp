@@ -14,7 +14,5 @@ interface MapInteractorInterface {
     fun getProfessions() : Flow<Pair<MutableList<Profession>?, String?>>
     fun placeOrder(token : String,order: Order) : Flow<String?>
     fun getAllOrders(token: String,userId: String) : Flow<Pair<List<OrderDto>?, String?>>
-    fun getImagesByName(token: String, fileName: String): Flow<Any?>
-    fun getOrdersWithImages(token: String, userId: String): Flow<List<OrderForView>>
     fun deleteOrder(token: String, orderId: String) : Flow<Boolean>
 }

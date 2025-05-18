@@ -12,6 +12,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentChangeProfileBinding
 import com.example.myapplication.profile.data.uriToFile
@@ -21,7 +22,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ChangeProfileFragment : Fragment() {
     private lateinit var binding: FragmentChangeProfileBinding
     private val viewModel: ProfileViewModel by viewModel()
-    private val apiBaseUrl = "https://hw-api-production.up.railway.app"
     private var currentUri: Uri ? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +76,7 @@ class ChangeProfileFragment : Fragment() {
 
         val avatarPath = userModel.avatarPath
         if(avatarPath != null){
-            val avatarUrl = "${apiBaseUrl}/image/show/$avatarPath"
+            val avatarUrl = "${BuildConfig.BASE_URL}/image/show/$avatarPath"
             Glide.with(requireContext())
                 .load(avatarUrl)
                 .placeholder(R.drawable.ic_account)

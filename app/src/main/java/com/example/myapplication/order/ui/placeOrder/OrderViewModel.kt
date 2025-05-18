@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
 import com.example.myapplication.order.domain.models.Order
 import com.example.myapplication.token.domain.TokenInteractor
+import com.mobsandgeeks.saripaar.annotation.Or
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -44,7 +45,7 @@ class OrderViewModel(
 
 
     private val cancelOrderState = MutableLiveData<Boolean>()
-    fun getCancelOrderState () : LiveData<Boolean> = cancelOrderState
+    fun getCancelOrderState(): LiveData<Boolean> = cancelOrderState
 
     fun placeOrder(order: Order) {
         val token = tokenInteractor.getToken()
@@ -113,26 +114,38 @@ class OrderViewModel(
         val token = tokenInteractor.getToken()
         ordersState.postValue(OrdersListState.Loading)
         viewModelScope.launch {
-            mapInteractor.getOrdersWithImages(token!!, userId!!).collect { list ->
-                if (list.isNullOrEmpty()) {
-                    ordersState.postValue(OrdersListState.EmptyList)
-                } else {
-                    ordersState.postValue(OrdersListState.Orders(list))
+            mapInteractor.getAllOrders(token!!, userId!!).collect { pair ->
+                val data = pair.first
+                val message = pair.second
+
+                when {
+
+                    data != null -> {
+                        if (data.size != 0) {
+                            ordersState.postValue(OrdersListState.Orders(data))
+                        } else {
+                            ordersState.postValue(OrdersListState.EmptyList)
+                        }
+                    }
+
+                    else -> {
+                        ordersState.postValue(OrdersListState.Failed)
+                    }
                 }
+
             }
         }
     }
 
-    fun clearObserve(){
+    fun clearObserve() {
         placeOrderState.postValue(null)
     }
 
-    fun cancelOrder(orderId: String){
+    fun cancelOrder(orderId: String) {
         val token = tokenInteractor.getToken()!!
         viewModelScope.launch {
-            mapInteractor.deleteOrder(token, orderId).collect{
-                state ->
-                when(state){
+            mapInteractor.deleteOrder(token, orderId).collect { state ->
+                when (state) {
                     true -> {
                         cancelOrderState.postValue(true)
                         getAllOrders()

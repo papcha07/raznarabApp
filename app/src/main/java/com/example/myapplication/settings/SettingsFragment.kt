@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.App
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSettingsBinding
 import com.example.myapplication.profile.ui.UserSettingsModel
@@ -27,7 +28,6 @@ class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: ProfileViewModel by viewModel()
     private lateinit var switchMaterial: SwitchMaterial
-    private val apiBaseUrl = "https://hw-api-production.up.railway.app"
     private val themeInteractor: ThemeInteractor by inject()
 
     override fun onCreateView(
@@ -86,7 +86,7 @@ class SettingsFragment : Fragment() {
 
         val avatarPath = userModel.avatarPath
         if(avatarPath != null){
-            val avatarUrl = "${apiBaseUrl}/image/show/$avatarPath"
+            val avatarUrl = "${BuildConfig.BASE_URL}/image/show/$avatarPath"
             Glide.with(requireContext())
                 .load(avatarUrl)
                 .placeholder(R.drawable.ic_account)

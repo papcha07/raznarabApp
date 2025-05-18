@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentOrderList2Binding
+import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.models.OrderForView
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
@@ -41,7 +42,7 @@ class OrderListFragment : Fragment() {
     }
 
     private fun setUpRecyclerVIew(){
-        orderAdapter = OrderAdapter(
+        orderAdapter = OrderAdapter(requireContext(),
             mutableListOf()
         ){
             order ->
@@ -65,15 +66,19 @@ class OrderListFragment : Fragment() {
                     showEmptyContainer()
                 }
 
-                OrdersListState.Loading -> {
+                is OrdersListState.Loading -> {
                     showProgressBar()
+                }
+
+                is OrdersListState.Failed -> {
+
                 }
             }
         }
     }
 
 
-    private fun showList(list: List<OrderForView>){
+    private fun showList(list: List<OrderDto>){
         orderAdapter.setList(list)
         binding.progressBarId.visibility = View.GONE
         binding.recyclerViewId.visibility = View.VISIBLE
@@ -92,7 +97,7 @@ class OrderListFragment : Fragment() {
         binding.emptyContainerId.visibility = View.GONE
     }
 
-    private fun navigateToOrderDetailScree(order: OrderForView){
+    private fun navigateToOrderDetailScree(order: OrderDto){
         val gsonOrder = gson.toJson(order)
         val action = OrderListFragmentDirections.actionOrderListFragment3ToOrderDetailsFragment(gsonOrder)
         findNavController().navigate(action)
