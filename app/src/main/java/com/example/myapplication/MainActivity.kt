@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -33,5 +34,18 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavId.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener{
+                _, destination, _ ->
+            when(destination.id){
+                R.id.registrationFragment2 -> {
+                    binding.bottomNavId.visibility = View.GONE
+                }
+
+                R.id.loginFragment2 -> {
+                    binding.bottomNavId.visibility = View.GONE
+                }
+            }
+        }
     }
 }
