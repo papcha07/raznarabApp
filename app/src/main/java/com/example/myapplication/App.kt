@@ -40,10 +40,6 @@ class App() : Application() {
             theme = themeInteractor.getTheme() //получили значение
             switchTheme(theme)
         }
-
-
-
-
     }
 
      fun switchTheme(isDark : Boolean){
@@ -57,11 +53,4 @@ class App() : Application() {
         )
         themeInteractor.switchTheme(theme)
     }
-
-
-
-
-
-
-
 }

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -279,7 +280,7 @@ class MapFragment : Fragment() {
     private fun setAvatar() {
         mapViewModel.getAvatarState().observe(viewLifecycleOwner){
             path ->
-            val avatarUrl = "${BuildConfig.BASE_URL}/image/show/$path"
+            val avatarUrl = "${CONST.BASE_URL}image/show/$path"
 
             Glide.with(requireContext())
                 .load(avatarUrl)

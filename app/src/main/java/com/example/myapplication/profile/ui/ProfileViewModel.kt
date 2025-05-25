@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val userInfoUseCaseInterface: UserInfoUseCaseInterface,
-    private val localUseCase: LocalDataInteractorInterface,
     private val tokenInteractor: TokenInteractor,
     private val shareInteractor: ShareInteractor
 ) : ViewModel() {
@@ -44,12 +43,10 @@ class ProfileViewModel(
                 when {
                     userInfo == null -> {
                         if (message == "Ошибка подключения") {
-
                         } else {
                             infoState.postValue(ProfileInfoStateScreen.Error(message!!))
                         }
                     }
-
                     else -> {
                         infoState.postValue(ProfileInfoStateScreen.Content(userInfo))
                     }

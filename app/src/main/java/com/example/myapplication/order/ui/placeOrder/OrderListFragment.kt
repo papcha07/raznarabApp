@@ -56,6 +56,11 @@ class OrderListFragment : Fragment() {
         recyclerView.adapter = orderAdapter
     }
 
+    override fun onResume() {
+        super.onResume()
+        ordersViewModel.getAllOrders()
+    }
+
     private fun observeAllOrders(){
         ordersViewModel.getOrdersState().observe(viewLifecycleOwner){
             state ->

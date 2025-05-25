@@ -1,5 +1,6 @@
 package com.example.myapplication.order.data.network
 
+import com.example.myapplication.CONST
 import com.example.myapplication.raznarab.ui.data.network.RaznarabApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,7 +25,7 @@ object RetrofitClient {
     private val professionsClient: Retrofit by lazy {
         Retrofit
             .Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -36,7 +37,7 @@ object RetrofitClient {
     private val orderClient: Retrofit by lazy {
         Retrofit
             .Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

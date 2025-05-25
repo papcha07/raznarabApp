@@ -1,5 +1,6 @@
 package com.example.myapplication.profile.data.network
 
+import com.example.myapplication.CONST
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,7 +10,7 @@ object ProfileRetrofitInstance {
 
     private val profileRetrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(defaultGson))
             .build()
     }
@@ -21,7 +22,7 @@ object ProfileRetrofitInstance {
 
     private val updateRetrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(patchGson))
             .build()
     }

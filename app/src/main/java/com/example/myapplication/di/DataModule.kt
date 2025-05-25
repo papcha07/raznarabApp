@@ -2,7 +2,6 @@ package com.example.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.room.Room
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.myapplication.authorization.data.network.AuthNetworkClient
@@ -16,11 +15,9 @@ import com.example.myapplication.order.data.network.RetrofitNetworkClient
 import com.example.myapplication.order.data.repository.CoordinatesRepositoryImpl
 import com.example.myapplication.order.domain.api.CoordinatesRepository
 import com.example.myapplication.profile.data.SettingsRepositoryImpl
-import com.example.myapplication.profile.data.local.LocalProfileRepositoryImpl
 import com.example.myapplication.profile.data.network.ProfileRetrofitInstance
 import com.example.myapplication.profile.data.network.SettingsNetworkClient
 import com.example.myapplication.profile.data.network.SettingsNetworkClientInterface
-import com.example.myapplication.profile.domain.api.LocalProfileRepository
 import com.example.myapplication.profile.domain.api.SettingsRepositoryInterface
 import com.example.myapplication.raznarab.ui.data.MapRepositoryImpl
 import com.example.myapplication.raznarab.ui.data.network.MapNetworkClient
@@ -28,7 +25,6 @@ import com.example.myapplication.raznarab.ui.data.network.MapNetworkClientInterf
 import com.example.myapplication.raznarab.ui.domain.api.MapRepository
 import com.example.myapplication.settings.domain.api.ThemeRepository
 import com.example.myapplication.settings.data.ThemeRepositoryImpl
-import com.example.myapplication.sharing.ShareInteractorImpl
 import com.example.myapplication.sharing.ShareRepository
 import com.example.myapplication.sharing.ShareRepositoryImpl
 import com.example.myapplication.token.data.TokenEncryptedRepository
@@ -109,14 +105,6 @@ val dataModule = module {
     }
 
 
-    //locale storage
-    single<LocalProfileRepository>{
-        LocalProfileRepositoryImpl(get(named("userPrefs")))
-    }
-
-    single(named("userPrefs")){
-        androidContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-    }
 
 
     //themeStorage

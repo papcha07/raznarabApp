@@ -5,7 +5,6 @@
     import com.example.myapplication.authorization.domain.AuthInteractorImpl
     import com.example.myapplication.order.domain.api.MapInteractorInterface
     import com.example.myapplication.order.domain.interactor.MapInteractor
-    import com.example.myapplication.profile.domain.LocalDataUseCase
     import com.example.myapplication.profile.domain.UserInfoUseCase
     import com.example.myapplication.profile.domain.api.LocalDataInteractorInterface
     import com.example.myapplication.profile.domain.api.UserInfoUseCaseInterface
@@ -38,9 +37,7 @@
             UserInfoUseCase(get())
         }
 
-        single<LocalDataInteractorInterface>{
-            LocalDataUseCase(get(), get())
-        }
+
         single<ThemeInteractor>{
             ThemeInteractorImpl(get())
         }

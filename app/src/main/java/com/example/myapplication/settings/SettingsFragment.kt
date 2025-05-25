@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.App
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSettingsBinding
 import com.example.myapplication.profile.ui.UserSettingsModel
@@ -64,11 +65,10 @@ class SettingsFragment : Fragment() {
                 }
 
                 is ProfileInfoStateScreen.Error -> {
-                    networkErrorStub()
+
                 }
 
                 is ProfileInfoStateScreen.ConnectionFailed -> {
-                    networkErrorStub()
                     Toast.makeText(
                         requireContext(),
                         "Проблемы с подключением к интернету",
@@ -86,7 +86,7 @@ class SettingsFragment : Fragment() {
 
         val avatarPath = userModel.avatarPath
         if(avatarPath != null){
-            val avatarUrl = "${BuildConfig.BASE_URL}/image/show/$avatarPath"
+            val avatarUrl = "${CONST.BASE_URL}image/show/$avatarPath"
             Glide.with(requireContext())
                 .load(avatarUrl)
                 .placeholder(R.drawable.ic_account)
@@ -96,10 +96,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun networkErrorStub() {
-        binding.workerNameId.text = "Имя Фамилия"
-        binding.phoneNumberId.text = "+77777777777"
-    }
+
 
     private fun navigateToChangeScreen() {
         binding.editButton.setOnClickListener {
@@ -145,8 +142,4 @@ class SettingsFragment : Fragment() {
             viewModel.messageToAdmins()
         }
     }
-
-
-
-
 }

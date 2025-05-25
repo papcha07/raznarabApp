@@ -7,14 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentOrderDetailsBinding
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
 import com.example.myapplication.order.data.dto.order.OrderDto
+import com.example.myapplication.order.domain.TimeFormatter
 import com.example.myapplication.order.domain.models.OrderForView
+import com.example.myapplication.order.ui.placeOrder.adapters.CandidatesAdapter
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +30,8 @@ class OrderDetailsFragment : Fragment() {
     private lateinit var binding: FragmentOrderDetailsBinding
     private val orderViewModel: OrderViewModel by viewModel()
     private lateinit var orderForView: OrderDto
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var candidatesAdapter: CandidatesAdapter
     private val gson: Gson by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +54,8 @@ class OrderDetailsFragment : Fragment() {
         fillScreen()
         cancelOrder(orderForView.id)
         observeCancelState()
+        setAdapter()
+        observerCandidates()
     }
 
     private fun cancelOrder(orderId: String){
@@ -55,12 +64,24 @@ class OrderDetailsFragment : Fragment() {
         }
     }
 
+    private fun setAdapter(){
+        candidatesAdapter = CandidatesAdapter(
+            context = requireContext(),
+            candidatesList = mutableListOf(),
+        ){
+            candidate ->
+        }
+        recyclerView = binding.recyclerResponses
+        recyclerView.adapter = candidatesAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
     private fun fillScreen(){
         binding.textOrderTitle.text = orderForView.title
         binding.textOrderPrice.text = "${orderForView.price.toInt()}₽"
-        binding.textOrderDate.text = orderForView.createdAt
+        binding.textOrderDate.text = TimeFormatter.formatResponseTime(orderForView.createdAt)
 
-        val avatarUrl = "${BuildConfig.BASE_URL}/image/show/${orderForView.mainImagePath}"
+        val avatarUrl = "${CONST.BASE_URL}image/show/${orderForView.mainImagePath}"
         Glide.with(requireContext())
             .load(avatarUrl)
             .placeholder(R.drawable.ic_account)
@@ -79,6 +100,34 @@ class OrderDetailsFragment : Fragment() {
                 }
                 false -> {
                     Toast.makeText(requireContext(), "Ошибка отмена заказа\nПопробуйте позже", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun observerCandidates(){
+        orderViewModel.getCandidateState().observe(viewLifecycleOwner){
+            state ->
+            when(state){
+
+                is CandidatesState.Content -> {
+                    candidatesAdapter.setList(state.data)
+                }
+
+                is CandidatesState.Failed -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Не удалось загрузить кандидатов..",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is CandidatesState.NoInternet -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Проблемы с интернетом..",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentChangeProfileBinding
 import com.example.myapplication.profile.data.uriToFile
@@ -76,7 +77,7 @@ class ChangeProfileFragment : Fragment() {
 
         val avatarPath = userModel.avatarPath
         if(avatarPath != null){
-            val avatarUrl = "${BuildConfig.BASE_URL}/image/show/$avatarPath"
+            val avatarUrl = "${CONST.BASE_URL}image/show/$avatarPath"
             Glide.with(requireContext())
                 .load(avatarUrl)
                 .placeholder(R.drawable.ic_account)

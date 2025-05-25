@@ -19,6 +19,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_account"
             android:contentDescription="Аватар"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,6 +72,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            android:id="@+id/typeId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Компания"
@@ -85,10 +87,8 @@
             android:id="@+id/textDescription"
             android:layout_width="0dp"
             android:fontFamily="@font/ys_text_regular"
-
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Опытный специалист, выполню заказ быстро и качественно."
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:maxLines="3"
             android:ellipsize="end"

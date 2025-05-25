@@ -11,7 +11,7 @@ class MapNetworkClient(val client: RetrofitClient) : MapNetworkClientInterface {
     override suspend fun getAllOrders(token: String): Response {
         return try {
             withContext(Dispatchers.IO){
-                val response = client.raznarabApi.getCoordinates(token)
+                val response = client.raznarabApi.getCoordinates("Bearer ${token}")
                 response.resultCode = 200
                 response
             }

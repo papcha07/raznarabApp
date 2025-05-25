@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.models.OrderForView
@@ -45,7 +46,7 @@ class OrderAdapter(
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val order = orders[position]
         Glide.with(context)
-            .load("${BuildConfig.BASE_URL}/image/show/${order.mainImagePath}")
+            .load("${CONST.BASE_URL}image/show/${order.mainImagePath}")
             .placeholder(R.drawable.ic_account)
             .error(R.drawable.ic_account)
             .dontAnimate()
