@@ -13,6 +13,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.PATCH
 
 interface OrderApi {
@@ -35,31 +36,46 @@ interface OrderApi {
     suspend fun getAllOrders(
         @Header("Authorization") token: String,
         @Path("userId") userId: String,
-    ) : OrdersResponse
+    ): OrdersResponse
 
 
     @GET("image/show/{name}")
     suspend fun getImagesByOrders(
         @Header("Authorization") token: String,
-        @Path("name") name : String
-    ) : Response<ResponseBody>
+        @Path("name") name: String
+    ): Response<ResponseBody>
 
     @PATCH("/order/cancel/{orderId}")
     suspend fun deleteOrderById(
-        @Header("Authorization") token : String,
+        @Header("Authorization") token: String,
         @Path("orderId") orderId: String
-    ) : retrofit2.Response<Unit>
+    ): retrofit2.Response<Unit>
 
     @GET("/order/candidates/{orderId}")
     suspend fun getCandidatesByOrderId(
         @Header("Authorization") token: String,
         @Path("orderId") orderId: String
-    ) : CandidatesResponse
+    ): CandidatesResponse
 
     @POST("/user/respond/{orderId}")
     suspend fun respondToOrder(
-        @Header("Authorization") token : String,
+        @Header("Authorization") token: String,
         @Path("orderId") orderId: String
-    ) : retrofit2.Response<Unit>
+    ): retrofit2.Response<Unit>
+
+
+    @POST("/order/{orderId}/set-executor/{executorId}")
+    suspend fun setExecutor(
+        @Header("Authorization") token: String,
+        @Path("orderId") orderId: String,
+        @Path("executorId") executorId: String
+    ): retrofit2.Response<Unit>
+
+    @POST("/order/{orderId}/complete")
+    suspend fun completeOrder(
+        @Header("Authorization") token: String,
+        @Path("orderId") orderId: String,
+        @Body body: Int
+    ): retrofit2.Response<Unit>
 
 }

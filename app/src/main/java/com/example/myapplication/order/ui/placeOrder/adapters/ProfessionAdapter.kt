@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui.placeOrder
+package com.example.myapplication.order.ui.placeOrder.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

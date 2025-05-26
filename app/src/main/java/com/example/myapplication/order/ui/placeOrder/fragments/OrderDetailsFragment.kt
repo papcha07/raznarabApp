@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui.placeOrder
+package com.example.myapplication.order.ui.placeOrder.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,15 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.myapplication.BuildConfig
 import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentOrderDetailsBinding
-import com.example.myapplication.databinding.FragmentPlaceOrderBinding
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.TimeFormatter
-import com.example.myapplication.order.domain.models.OrderForView
+import com.example.myapplication.order.ui.placeOrder.OrderViewModel
 import com.example.myapplication.order.ui.placeOrder.adapters.CandidatesAdapter
+import com.example.myapplication.order.ui.placeOrder.state.CandidatesState
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,10 +51,11 @@ class OrderDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fillScreen()
-        cancelOrder(orderForView.id)
+        orderViewModel.getAllCandidates(orderForView.id)
         observeCancelState()
         setAdapter()
         observerCandidates()
+        cancelOrder(orderForView.id)
     }
 
     private fun cancelOrder(orderId: String){
@@ -70,6 +70,9 @@ class OrderDetailsFragment : Fragment() {
             candidatesList = mutableListOf(),
         ){
             candidate ->
+            val cand = candidate
+            val action = OrderDetailsFragmentDirections.actionOrderDetailsFragment2ToExecutorDetailFragment(candidate.id, orderForView.id)
+            findNavController().navigate(action)
         }
         recyclerView = binding.recyclerResponses
         recyclerView.adapter = candidatesAdapter

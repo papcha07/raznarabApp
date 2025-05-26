@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui.placeOrder
+package com.example.myapplication.order.ui.placeOrder.fragments
 
 import android.content.Context
 import android.content.DialogInterface
@@ -6,28 +6,27 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentPlaceOrderBinding
-import com.example.myapplication.order.data.network.RetrofitClient
 import com.example.myapplication.order.domain.models.Place
-import com.example.myapplication.order.domain.models.Profession
 import com.example.myapplication.order.domain.models.Order
+import com.example.myapplication.order.ui.placeOrder.OrderViewModel
+import com.example.myapplication.order.ui.placeOrder.adapters.ImageAdapter
+import com.example.myapplication.order.ui.placeOrder.adapters.PlaceAdapter
+import com.example.myapplication.order.ui.placeOrder.adapters.ProfessionAdapter
+import com.example.myapplication.order.ui.placeOrder.state.AddressState
+import com.example.myapplication.order.ui.placeOrder.state.ProfessionState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 

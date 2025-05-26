@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/settings_background"
-        tools:context=".order.ui.placeOrder.PlaceOrderFragment">
+        tools:context=".order.ui.placeOrder.fragments.PlaceOrderFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/start"

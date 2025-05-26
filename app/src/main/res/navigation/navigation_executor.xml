@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_ececutor"
-    app:startDestination="@id/loginFragment2">
+    app:startDestination="@id/mapFragment2">
     <fragment
         android:id="@+id/mapFragment2"
         android:name="com.example.myapplication.raznarab.ui.MapFragment"
@@ -25,6 +25,9 @@
             android:id="@+id/action_settingsFragment2_to_changeProfileFragment2"
             app:enterAnim="@anim/slide_in_right"
             app:destination="@id/changeProfileFragment2" />
+        <action
+            android:id="@+id/action_settingsFragment2_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment2"
@@ -45,7 +48,7 @@
         tools:layout="@layout/fragment_change_profile" />
     <fragment
         android:id="@+id/placeOrderFragment2"
-        android:name="com.example.myapplication.order.ui.placeOrder.PlaceOrderFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.PlaceOrderFragment"
         android:label="PlaceOrderFragment" >
         <action
             android:id="@+id/action_placeOrderFragment2_to_imageFragment"
@@ -53,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/orderListFragment"
-        android:name="com.example.myapplication.order.ui.placeOrder.OrderListFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.OrderListFragment"
         android:label="fragment_order_list2"
         tools:layout="@layout/fragment_order_list2" >
         <action
@@ -72,7 +75,7 @@
 
     <fragment
         android:id="@+id/orderDetailsFragment2"
-        android:name="com.example.myapplication.order.ui.placeOrder.OrderDetailsFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.OrderDetailsFragment"
         android:label="OrderDetailsFragment" >
         <argument
             android:name="orderInfo"
@@ -81,10 +84,13 @@
         <action
             android:id="@+id/action_orderDetailsFragment2_to_orderListFragment"
             app:destination="@id/orderListFragment" />
+        <action
+            android:id="@+id/action_orderDetailsFragment2_to_executorDetailFragment"
+            app:destination="@id/executorDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/imageFragment"
-        android:name="com.example.myapplication.order.ui.placeOrder.ImageFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.ImageFragment"
         android:label="fragment_image"
         tools:layout="@layout/fragment_image" >
 
@@ -95,5 +101,19 @@
         <action
             android:id="@+id/action_imageFragment_to_placeOrderFragment2"
             app:destination="@id/placeOrderFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/executorDetailFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.ExecutorDetailFragment"
+        android:label="ExecutorDetailFragment" >
+        <argument
+            android:name="executorId"
+            app:argType="string"
+            />
+
+        <argument
+            android:name="orderId"
+            app:argType="string"
+            />
     </fragment>
 </navigation>

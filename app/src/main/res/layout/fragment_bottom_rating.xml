@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/bottomContainerId"
+android:layout_width="match_parent"
+android:layout_height="230dp"
+app:behavior_hideable = "false"
+android:background="@drawable/bottom_dialog_background"
+android:orientation="vertical"
+app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <View
+        android:id="@+id/scrollPlaceId"
+        android:layout_width="40dp"
+        android:layout_height="5dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/scroll_view">
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical">
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/finishOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Завершить заказ"
+            android:textSize="14sp"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/ys_text_medium"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

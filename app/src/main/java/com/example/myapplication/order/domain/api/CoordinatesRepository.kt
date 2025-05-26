@@ -10,6 +10,9 @@ import com.example.myapplication.order.domain.models.Place
 import com.example.myapplication.order.domain.models.Resource
 import com.example.myapplication.order.domain.models.Profession
 import kotlinx.coroutines.flow.Flow
+import retrofit2.http.Body
+import retrofit2.http.Header
+import retrofit2.http.Path
 
 interface CoordinatesRepository {
     fun searchAddress(address: String): Flow<Resource<MutableList<Place>>>
@@ -20,4 +23,6 @@ interface CoordinatesRepository {
     fun deleteOrder(token: String, orderId: String): Flow<Boolean>
     fun getCandidatesByOrderId(token: String, orderId: String): Flow<Resource<List<Candidate>>>
     fun respondToOrder(token: String, orderId: String) : Flow<Boolean>
+    fun setExecutor(token: String, orderId: String, executorId: String): Flow<Boolean>
+    fun completeOrder(token: String,orderId: String, body: Int): Flow<Boolean>
 }

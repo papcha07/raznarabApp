@@ -119,7 +119,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun logOut() {
-//        findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
+        findNavController().navigate(R.id.action_settingsFragment2_to_loginFragment2)
     }
 
     private fun showLogOutDialog() {

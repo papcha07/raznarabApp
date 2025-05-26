@@ -10,5 +10,5 @@ data class OrderDto(
     val professionName: String,
     val createdAt: String,
     val mainImagePath: String?,
-    val isCancelled: Boolean
+    val status : Status
 )

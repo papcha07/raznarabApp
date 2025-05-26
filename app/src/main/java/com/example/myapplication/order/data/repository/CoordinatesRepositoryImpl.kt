@@ -176,4 +176,39 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
         }
     }
 
+    override fun setExecutor(token: String, orderId: String, executorId: String): Flow<Boolean>  = flow{
+        val response = networkClient.setExecutor(
+            token,
+            orderId,
+            executorId
+        )
+
+        when(response.resultCode){
+            200 -> {
+                emit(true)
+            }
+
+            else -> {
+                emit(false)
+            }
+        }
+    }
+
+    override fun completeOrder(token: String, orderId: String, body: Int): Flow<Boolean>  = flow{
+        val response = networkClient.completeOrder(
+            token,
+            orderId,
+            body
+        )
+        when(response.resultCode){
+            200 -> {
+                emit(true)
+            }
+
+            else -> {
+                emit(false)
+            }
+        }
+    }
+
 }

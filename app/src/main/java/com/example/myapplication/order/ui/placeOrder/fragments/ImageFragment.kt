@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui.placeOrder
+package com.example.myapplication.order.ui.placeOrder.fragments
 
 import android.net.Uri
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentImageBinding
+import com.example.myapplication.order.ui.placeOrder.OrderViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 

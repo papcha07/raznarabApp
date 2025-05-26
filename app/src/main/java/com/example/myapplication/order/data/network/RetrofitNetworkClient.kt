@@ -78,7 +78,7 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
         }
     }
 
-    override suspend fun placeOrderRequest(token : String,dto: Any): Response {
+    override suspend fun placeOrderRequest(token: String, dto: Any): Response {
         return try {
             Log.d("REQCHECK", "dto is Order: ${dto is Order}, class: ${dto::class.qualifiedName}")
             if (dto is Order) {
@@ -116,16 +116,14 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
         }
     }
 
-    override suspend fun getAllOrdersRequest(token : String,userId: String): Response {
+    override suspend fun getAllOrdersRequest(token: String, userId: String): Response {
         return try {
-            withContext(Dispatchers.IO){
-                val response = client.orderApi.getAllOrders("Bearer $token",userId)
+            withContext(Dispatchers.IO) {
+                val response = client.orderApi.getAllOrders("Bearer $token", userId)
                 response.resultCode = 200
                 response
             }
-        }
-
-        catch (e: HttpException){
+        } catch (e: HttpException) {
             Response().apply {
                 Log.d("responseMessage", e.response().toString())
                 resultCode = e.code()
@@ -136,14 +134,13 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
 
     override suspend fun deleteOrderById(token: String, orderId: String): Response {
         return try {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 val response = client.orderApi.deleteOrderById("Bearer $token", orderId)
                 Response().apply {
                     resultCode = if (response.isSuccessful) 200 else response.code()
                 }
             }
-        }
-        catch (e: HttpException){
+        } catch (e: HttpException) {
             Response().apply {
                 resultCode = e.code()
             }
@@ -152,21 +149,18 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
 
     override suspend fun getCandidatesByOrderId(token: String, orderId: String): Response {
         return try {
-            withContext(Dispatchers.IO){
-                if(isInternetAvailable(context)){
+            withContext(Dispatchers.IO) {
+                if (isInternetAvailable(context)) {
                     val response = client.orderApi.getCandidatesByOrderId("Bearer $token", orderId)
                     response.resultCode = 200
                     response
-                }
-                else{
+                } else {
                     Response().apply {
                         resultCode = -1
                     }
                 }
             }
-        }
-
-        catch (e: HttpException){
+        } catch (e: HttpException) {
             Response().apply {
                 resultCode = e.code()
             }
@@ -175,21 +169,61 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
 
     override suspend fun respondToOrder(token: String, orderId: String): Response {
         return try {
-            withContext(Dispatchers.IO){
-                if(isInternetAvailable(context)){
+            withContext(Dispatchers.IO) {
+                if (isInternetAvailable(context)) {
                     val response = client.orderApi.respondToOrder("Bearer $token", orderId)
                     Response().apply {
                         resultCode = if (response.isSuccessful) 200 else response.code()
                     }
-                }
-                else{
+                } else {
                     Response().apply {
                         resultCode = -1
                     }
                 }
             }
+        } catch (e: HttpException) {
+            Response().apply {
+                resultCode = e.code()
+            }
         }
-        catch (e: HttpException){
+    }
+
+    override suspend fun setExecutor(token: String, orderId: String, executorId: String): Response {
+        return try {
+            withContext(Dispatchers.IO) {
+                if (isInternetAvailable(context)) {
+                    val response = client.orderApi.setExecutor("Bearer $token", orderId, executorId)
+                    Response().apply {
+                        resultCode = if (response.isSuccessful) 200 else response.code()
+                    }
+                } else {
+                    Response().apply {
+                        resultCode = -1
+                    }
+                }
+            }
+        } catch (e: HttpException) {
+            Response().apply {
+                resultCode = e.code()
+            }
+        }
+    }
+
+    override suspend fun completeOrder(token: String, orderId: String, rating: Int): Response {
+        return try {
+            withContext(Dispatchers.IO) {
+                if (isInternetAvailable(context)) {
+                    val response = client.orderApi.completeOrder("Bearer $token", orderId, rating)
+                    Response().apply {
+                        resultCode = if (response.isSuccessful) 200 else response.code()
+                    }
+                } else {
+                    Response().apply {
+                        resultCode = -1
+                    }
+                }
+            }
+        } catch (e: HttpException) {
             Response().apply {
                 resultCode = e.code()
             }

@@ -18,4 +18,6 @@ interface MapInteractorInterface {
     fun deleteOrder(token: String, orderId: String) : Flow<Boolean>
     fun getCandidatesById(token: String, orderId: String) : Flow<Pair<List<Candidate>?, String?>>
     fun respondToOrder(token: String, orderId: String) : Flow<Boolean>
+    fun setExecutor(token: String, orderId: String, executorId: String): Flow<Boolean>
+    fun completeOrder(token: String,orderId: String, body: Int): Flow<Boolean>
 }

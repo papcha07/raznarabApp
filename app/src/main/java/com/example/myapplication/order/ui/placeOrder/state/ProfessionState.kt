@@ -1,4 +1,4 @@
-package com.example.myapplication.order.ui.placeOrder
+package com.example.myapplication.order.ui.placeOrder.state
 
 import com.example.myapplication.order.domain.models.Profession
 

@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.order.domain.TimeFormatter
 import com.example.myapplication.order.domain.models.Candidate
@@ -22,6 +25,7 @@ class CandidatesAdapter(
         val textRatingTextView: TextView = itemView.findViewById(R.id.textRating)
         val typeTextView: TextView = itemView.findViewById(R.id.typeId)
         val descriptionTextView: TextView = itemView.findViewById(R.id.textDescription)
+        val imageView: ImageView = itemView.findViewById(R.id.imageAvatar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CandidatesViewHolder {
@@ -51,13 +55,29 @@ class CandidatesAdapter(
                 }
             }
         }
-        holder.textRatingTextView.text = candidate.rating.toString()
+        if(candidate.rating == null){
+            holder.textRatingTextView.text = "5.00"
+        } else{
+            holder.textRatingTextView.text = candidate.rating.toString()
+        }
         holder.phoneTextView.text = candidate.phoneNumber
+        holder.itemView.setOnClickListener {
+            onCandidateClick(candidate)
+        }
+
+        Glide.with(context)
+            .load("${CONST.BASE_URL}image/show/${candidate.imagePath}")
+            .placeholder(R.drawable.ic_account)
+            .error(R.drawable.ic_account)
+            .dontAnimate()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.imageView)
     }
 
     fun setList(newCandidates: List<Candidate>){
         candidatesList.clear()
         candidatesList.addAll(newCandidates)
+        notifyDataSetChanged()
     }
 
 

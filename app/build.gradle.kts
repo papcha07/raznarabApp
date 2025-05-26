@@ -88,7 +88,7 @@ dependencies {
     implementation("com.auth0:java-jwt:3.18.2")
 
     implementation ("io.realm:realm-android-library:10.10.1")
-
+    implementation("me.zhanghai.android.materialratingbar:library:1.4.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0")
     implementation("com.mobsandgeeks:android-saripaar:2.0.3")

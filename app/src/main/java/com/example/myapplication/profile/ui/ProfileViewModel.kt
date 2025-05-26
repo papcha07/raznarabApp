@@ -55,6 +55,32 @@ class ProfileViewModel(
         }
     }
 
+
+    private val executorInfoState = MutableLiveData<ProfileInfoStateScreen>()
+    fun getExecutorInfoState(): LiveData<ProfileInfoStateScreen> = executorInfoState
+
+    fun loadInfoByExecutor(executorId: String){
+        val token = getToken()
+        viewModelScope.launch {
+            userInfoUseCaseInterface.getUserInfo(executorId, token).collect{
+                pair ->
+                val userInfo = pair.first
+                val message = pair.second
+                when{
+                    userInfo == null -> {
+                        if (message == "Ошибка подключения") {
+                        } else {
+                            executorInfoState.postValue(ProfileInfoStateScreen.Error(message!!))
+                        }
+                    }
+                    else -> {
+                        executorInfoState.postValue(ProfileInfoStateScreen.Content(userInfo))
+                    }
+                }
+            }
+        }
+    }
+
     fun updateInfo(userInfo: UserInfoRequest) {
 
         val id = getUserId()

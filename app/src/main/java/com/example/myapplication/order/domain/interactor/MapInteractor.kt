@@ -99,5 +99,13 @@ class MapInteractor(private val coordinatesRepository: CoordinatesRepository) :
         return coordinatesRepository.respondToOrder(token,orderId)
     }
 
+    override fun setExecutor(token: String, orderId: String, executorId: String): Flow<Boolean> {
+        return coordinatesRepository.setExecutor(token, orderId, executorId)
+    }
+
+    override fun completeOrder(token: String, orderId: String, body: Int): Flow<Boolean> {
+        return coordinatesRepository.completeOrder(token, orderId, body)
+    }
+
 
 }

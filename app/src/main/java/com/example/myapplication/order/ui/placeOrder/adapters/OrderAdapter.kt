@@ -1,14 +1,12 @@
-package com.example.myapplication.order.ui.placeOrder
+package com.example.myapplication.order.ui.placeOrder.adapters
 
 import android.content.Context
-import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapplication.BuildConfig
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,10 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.CONST
 import com.example.myapplication.R
 import com.example.myapplication.order.data.dto.order.OrderDto
-import com.example.myapplication.order.domain.models.OrderForView
-import java.io.ByteArrayInputStream
 import java.time.OffsetDateTime
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class OrderAdapter(
@@ -53,18 +48,30 @@ class OrderAdapter(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.imageView)
 
-        holder.statusTextView.text =
-            if (order.isCancelled) {
+        holder.statusTextView.text = order.status.name
+
+        when(order.status.name){
+            "Создан" -> {
                 holder.statusTextView.setTextColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.red)
+                    ContextCompat.getColor(holder.itemView.context, R.color.status_created)
                 )
-                "Отменен"
-            } else {
-                holder.statusTextView.setTextColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.green)
-                )
-                "Активен"
             }
+            "Выполняется" -> {
+                holder.statusTextView.setTextColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.status_in_progress)
+                )
+            }
+            "Завершен" -> {
+                holder.statusTextView.setTextColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.status_completed)
+                )
+            }
+            "Отменен" -> {
+                holder.statusTextView.setTextColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.status_cancelled)
+                )
+            }
+        }
         holder.titleTextView.text = order.title
         holder.categoryTextView.text = order.professionName
         holder.priceTextView.text = "${order.price.toInt()} ₽"

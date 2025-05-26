@@ -9,4 +9,6 @@ interface NetworkClient {
     suspend fun deleteOrderById(token: String, orderId : String): Response
     suspend fun getCandidatesByOrderId(token: String, orderId: String): Response
     suspend fun respondToOrder(token: String, orderId: String) : Response
+    suspend fun setExecutor(token: String, orderId: String, executorId: String) : Response
+    suspend fun completeOrder(token: String, orderId: String, rating: Int) : Response
 }

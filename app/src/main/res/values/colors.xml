@@ -13,4 +13,9 @@
     <color name="red">#FF0000</color>
     <color name="green">#00AA00</color>
 
+    <color name="status_created">#007BFF</color>
+    <color name="status_in_progress">#FFA500</color>
+    <color name="status_completed">#00AA00</color>
+    <color name="status_cancelled">#DC3545</color>
+
 </resources>

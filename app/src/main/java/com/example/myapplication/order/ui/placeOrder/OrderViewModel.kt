@@ -1,6 +1,5 @@
 package com.example.myapplication.order.ui.placeOrder
 
-import android.media.session.MediaSession.Token
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,11 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.order.domain.api.MapInteractorInterface
-import com.example.myapplication.order.domain.models.Candidate
 import com.example.myapplication.order.domain.models.Order
+import com.example.myapplication.order.ui.placeOrder.state.AddressState
+import com.example.myapplication.order.ui.placeOrder.state.CandidatesState
+import com.example.myapplication.order.ui.placeOrder.state.OrdersListState
+import com.example.myapplication.order.ui.placeOrder.state.ProfessionState
 import com.example.myapplication.token.domain.TokenInteractor
-import com.mobsandgeeks.saripaar.annotation.Or
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -180,6 +180,26 @@ class OrderViewModel(
                         } else {
                             candidatesState.postValue(CandidatesState.Failed)
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private val orderStatus = MutableLiveData<Boolean>()
+    fun getOrderStatus() : LiveData<Boolean> = orderStatus
+
+    fun setExecutor(orderId: String, executorId: String){
+        val token = tokenInteractor.getToken()!!
+        viewModelScope.launch {
+            mapInteractor.setExecutor(token, orderId, executorId).collect{
+                state ->
+                when(state){
+                    true ->{
+                        orderStatus.postValue(true)
+                    }
+                    false -> {
+                        orderStatus.postValue(false)
                     }
                 }
             }
