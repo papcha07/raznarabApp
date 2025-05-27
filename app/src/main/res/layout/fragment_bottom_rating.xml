@@ -3,7 +3,7 @@
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:id="@+id/bottomContainerId"
 android:layout_width="match_parent"
-android:layout_height="230dp"
+android:layout_height="220dp"
 app:behavior_hideable = "false"
 android:background="@drawable/bottom_dialog_background"
 android:orientation="vertical"
@@ -23,10 +23,14 @@ app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
         android:orientation="vertical">
-        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+
+        <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:progressTint="@android:color/holo_orange_light"
             android:layout_gravity="center_horizontal" />
 
         <androidx.appcompat.widget.AppCompatButton

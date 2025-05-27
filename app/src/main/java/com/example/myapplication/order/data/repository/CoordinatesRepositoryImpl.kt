@@ -204,7 +204,6 @@ class CoordinatesRepositoryImpl(val networkClient: NetworkClient) : CoordinatesR
             200 -> {
                 emit(true)
             }
-
             else -> {
                 emit(false)
             }

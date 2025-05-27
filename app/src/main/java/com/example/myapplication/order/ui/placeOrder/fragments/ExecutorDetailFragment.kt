@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.myapplication.CONST
@@ -25,6 +27,8 @@ class ExecutorDetailFragment : Fragment() {
     private lateinit var binding: FragmentExecutorDetailBinding
     private var id = "-1"
     private var orderId = "-1"
+    private var isExecutor = false
+    private lateinit var ratingBar: RatingBar
     private val profileViewModel : ProfileViewModel by viewModel()
     private val orderViewModel : OrderViewModel by viewModel()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<MaterialCardView>
@@ -35,7 +39,7 @@ class ExecutorDetailFragment : Fragment() {
         val args = ExecutorDetailFragmentArgs.fromBundle(requireArguments())
         id = args.executorId
         orderId = args.orderId
-
+        isExecutor = args.isExecutor
     }
 
     override fun onCreateView(
@@ -48,11 +52,25 @@ class ExecutorDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ratingBar  = binding.orderBottomRating.ratingBar
+
+
+        if(isExecutor){
+            binding.buttonAssign.visibility = View.GONE
+            binding.orderBottomRating.bottomContainerId.visibility = View.VISIBLE
+        } else{
+            binding.buttonAssign.visibility = View.VISIBLE
+            binding.orderBottomRating.bottomContainerId.visibility = View.GONE
+        }
+
         profileViewModel.loadInfoByExecutor(id)
         observerInfoByExecutor()
         setAssignButton()
         observeExecutorSetter()
         initBottomMenu()
+        ratingBarListener()
+        sendRating()
+        observerRating()
     }
 
     private fun initBottomMenu(){
@@ -62,7 +80,7 @@ class ExecutorDetailFragment : Fragment() {
             isHideable = false
             peekHeight = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                50f,
+                70f,
                 resources.displayMetrics
             ).toInt()
         }
@@ -112,6 +130,8 @@ class ExecutorDetailFragment : Fragment() {
 
     private fun setExecutor(orderId : String, executorId : String){
         orderViewModel.setExecutor(orderId, executorId)
+        findNavController().navigate(R.id.action_executorDetailFragment_to_orderListFragment)
+        orderViewModel.resetAll()
     }
 
     private fun observeExecutorSetter(){
@@ -124,6 +144,10 @@ class ExecutorDetailFragment : Fragment() {
 
                 false -> {
                     showMessage("Не удалось назначить исполнителя")
+                }
+
+                null -> {
+
                 }
             }
         }
@@ -138,6 +162,43 @@ class ExecutorDetailFragment : Fragment() {
     private fun showMessage(message: String){
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
+
+    private fun ratingBarListener(){
+        ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            orderViewModel.currentRating.postValue(rating.toInt())
+        }
+    }
+
+    private fun sendRating(){
+        binding.orderBottomRating.finishOrder.setOnClickListener {
+            orderViewModel.setRating(
+                orderId = orderId,
+                rating = orderViewModel.currentRating.value ?: 5
+            )
+        }
+    }
+
+    private fun observerRating(){
+        orderViewModel.getRatingStatus().observe(viewLifecycleOwner){
+            state ->
+            when(state){
+                true -> {
+                    showMessage("Успешно оценили!")
+                    findNavController().navigate(R.id.action_executorDetailFragment_to_orderListFragment)
+                }
+
+                false -> {
+                    showMessage("Не получилось оценить!")
+                }
+
+                null -> {
+
+                }
+            }
+        }
+    }
+
 
 
 }

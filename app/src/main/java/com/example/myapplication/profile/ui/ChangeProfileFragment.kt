@@ -74,6 +74,7 @@ class ChangeProfileFragment : Fragment() {
         binding.lastNameEditTextId.setText(userModel.secondName)
         binding.phoneEditTextId.setText(userModel.phoneNumber)
         binding.abouEditTextId.setText(userModel.description)
+        binding.ratingId.text = userModel.rating.toString()
 
         val avatarPath = userModel.avatarPath
         if(avatarPath != null){

@@ -31,7 +31,7 @@ class MapNetworkClient(val client: RetrofitClient) : MapNetworkClientInterface {
     ): Response {
         return try {
             withContext(Dispatchers.IO){
-                val response = client.raznarabApi.getInfoByCoordinates(token, latitude, longitude)
+                val response = client.raznarabApi.getInfoByCoordinates("Bearer ${token}", latitude, longitude)
                 response.resultCode = 200
                 response
             }

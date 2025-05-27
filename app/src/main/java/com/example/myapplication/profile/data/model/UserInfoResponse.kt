@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose
 data class UserInfoResponse(
     val email: String?,
     val phoneNumber: String?,
-    val rating: Int?,
+    val rating: Double?,
     val firstName: String?,
     val secondName: String?,
     val patronymic: String?,

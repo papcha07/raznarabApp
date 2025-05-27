@@ -47,7 +47,7 @@ class UserInfoUseCase(private val settingsRepository: SettingsRepositoryInterfac
                             secondName = result.data.secondName,
                             patronymic = result.data.patronymic,
                             description = result.data.description,
-                            rating = 1,
+                            rating = 1.0,
                             avatarPath = ""
                         ), null)
                 }

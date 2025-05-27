@@ -45,7 +45,7 @@ class OrderListFragment : Fragment() {
             requireContext(),
             mutableListOf()
         ) { order ->
-            if(order.status.name != "Отменен"){
+            if(order.status.name != "Отменен" && order.status.name != "Завершен"){
                 navigateToOrderDetailScree(order)
                 ordersViewModel.getAllCandidates(order.id)
             }
@@ -57,7 +57,6 @@ class OrderListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        ordersViewModel.getAllOrders()
     }
 
     private fun observeAllOrders() {

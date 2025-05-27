@@ -26,6 +26,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.card.MaterialCardView
+import com.google.gson.Gson
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -35,12 +36,14 @@ import com.yandex.mapkit.map.PlacemarksStyler
 import com.yandex.mapkit.map.TextStyle
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MapFragment : Fragment() {
     private lateinit var binding: FragmentMapBinding
     private lateinit var mapView: MapView
+    private val gson: Gson by inject()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val mapViewModel: MapViewModel by viewModel()
     private lateinit var bottomAdapter: BottomAdapter
@@ -208,7 +211,10 @@ class MapFragment : Fragment() {
     private fun initRecyclerView() {
         bottomAdapter = BottomAdapter(mutableListOf()){
             order ->
-            respondToOrder(order.id)
+//            respondToOrder(order.id)
+            val gsonOrder = gson.toJson(order)
+            val action = MapFragmentDirections.actionMapFragment2ToXWatchOrderFragment(gsonOrder)
+            findNavController().navigate(action)
         }
         recyclerView = binding.orderBottomNavigation.recyclerViewId
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

@@ -1,6 +1,7 @@
 package com.example.myapplication.order.data.network
 
 import com.example.myapplication.order.data.dto.order.CandidatesResponse
+import com.example.myapplication.order.data.dto.order.CompleteOrderRequest
 import com.example.myapplication.order.data.dto.order.OrderResponse
 import com.example.myapplication.order.data.dto.order.OrdersResponse
 import okhttp3.MultipartBody
@@ -75,7 +76,7 @@ interface OrderApi {
     suspend fun completeOrder(
         @Header("Authorization") token: String,
         @Path("orderId") orderId: String,
-        @Body body: Int
+        @Body body: CompleteOrderRequest
     ): retrofit2.Response<Unit>
 
 }

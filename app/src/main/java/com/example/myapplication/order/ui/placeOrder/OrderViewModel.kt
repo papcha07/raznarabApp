@@ -186,8 +186,8 @@ class OrderViewModel(
         }
     }
 
-    private val orderStatus = MutableLiveData<Boolean>()
-    fun getOrderStatus() : LiveData<Boolean> = orderStatus
+    private val orderStatus = MutableLiveData<Boolean?>()
+    fun getOrderStatus() : LiveData<Boolean?> = orderStatus
 
     fun setExecutor(orderId: String, executorId: String){
         val token = tokenInteractor.getToken()!!
@@ -205,5 +205,35 @@ class OrderViewModel(
             }
         }
     }
+
+     val currentRating = MutableLiveData<Int>()
+
+    private val ratingStatus = MutableLiveData<Boolean?>()
+    fun getRatingStatus() : LiveData<Boolean?> = ratingStatus
+
+    fun setRating(orderId: String, rating: Int){
+        val token = tokenInteractor.getToken()!!
+        viewModelScope.launch {
+            mapInteractor.completeOrder(token, orderId, rating).collect{
+                state ->
+                when(state){
+                    true -> {
+                        ratingStatus.postValue(true)
+                    }
+
+                    false -> {
+                        ratingStatus.postValue(false)
+                    }
+                }
+            }
+        }
+    }
+
+    fun resetAll(){
+        ratingStatus.postValue(null)
+        orderStatus.postValue(null)
+    }
+
+
 
 }

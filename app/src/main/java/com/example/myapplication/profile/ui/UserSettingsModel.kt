@@ -3,7 +3,7 @@ package com.example.myapplication.profile.ui
 data class UserSettingsModel(
     val email: String?,
     val phoneNumber: String?,
-    val rating: Int?,
+    val rating: Double?,
     val firstName: String?,
     val secondName: String?,
     val patronymic: String?,

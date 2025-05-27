@@ -8,6 +8,7 @@ import android.util.Log
 import com.example.myapplication.order.data.FileConverter
 import com.example.myapplication.order.data.dto.geo.GeoCodeRequest
 import com.example.myapplication.order.data.dto.Response
+import com.example.myapplication.order.data.dto.order.CompleteOrderRequest
 import com.example.myapplication.order.data.dto.order.OrderDto
 import com.example.myapplication.order.domain.models.Order
 import kotlinx.coroutines.Dispatchers
@@ -213,7 +214,8 @@ class RetrofitNetworkClient(val client: RetrofitClient, val context: Context) : 
         return try {
             withContext(Dispatchers.IO) {
                 if (isInternetAvailable(context)) {
-                    val response = client.orderApi.completeOrder("Bearer $token", orderId, rating)
+                    val requestBody = CompleteOrderRequest(rating)
+                    val response = client.orderApi.completeOrder("Bearer $token", orderId, requestBody)
                     Response().apply {
                         resultCode = if (response.isSuccessful) 200 else response.code()
                     }

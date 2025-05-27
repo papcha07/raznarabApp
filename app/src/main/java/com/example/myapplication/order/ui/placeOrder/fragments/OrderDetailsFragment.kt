@@ -70,8 +70,7 @@ class OrderDetailsFragment : Fragment() {
             candidatesList = mutableListOf(),
         ){
             candidate ->
-            val cand = candidate
-            val action = OrderDetailsFragmentDirections.actionOrderDetailsFragment2ToExecutorDetailFragment(candidate.id, orderForView.id)
+            val action = OrderDetailsFragmentDirections.actionOrderDetailsFragment2ToExecutorDetailFragment(candidate.id, orderForView.id, candidate.isExecutor)
             findNavController().navigate(action)
         }
         recyclerView = binding.recyclerResponses

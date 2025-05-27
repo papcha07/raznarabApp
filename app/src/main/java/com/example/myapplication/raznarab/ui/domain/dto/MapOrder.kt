@@ -7,5 +7,6 @@ data class MapOrder (
     val shortDescription: String,
     val address: String,
     val price: Double,
-    val professionId: String
+    val professionId: String,
+    val images: List<String>
 )
