@@ -30,9 +30,7 @@ class LoginViewModel(
                 else {
                     loginState.postValue(LoginScreenState.Success(token))
                     tokenInteractor.saveToken(token)
-                    Log.d("TOKEN", tokenInteractor.getToken()!!)
                 }
-
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.myapplication.authorization.data.network
 
+import com.example.myapplication.CONST
 import com.google.gson.GsonBuilder
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,7 +11,7 @@ object AuthRetrofitClient {
     private val client: Retrofit by lazy {
         Retrofit
             .Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -19,7 +20,7 @@ object AuthRetrofitClient {
     private val updateClient : Retrofit by lazy {
         Retrofit
             .Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }

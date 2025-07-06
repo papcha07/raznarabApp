@@ -3,4 +3,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name ="blue">#0601B4</color>
+    <color name ="card_color">#0601B4</color>
+    <color name="settings_background">#E0E0E0</color>
+    <color name="title_name_color">#FF000000</color>
+    <color name = "settings_card_color">#FFFFFFFF</color>
+    <color name ="text_color_settings">#FF000000</color>
+    <color name="place_button_color">#0601B4</color>
+    <color name="background_edittext_color">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00AA00</color>
+
+    <color name="status_created">#007BFF</color>
+    <color name="status_in_progress">#FFA500</color>
+    <color name="status_completed">#00AA00</color>
+    <color name="status_cancelled">#DC3545</color>
+
 </resources>

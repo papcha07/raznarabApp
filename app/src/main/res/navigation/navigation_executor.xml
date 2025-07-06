@@ -3,16 +3,146 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_ececutor"
-    app:startDestination="@id/placeOrderFragment2">
-
+    app:startDestination="@id/mapFragment2">
+    <fragment
+        android:id="@+id/mapFragment2"
+        android:name="com.example.myapplication.raznarab.ui.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment2_to_placeOrderFragment2"
+            app:destination="@id/placeOrderFragment2" />
+        <action
+            android:id="@+id/action_mapFragment2_to_settingsFragment2"
+            app:destination="@id/settingsFragment2" />
+        <action
+            android:id="@+id/action_mapFragment2_to_xWatchOrderFragment"
+            app:destination="@id/xWatchOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment2"
+        android:name="com.example.myapplication.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment2_to_changeProfileFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:destination="@id/changeProfileFragment2" />
+        <action
+            android:id="@+id/action_settingsFragment2_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.example.myapplication.authorization.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment2_to_mapFragment2"
+            app:destination="@id/mapFragment2" />
+        <action
+            android:id="@+id/action_loginFragment2_to_registrationFragment2"
+            app:destination="@id/registrationFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeProfileFragment2"
+        android:name="com.example.myapplication.profile.ui.ChangeProfileFragment"
+        android:label="fragment_change_profile"
+        tools:layout="@layout/fragment_change_profile" />
     <fragment
         android:id="@+id/placeOrderFragment2"
-        android:name="com.example.myapplication.order.ui.PlaceOrderFragment"
-        android:label="fragment_place_order"
-        tools:layout="@layout/fragment_place_order" />
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.PlaceOrderFragment"
+        android:label="PlaceOrderFragment" >
+        <action
+            android:id="@+id/action_placeOrderFragment2_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/orderListFragment2"
-        android:name="com.example.myapplication.order.ui.OrderListFragment"
-        android:label="fragment_order_list"
-        tools:layout="@layout/fragment_order_list" />
+        android:id="@+id/orderListFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.OrderListFragment"
+        android:label="fragment_order_list2"
+        tools:layout="@layout/fragment_order_list2" >
+        <action
+            android:id="@+id/action_orderListFragment_to_orderDetailsFragment2"
+            app:destination="@id/orderDetailsFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment2"
+        android:name="com.example.myapplication.authorization.ui.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment2_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment2"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.OrderDetailsFragment"
+        android:label="OrderDetailsFragment" >
+        <argument
+            android:name="orderInfo"
+            app:argType="string"
+            />
+        <action
+            android:id="@+id/action_orderDetailsFragment2_to_orderListFragment"
+            app:destination="@id/orderListFragment" />
+        <action
+            android:id="@+id/action_orderDetailsFragment2_to_executorDetailFragment"
+            app:destination="@id/executorDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" >
+
+        <argument
+            android:name="uri"
+            app:argType= "android.net.Uri"
+            />
+        <action
+            android:id="@+id/action_imageFragment_to_placeOrderFragment2"
+            app:destination="@id/placeOrderFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/executorDetailFragment"
+        android:name="com.example.myapplication.order.ui.placeOrder.fragments.ExecutorDetailFragment"
+        android:label="ExecutorDetailFragment" >
+        <argument
+            android:name="executorId"
+            app:argType="string"
+            />
+
+        <argument
+            android:name="orderId"
+            app:argType="string"
+            />
+
+        <argument
+            android:name="isExecutor"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_executorDetailFragment_to_orderListFragment"
+            app:destination="@id/orderListFragment"
+            app:popUpTo="@id/orderListFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/xWatchOrderFragment"
+        android:name="com.example.myapplication.raznarab.ui.xWatchOrderFragment"
+        android:label="xWatchOrderFragment" >
+        <argument
+            android:name="order"
+            app:argType="string"
+            />
+        <action
+            android:id="@+id/action_xWatchOrderFragment_to_mapFragment2"
+            app:destination="@id/mapFragment2"
+            app:popUpTo="@id/mapFragment2"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 </navigation>

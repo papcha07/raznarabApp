@@ -5,6 +5,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/ys_text_regular</item>
+        <item name="android:textColor">@color/text_color_settings</item>
     </style>
 
     <style name="order_edit_text">
@@ -50,6 +51,33 @@
         <item name="android:elevation">3dp</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="android:background">@drawable/profile_background_edit_text</item>
+    </style>
+
+    <style name="main_text_style_settings">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color_settings</item>
+        <item name="android:fontFamily">@font/ys_text_medium</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="second_text_style_settings">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color_settings</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/ys_text_regular</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">35dp</item>
+    </style>
+
+    <style name="playlistImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 
 </resources>

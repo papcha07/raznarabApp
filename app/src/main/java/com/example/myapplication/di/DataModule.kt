@@ -1,5 +1,6 @@
 package com.example.di
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
@@ -18,9 +19,18 @@ import com.example.myapplication.profile.data.network.ProfileRetrofitInstance
 import com.example.myapplication.profile.data.network.SettingsNetworkClient
 import com.example.myapplication.profile.data.network.SettingsNetworkClientInterface
 import com.example.myapplication.profile.domain.api.SettingsRepositoryInterface
+import com.example.myapplication.raznarab.ui.data.MapRepositoryImpl
+import com.example.myapplication.raznarab.ui.data.network.MapNetworkClient
+import com.example.myapplication.raznarab.ui.data.network.MapNetworkClientInterface
+import com.example.myapplication.raznarab.ui.domain.api.MapRepository
+import com.example.myapplication.settings.domain.api.ThemeRepository
+import com.example.myapplication.settings.data.ThemeRepositoryImpl
+import com.example.myapplication.sharing.ShareRepository
+import com.example.myapplication.sharing.ShareRepositoryImpl
 import com.example.myapplication.token.data.TokenEncryptedRepository
 import com.example.myapplication.token.data.TokenEncryptedRepositoryImpl
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 
@@ -32,7 +42,7 @@ val dataModule = module {
     }
 
     single<NetworkClient> {
-        RetrofitNetworkClient(get())
+        RetrofitNetworkClient(get(), androidContext())
     }
 
     single {
@@ -91,7 +101,43 @@ val dataModule = module {
     }
 
     single<SettingsNetworkClientInterface>{
-        SettingsNetworkClient(ProfileRetrofitInstance)
+        SettingsNetworkClient(ProfileRetrofitInstance, androidContext())
     }
+
+
+
+
+    //themeStorage
+    single<ThemeRepository>{
+        ThemeRepositoryImpl(get(named("themePrefs")))
+    }
+
+    single(named("themePrefs")){
+        androidContext().getSharedPreferences("theme_prefs", Context.MODE_PRIVATE)
+    }
+
+
+
+
+
+    single<ShareRepository>{
+        ShareRepositoryImpl(androidContext())
+    }
+
+
+    //рабочий di
+    single<MapRepository>{
+        MapRepositoryImpl(get())
+    }
+
+    single<MapNetworkClientInterface>{
+        MapNetworkClient(get())
+    }
+
+    single{
+        RetrofitClient
+    }
+
+
 
 }

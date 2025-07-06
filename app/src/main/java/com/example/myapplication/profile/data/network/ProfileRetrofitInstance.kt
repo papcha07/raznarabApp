@@ -1,6 +1,10 @@
 package com.example.myapplication.profile.data.network
 
+import com.example.myapplication.CONST
+import com.example.myapplication.order.data.network.RetrofitClient
 import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -9,8 +13,9 @@ object ProfileRetrofitInstance {
 
     private val profileRetrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(defaultGson))
+            .client(RetrofitClient.okHttpClient)
             .build()
     }
 
@@ -19,9 +24,18 @@ object ProfileRetrofitInstance {
     }
 
 
+    val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(logging)
+        .build()
+
+
     private val updateRetrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://hw-api-production.up.railway.app/")
+            .baseUrl(CONST.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(patchGson))
             .build()
     }

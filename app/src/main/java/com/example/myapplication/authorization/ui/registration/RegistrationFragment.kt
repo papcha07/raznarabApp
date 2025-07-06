@@ -37,11 +37,6 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
         chooseRoleVariant()
-
-
-
-
-
         registrationViewModel.getScreenState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 Category.Company -> {
@@ -53,12 +48,11 @@ class RegistrationFragment : Fragment() {
                 }
             }
         }
-
         registration()
         registrationObserver()
+        goToLoginScreen()
 
     }
-
 
     private fun setAdapter() {
         spinner = binding.spinnerId
@@ -117,7 +111,6 @@ class RegistrationFragment : Fragment() {
             when(state) {
                 is RegistrationScreenState.Success -> {
                     showToast("Регистрация прошла успешно")
-
                 }
 
                 is RegistrationScreenState.AlreadyExist -> {
@@ -146,5 +139,11 @@ class RegistrationFragment : Fragment() {
 
     private fun showToast(message : String){
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun goToLoginScreen(){
+        binding.noAccountButtonId.setOnClickListener {
+            findNavController().navigate(R.id.action_registrationFragment2_to_loginFragment2)
+        }
     }
 }
