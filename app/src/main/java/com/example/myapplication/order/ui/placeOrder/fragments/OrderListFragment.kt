@@ -57,6 +57,7 @@ class OrderListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        ordersViewModel.getAllOrders()
     }
 
     private fun observeAllOrders() {

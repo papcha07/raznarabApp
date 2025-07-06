@@ -298,9 +298,6 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun respondToOrder(orderId: String){
-        mapViewModel.respondToOrder(orderId)
-    }
 
 
 

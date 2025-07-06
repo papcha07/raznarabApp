@@ -202,6 +202,7 @@ class OrderViewModel(
                         orderStatus.postValue(false)
                     }
                 }
+                getAllOrders()
             }
         }
     }

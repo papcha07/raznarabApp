@@ -92,6 +92,7 @@
         android:visibility="gone"/>
 
     <include
+
         android:id="@+id/orderBottomNavigation"
         layout="@layout/bottom_single_order"
         android:visibility="visible" />

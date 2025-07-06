@@ -129,6 +129,7 @@
             app:popUpToInclusive="true"
             />
     </fragment>
+
     <fragment
         android:id="@+id/xWatchOrderFragment"
         android:name="com.example.myapplication.raznarab.ui.xWatchOrderFragment"
@@ -136,6 +137,12 @@
         <argument
             android:name="order"
             app:argType="string"
+            />
+        <action
+            android:id="@+id/action_xWatchOrderFragment_to_mapFragment2"
+            app:destination="@id/mapFragment2"
+            app:popUpTo="@id/mapFragment2"
+            app:popUpToInclusive="true"
             />
     </fragment>
 </navigation>

@@ -55,11 +55,11 @@ class CandidatesAdapter(
                 }
             }
         }
-//        if(candidate.rating == null){
-//            holder.textRatingTextView.text = "5.00"
-//        } else{
-//            holder.textRatingTextView.text = candidate.rating.toString()
-//        }
+        if(candidate.rating == null){
+            holder.textRatingTextView.text = "5.00"
+        } else{
+            holder.textRatingTextView.text = candidate.rating.toString()
+        }
         holder.phoneTextView.text = candidate.phoneNumber
         holder.itemView.setOnClickListener {
             onCandidateClick(candidate)

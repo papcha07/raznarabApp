@@ -130,8 +130,6 @@ class ExecutorDetailFragment : Fragment() {
 
     private fun setExecutor(orderId : String, executorId : String){
         orderViewModel.setExecutor(orderId, executorId)
-        findNavController().navigate(R.id.action_executorDetailFragment_to_orderListFragment)
-        orderViewModel.resetAll()
     }
 
     private fun observeExecutorSetter(){
@@ -140,6 +138,8 @@ class ExecutorDetailFragment : Fragment() {
             when(state){
                 true -> {
                     showMessage("Вы назначили исполнителя")
+                    findNavController().navigate(R.id.action_executorDetailFragment_to_orderListFragment)
+                    orderViewModel.resetAll()
                 }
 
                 false -> {

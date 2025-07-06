@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentWatchOrderBinding
 import com.example.myapplication.order.ui.placeOrder.OrderViewModel
 import com.example.myapplication.raznarab.ui.domain.dto.MapOrder
@@ -64,6 +66,7 @@ class xWatchOrderFragment : Fragment() {
     private fun respondToOrder(orderId: String){
         binding.button.setOnClickListener {
             orderViewModel.respondToOrder(orderId)
+            findNavController().navigate(R.id.action_xWatchOrderFragment_to_mapFragment2)
         }
     }
 

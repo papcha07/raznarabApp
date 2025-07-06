@@ -1,21 +1,15 @@
 package com.example.myapplication.order.domain.interactor
 
-import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.example.myapplication.order.data.dto.order.OrderDto
-import com.example.myapplication.order.data.network.ImagesResponse
 import com.example.myapplication.order.domain.TimeFormatter
 import com.example.myapplication.order.domain.api.CoordinatesRepository
 import com.example.myapplication.order.domain.api.MapInteractorInterface
 import com.example.myapplication.order.domain.models.Candidate
 import com.example.myapplication.order.domain.models.Order
-import com.example.myapplication.order.domain.models.OrderForView
 import com.example.myapplication.order.domain.models.Place
-import com.example.myapplication.order.domain.models.Resource
 import com.example.myapplication.order.domain.models.Profession
+import com.example.myapplication.order.domain.models.Resource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class MapInteractor(private val coordinatesRepository: CoordinatesRepository) :
